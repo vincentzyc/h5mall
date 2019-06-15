@@ -11,6 +11,7 @@ module.exports = {
     // 以下库使用cdn，不会被打包
     externals: {
       vue: "Vue",
+      vuex: "Vuex",
       "vue-router": "VueRouter",
       axios: "axios"
     }
