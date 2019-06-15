@@ -1,6 +1,6 @@
 <template>
-  <base-page type="button-view" title="Button">
-    <div slot="content">
+  <base-page>
+    <div>
       <cube-button>Button</cube-button>
       <cube-button type="submit">Submit Button</cube-button>
       <cube-button :active="true">Active Button</cube-button>

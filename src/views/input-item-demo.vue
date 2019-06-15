@@ -1,6 +1,6 @@
 <template>
-  <base-page type="about-view" title="Input-item">
-    <div slot="content">
+  <base-page>
+    <div>
       <h2>适合金融业务场景的输入框组件</h2>
       <div class="input-item-wrapper">
         <base-input-item class="input-item" title="普通文本" placeholder="普通文本(最大长度5)" :maxlength="5"></base-input-item>

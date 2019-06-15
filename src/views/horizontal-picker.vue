@@ -1,7 +1,7 @@
 
 <template>
-  <base-page type="scroll-view" title="Scroll" class="option-demo">
-    <div slot="content" class="scroll-wrapper">
+  <base-page>
+    <div class="scroll-wrapper">
       <div class="demo">
         <div class="text-center">horizontal Scroll Picker</div>
         <horizontal-picker
