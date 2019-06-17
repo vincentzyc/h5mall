@@ -2,10 +2,7 @@
   <div id="app">
     <div class="base-content">
       <!-- <cube-scroll ref="scroll"> -->
-      <div class="text-center">
-        <img alt="Vue logo" src="@/assets/img/logo.png">
-      </div>
-      <HelloWorld/>
+      <Home/>
       <!-- </cube-scroll> -->
     </div>
     <base-view></base-view>
@@ -13,11 +10,11 @@
 </template>
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/hello-world.vue";
+import Home from "@/views/home.vue";
 export default {
   name: "app",
   components: {
-    HelloWorld
+    Home
   }
   // mounted() {
   //     this.$nextTick(function() {

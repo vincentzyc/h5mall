@@ -28,10 +28,6 @@ export default {
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-
-    .content {
-      margin: 10px;
-    }
   }
 }
 </style>
