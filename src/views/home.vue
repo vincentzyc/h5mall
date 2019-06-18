@@ -1,8 +1,8 @@
 <template>
   <base-page>
     <div>
-      <cube-slide ref="slide" :data="items" @change="changePage">
-        <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide">
+      <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
+        <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
           <a :href="item.url">
             <img :src="item.image">
           </a>

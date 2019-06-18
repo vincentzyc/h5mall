@@ -1,7 +1,26 @@
 .banner-slide {
-  height: 200px;
+  .banner-slide-item {
+    height: 200px;
 
-  img {
-    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+
+  .cube-slide-dots {
+    text-align: right;
+    padding-right: 20px;
+    padding-bottom: 20px;
+
+    span {
+      height: 10px;
+      border-radius: 100%;
+      border: 1px solid #fc4d56;
+      background: transparent;
+
+      &.active {
+        background: #fc4d56;
+      }
+    }
   }
 }
