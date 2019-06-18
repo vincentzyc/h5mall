@@ -1,6 +1,7 @@
 <template>
   <base-page>
     <div>
+      <v-header></v-header>
       <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
         <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
           <a :href="item.url">
@@ -15,12 +16,12 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from "@/components/hello-world.vue";
+import vHeader from "./header.vue";
 
 export default {
   name: "home",
   components: {
-    // HelloWorld
+    'v-header': vHeader
   },
   data() {
     return {

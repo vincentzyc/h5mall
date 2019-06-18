@@ -10,7 +10,7 @@
 </template>
 <script>
 // @ is an alias to /src
-import Home from "@/views/home.vue";
+import Home from "@/views/home";
 export default {
   name: "app",
   components: {
