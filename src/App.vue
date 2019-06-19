@@ -2,7 +2,7 @@
   <div id="app">
     <div class="base-content">
       <!-- <cube-scroll ref="scroll"> -->
-      <Home/>
+        <Home/>
       <!-- </cube-scroll> -->
     </div>
     <base-view></base-view>
@@ -17,11 +17,11 @@ export default {
     Home
   }
   // mounted() {
-  //     this.$nextTick(function() {
-  //         window.addEventListener("load", () => {
-  //             this.$refs.scroll.refresh();
-  //         });
+  //   this.$nextTick(function () {
+  //     window.addEventListener("load", () => {
+  //       this.$refs.scroll.refresh();
   //     });
+  //   });
   // }
 };
 </script>
