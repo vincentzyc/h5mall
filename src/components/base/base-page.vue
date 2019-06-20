@@ -23,6 +23,8 @@ export default {
   background: #efeff4;
 
   >.wrapper {
+    position: relative;
+    width: 100%;
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;

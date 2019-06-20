@@ -2,14 +2,17 @@
   <base-page>
     <v-header></v-header>
     <cube-scroll ref="scroll">
-      <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
-        <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
-          <a :href="item.url">
-            <img :src="item.image">
-          </a>
-        </cube-slide-item>
-      </cube-slide>
-      <div style="height:1500px;width:100%;background:#999"></div>
+      <div class="scroll-wrapper">
+        <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
+          <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
+            <a :href="item.url">
+              <img :src="item.image">
+            </a>
+          </cube-slide-item>
+        </cube-slide>
+        <div style="height:1500px;width:100%;background:#999"></div>
+        <div>111111</div>
+      </div>
     </cube-scroll>
     <v-footer></v-footer>
   </base-page>
@@ -57,7 +60,7 @@ export default {
       setTimeout(() => {
         console.log(document.getElementsByClassName('cube-slide')[0].clientWidth);
         this.$refs.slide.refresh();
-        this.$refs.scroll.refresh();
+        // this.$refs.scroll.refresh();
       }, 0);
     });
   }
