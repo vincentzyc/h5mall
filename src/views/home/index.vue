@@ -11,7 +11,7 @@
           </cube-slide-item>
         </cube-slide>
         <div style="height:1500px;width:100%;background:#999"></div>
-        <div>111111</div>
+        <div class="text-center">到底啦</div>
       </div>
     </cube-scroll>
     <v-footer></v-footer>
