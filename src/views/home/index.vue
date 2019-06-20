@@ -1,7 +1,7 @@
 <template>
   <base-page>
-    <div>
-      <v-header></v-header>
+    <v-header></v-header>
+    <cube-scroll ref="scroll">
       <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
         <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
           <a :href="item.url">
@@ -9,9 +9,9 @@
           </a>
         </cube-slide-item>
       </cube-slide>
-      <!-- <div style="height:1500px;width:100%;background:#999"></div> -->
-      <v-footer></v-footer>
-    </div>
+      <div style="height:1500px;width:100%;background:#999"></div>
+    </cube-scroll>
+    <v-footer></v-footer>
   </base-page>
 </template>
 
@@ -51,6 +51,15 @@ export default {
     clickHandler(item, index) {
       console.log(item, index)
     }
+  },
+  mounted() {
+    this.$nextTick(function () {
+      setTimeout(() => {
+        console.log(document.getElementsByClassName('cube-slide')[0].clientWidth);
+        this.$refs.slide.refresh();
+        this.$refs.scroll.refresh();
+      }, 0);
+    });
   }
 };
 </script>

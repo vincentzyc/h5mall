@@ -2,7 +2,7 @@
   <div id="app">
     <div class="base-content">
       <!-- <cube-scroll ref="scroll"> -->
-        <Home/>
+      <Home/>
       <!-- </cube-scroll> -->
     </div>
     <base-view></base-view>
@@ -29,6 +29,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 #app, body, html {
   height: 100%;
+  width: 100%;
 }
 
 .base-content {

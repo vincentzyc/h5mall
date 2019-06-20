@@ -1,10 +1,8 @@
 <template>
   <div class="base-page">
-    <div class="wrapper">
-      <main class="content">
-        <slot/>
-      </main>
-    </div>
+    <main class="wrapper">
+      <slot/>
+    </main>
   </div>
 </template>
 
