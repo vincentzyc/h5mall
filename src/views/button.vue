@@ -1,7 +1,7 @@
 <template>
   <base-page>
     <div>
-      <cube-button>Button</cube-button>
+      <cube-button @click="$router.back()">Back</cube-button>
       <cube-button type="submit">Submit Button</cube-button>
       <cube-button :active="true">Active Button</cube-button>
       <cube-button :disabled="true">Disabled Button</cube-button>

@@ -1,5 +1,5 @@
 <template>
-  <base-page>
+  <base-page class="aaaaa">
     <v-header></v-header>
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">
@@ -11,23 +11,20 @@
           </cube-slide-item>
         </cube-slide>
         <div style="height:1500px;width:100%;background:#999"></div>
-        <div class="text-center mg20">到底啦</div>
+        <div class="text-center mg20" @click="$router.push('/page/button')">到底啦</div>
       </div>
     </cube-scroll>
-    <v-footer></v-footer>
   </base-page>
 </template>
 
 <script>
 // @ is an alias to /src
 import vHeader from "./header.vue";
-import vFooter from "./footer.vue";
 
 export default {
   name: "home",
   components: {
-    'v-header': vHeader,
-    'v-footer': vFooter
+    'v-header': vHeader
   },
   data() {
     return {

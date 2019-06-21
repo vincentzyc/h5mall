@@ -1,21 +1,38 @@
 <template>
-  <transition name="page-move">
+  <transition :name="transitionName">
     <router-view class="base-view"></router-view>
   </transition>
 </template>
 
 <script type="text/ecmascript-6">
 export default {
-  name: "base-view"
+  name: "base-view",
+  data(){
+    return {
+      transitionName:""
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      const toDepth = to.path.split('/').length;
+      const fromDepth = from.path.split('/').length;
+      this.transitionName = toDepth === fromDepth ? 'fade' : toDepth < fromDepth? 'slide-right' : 'slide-left'
+  }
+}
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-.page-move-enter, .page-move-leave-active {
+<style>
+.base-view {
+  transition: 0.3s;
+}
+.fade-enter, .fade-leave-active{
+	opacity: 0;
+}
+.slide-left-enter, .slide-left-leave-active {
   transform: translate(100%, 0);
 }
-
-.page-move-enter-active, .page-move-leave-active {
-  transition: transform 0.3s;
+.slide-right-enter, .slide-right-leave-active {
+  transform: translate(-100%, 0);
 }
 </style>

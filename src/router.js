@@ -6,24 +6,38 @@ Vue.use(VueRouter);
 export default new VueRouter({
   routes: [
     {
-      path: "/about",
-      name: "about",
-      component: () => import("./views/about.vue")
+      path: "/",
+      redirect: '/home'
     },
     {
-      path: "/button",
+      path: "/home",
+      name: "home",
+      component: () => import("./views/home")
+    },
+    {
+      path: "/publish",
+      name: "publish",
+      component: () => import("./views/publish")
+    },
+    {
+      path: "/cart",
+      name: "cart",
+      component: () => import("./views/cart")
+    },
+    {
+      path: "/message",
+      name: "message",
+      component: () => import("./views/message")
+    },
+    {
+      path: "/me",
+      name: "me",
+      component: () => import("./views/me")
+    },
+    {
+      path: "/page/button",
       name: "button",
-      component: () => import("./views/button.vue")
-    },
-    {
-      path: "/inputitem",
-      name: "inputitem",
-      component: () => import("./views/input-item-demo.vue")
-    },
-    {
-			path: '/horizontalpicker',
-			name: 'horizontalpicker',
-			component: () => import('./views/horizontal-picker')
+      component: () => import("./views/button")
     }
   ]
 });
