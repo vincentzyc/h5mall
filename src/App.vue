@@ -47,7 +47,7 @@ html {
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 52px;
+  bottom: 60px;
   width: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;

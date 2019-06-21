@@ -1,5 +1,5 @@
 <template>
-  <base-page class="aaaaa">
+  <base-page>
     <v-header></v-header>
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">

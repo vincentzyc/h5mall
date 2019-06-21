@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer-wrap">
-    <ul class="flex text-center">
+  <footer class="footer-wrap flex flex-center">
+    <ul class="flex text-center widthfull">
       <router-link class="flex-auto" to="/home" tag="li" active-class="active">
         <div class="icon home"></div>
         <h5>首页</h5>
