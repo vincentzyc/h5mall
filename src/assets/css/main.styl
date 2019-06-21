@@ -65,6 +65,7 @@ $orange-color = #fb8b44;
     h5 {
       font-size: 14px;
       margin-top: 2px;
+      color: #999;
     }
 
     .icon {
@@ -94,7 +95,9 @@ $orange-color = #fb8b44;
     }
 
     &.active {
-      color: $themm-color;
+      h5 {
+        color: $themm-color;
+      }
 
       .icon.home {
         background: url('../img/footer.png') no-repeat -38px -2px / 360px auto;
