@@ -14,7 +14,8 @@ module.exports = {
       vuex: "Vuex",
       "vue-router": "VueRouter",
       axios: "axios"
-    }
+    },
+    devtool: 'source-map'
   },
   css: {
     loaderOptions: {

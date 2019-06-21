@@ -11,7 +11,7 @@
           </cube-slide-item>
         </cube-slide>
         <div style="height:1500px;width:100%;background:#999"></div>
-        <div class="text-center">到底啦</div>
+        <div class="text-center mg20">到底啦</div>
       </div>
     </cube-scroll>
     <v-footer></v-footer>
@@ -58,9 +58,8 @@ export default {
   mounted() {
     this.$nextTick(function () {
       setTimeout(() => {
-        console.log(document.getElementsByClassName('cube-slide')[0].clientWidth);
         this.$refs.slide.refresh();
-        // this.$refs.scroll.refresh();
+        this.$refs.scroll.refresh();
       }, 0);
     });
   }
