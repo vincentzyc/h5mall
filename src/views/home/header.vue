@@ -40,7 +40,9 @@
   background: rgba(255, 255, 255, 0.3);
 
   input {
-    margin-left 5px
+    color: #fff;
+    border: none;
+    margin-left: 5px;
     outline: none;
     background: transparent;
 
