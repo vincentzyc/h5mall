@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <v-header></v-header>
+    <v-header/>
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
@@ -10,6 +10,7 @@
             </a>
           </cube-slide-item>
         </cube-slide>
+        <v-tabs/>
         <div style="height:1500px;width:100%;background:#999"></div>
         <div class="text-center mg20" @click="$router.push('/page/button')">到底啦</div>
       </div>
@@ -20,11 +21,13 @@
 <script>
 // @ is an alias to /src
 import vHeader from "./header.vue";
+import vTabs from "./tabs.vue";
 
 export default {
   name: "home",
   components: {
-    'v-header': vHeader
+    'v-header': vHeader,
+    'v-tabs': vTabs
   },
   data() {
     return {
