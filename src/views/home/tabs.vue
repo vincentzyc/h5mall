@@ -1,8 +1,8 @@
 <template>
   <div class="row flex flex-wrap tabs-wrap">
-    <div v-for="(item, index) in tabs" :label="item.label" :key="item.label" class="tabs-item flex-none">
-      <i slot="icon" :class="item.icon"></i>
-      <h4>{{item.label}}</h4>
+    <div v-for="(item, index) in tabs" :label="item.label" :key="item.label+index" class="tabs-item flex-none">
+      <img :src="require(`@/assets/img/${item.icon}`)" alt>
+      <h5>{{item.label}}</h5>
     </div>
   </div>
 </template>
@@ -11,43 +11,39 @@
 export default {
   data() {
     return {
-      selectedLabelSlots: 'Like',
       tabs: [{
-        label: 'Home',
-        icon: 'cubeic-home'
+        label: '果蔬生鲜',
+        icon: 'tab01.png'
       }, {
-        label: 'Like',
-        icon: 'cubeic-like'
+        label: '肉类',
+        icon: 'tab02.png'
       }, {
-        label: 'Vip',
-        icon: 'cubeic-vip'
+        label: '干货坚果',
+        icon: 'tab03.png'
       }, {
-        label: 'Me',
-        icon: 'cubeic-person'
+        label: '家乡特产',
+        icon: 'tab04.png'
       }, {
-        label: 'Home1',
-        icon: 'cubeic-home'
+        label: '速食',
+        icon: 'tab05.png'
       }, {
-        label: 'Like1',
-        icon: 'cubeic-like'
+        label: '中药补品',
+        icon: 'tab06.png'
       }, {
-        label: 'Vip1',
-        icon: 'cubeic-vip'
+        label: '海产',
+        icon: 'tab07.png'
       }, {
-        label: 'Me1',
-        icon: 'cubeic-person'
+        label: '花卉苗木',
+        icon: 'tab08.png'
       }, {
-        label: 'Home2',
-        icon: 'cubeic-home'
+        label: '粮油米面',
+        icon: 'tab09.png'
       }, {
-        label: 'Like2',
-        icon: 'cubeic-like'
+        label: '农作艺品',
+        icon: 'tab10.png'
       }, {
-        label: 'Vip2',
-        icon: 'cubeic-vip'
-      }, {
-        label: 'Me2',
-        icon: 'cubeic-person'
+        label: '更多',
+        icon: 'tab11.png'
       }]
     }
   },
@@ -62,13 +58,23 @@ export default {
 
 <style lang="stylus" scoped>
 .tabs-wrap {
-  padding: 15px 0;
+  padding: 15px 5px;
+  background: #fff;
 
   .tabs-item {
     width: 20%;
     text-align: center;
     padding: 5px;
     margin-bottom: 5px;
+    font-size: 12px;
+    color: #666;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
   }
 }
 </style>

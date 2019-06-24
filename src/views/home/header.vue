@@ -5,15 +5,25 @@
         <span>广州市</span>
       </div>
       <div class="search-wrap flex flex-auto flex-center">
-        <div class="search-input flex flex-auto">
+        <div class="search-input flex flex-auto" @click="test()">
           <i class="cubeic-search"></i>
-          <input type="text" placeholder="搜索" class="flex-auto">
+          <input type="text" placeholder="搜索" class="flex-auto" disabled>
         </div>
       </div>
       <i class="scan cubeic-scan"></i>
     </div>
   </header>
 </template>
+
+<script>
+export default {
+  methods:{
+    test(){
+      console.log(11111111);
+    }
+  }
+}
+</script>
 
 
 <style lang="stylus" scoped>

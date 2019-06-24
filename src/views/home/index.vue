@@ -11,7 +11,8 @@
           </cube-slide-item>
         </cube-slide>
         <v-tabs/>
-        <div style="height:1500px;width:100%;background:#999"></div>
+        <FineStore/>
+        <vRecommend/>
         <div class="text-center mg20" @click="$router.push('/page/button')">到底啦</div>
       </div>
     </cube-scroll>
@@ -22,12 +23,17 @@
 // @ is an alias to /src
 import vHeader from "./header.vue";
 import vTabs from "./tabs.vue";
+import FineStore from "./fine-store.vue";
+import vRecommend from "./recommend.vue";
+
 
 export default {
   name: "home",
   components: {
-    'v-header': vHeader,
-    'v-tabs': vTabs
+    vHeader,
+    vTabs,
+    FineStore,
+    vRecommend
   },
   data() {
     return {
