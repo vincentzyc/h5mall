@@ -1,4 +1,4 @@
-$themm-color = #fc4d56;
+$theme-color = #fc4d56;
 $orange-color = #fb8b44;
 
 // common
@@ -6,9 +6,14 @@ $orange-color = #fb8b44;
   width: 100%;
 }
 
-.border-beee{
+.border-beee {
   border-bottom: 1px solid #ddd;
-  }
+}
+
+.ctheme {
+  color: $theme-color;
+}
+
 // /common
 .banner-slide {
   width: 100%;
@@ -29,11 +34,11 @@ $orange-color = #fb8b44;
     span {
       height: 10px;
       border-radius: 100%;
-      border: 1px solid $themm-color;
+      border: 1px solid $theme-color;
       background: transparent;
 
       &.active {
-        background: $themm-color;
+        background: $theme-color;
       }
     }
   }
@@ -54,10 +59,10 @@ $orange-color = #fb8b44;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 5;
-  background: -webkit-linear-gradient(left, $orange-color, $themm-color); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, $orange-color, $themm-color); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, $orange-color, $themm-color); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, $orange-color, $themm-color); /* 标准的语法 */
+  background: -webkit-linear-gradient(left, $orange-color, $theme-color); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, $orange-color, $theme-color); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, $orange-color, $theme-color); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, $orange-color, $theme-color); /* 标准的语法 */
 }
 
 .footer-wrap {
@@ -105,7 +110,7 @@ $orange-color = #fb8b44;
 
     &.active {
       h5 {
-        color: $themm-color;
+        color: $theme-color;
       }
 
       .icon.home {
