@@ -10,12 +10,6 @@
     <cube-button :inline="true" @click="showCarType()">showCarType</cube-button>
     <cube-button :outline="true" @click="showBuyTime()">showBuyTime</cube-button>
     <cube-button :primary="true" @click="axiosPost()">axiosPost</cube-button>
-    <cube-checkbox-group v-model="buttonStyle" :horizontal="true">
-      <cube-checkbox label="inline">Inline</cube-checkbox>
-      <cube-checkbox label="outline">Outline</cube-checkbox>
-      <cube-checkbox label="primary">Primary</cube-checkbox>
-    </cube-checkbox-group>
-    <cube-button :inline="inlineStyle" :outline="outlineStyle" :primary="primaryStyle">Demo Button</cube-button>
     <cube-button :disabled="true">Disabled Button</cube-button>
   </div>
 </template>
@@ -26,22 +20,10 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      buttonStyle: ["inline", "outline", "primary"],
       blandList: jsonData.blandList,
       carType: jsonData.carType,
       buyTime: jsonData.buyTime
     };
-  },
-  computed: {
-    inlineStyle() {
-      return this.buttonStyle.indexOf("inline") >= 0;
-    },
-    outlineStyle() {
-      return this.buttonStyle.indexOf("outline") >= 0;
-    },
-    primaryStyle() {
-      return this.buttonStyle.indexOf("primary") >= 0;
-    }
   },
   methods: {
     sandglass() {
