@@ -3,8 +3,8 @@
     <v-header/>
     <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
       <div class="scroll-wrapper">
-        <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
-          <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
+        <cube-slide ref="slide" :data="items" class="banner-slide">
+          <cube-slide-item v-for="(item, index) in items" :key="index" class="banner-slide-item">
             <a :href="item.url">
               <img :src="item.image">
             </a>
@@ -62,12 +62,6 @@ export default {
     },
     scrollTo() {
       this.$refs.scroll.scrollTo(0, 0, 500)
-    },
-    changePage(current) {
-      console.log('当前轮播图序号为:' + current)
-    },
-    clickHandler(item, index) {
-      console.log(item, index)
     }
   },
   mounted() {

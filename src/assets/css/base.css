@@ -236,6 +236,12 @@ strong,
 .relative {
 	position: relative;
 }
+.lh16 {
+	line-height: .32rem;
+}
+.lh18 {
+	line-height: .36rem;
+}
 .lh20 {
 	line-height: .4rem;
 }

@@ -58,7 +58,7 @@ export default {
 
 <style lang="stylus" scoped>
 .tabs-wrap {
-  padding: 15px 5px;
+  padding: 10px 5px;
   background: #fff;
 
   .tabs-item {

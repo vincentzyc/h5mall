@@ -28,7 +28,7 @@ $orange-color = #fb8b44;
   width: 100%;
 
   .banner-slide-item {
-    height: 200px;
+    height: 180px;
 
     img {
       width: 100%;
@@ -72,75 +72,4 @@ $orange-color = #fb8b44;
   background: -o-linear-gradient(right, $orange-color, $theme-color); /* Opera 11.1 - 12.0 */
   background: -moz-linear-gradient(right, $orange-color, $theme-color); /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, $orange-color, $theme-color); /* 标准的语法 */
-}
-
-.footer-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 56px;
-  border-top: 1px solid #eee;
-  background: #fff;
-  z-index: 5;
-
-  li {
-    h5 {
-      font-size: 14px;
-      margin-top: 2px;
-      color: #999;
-    }
-
-    .icon {
-      width: 30px;
-      height: 30px;
-      margin: auto;
-    }
-
-    .icon.home {
-      background: url('../img/footer.png') no-repeat -3px -2px / 360px auto;
-    }
-
-    .icon.publish {
-      background: url('../img/footer.png') no-repeat -290px -2px / 360px auto;
-    }
-
-    .icon.cart {
-      background: url('../img/footer.png') no-repeat -218px -2px / 360px auto;
-    }
-
-    .icon.message {
-      background: url('../img/footer.png') no-repeat -73px -2px / 360px auto;
-    }
-
-    .icon.me {
-      background: url('../img/footer.png') no-repeat -145px -2px / 360px auto;
-    }
-
-    &.active {
-      h5 {
-        color: $theme-color;
-      }
-
-      .icon.home {
-        background: url('../img/footer.png') no-repeat -38px -2px / 360px auto;
-      }
-
-      .icon.publish {
-        background: url('../img/footer.png') no-repeat -326px -2px / 360px auto;
-      }
-
-      .icon.cart {
-        background: url('../img/footer.png') no-repeat -254px -2px / 360px auto;
-      }
-
-      .icon.message {
-        background: url('../img/footer.png') no-repeat -109px -2px / 360px auto;
-      }
-
-      .icon.me {
-        background: url('../img/footer.png') no-repeat -181px -2px / 360px auto;
-      }
-    }
-  }
 }
