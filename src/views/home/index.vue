@@ -1,7 +1,7 @@
 <template>
   <base-page>
     <v-header/>
-    <cube-scroll ref="scroll">
+    <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="items" @change="changePage" class="banner-slide">
           <cube-slide-item v-for="(item, index) in items" :key="index" @click.native="clickHandler(item, index)" class="banner-slide-item">
@@ -13,9 +13,11 @@
         <v-tabs/>
         <FineStore/>
         <vRecommend/>
-        <div class="text-center mg20" @click="$router.push('/page/button')">到底啦</div>
       </div>
     </cube-scroll>
+    <div class="backtop" @click="scrollTo()" v-show="backtop">
+      <img src="@/assets/img/totop.png" alt="回到顶部" width="100%">
+    </div>
   </base-page>
 </template>
 
@@ -37,6 +39,7 @@ export default {
   },
   data() {
     return {
+      backtop: false,
       items: [
         {
           url: 'http://www.didichuxing.com/',
@@ -54,6 +57,12 @@ export default {
     }
   },
   methods: {
+    scroll(pos) {
+      this.backtop = pos.y < -200 ? true : false
+    },
+    scrollTo() {
+      this.$refs.scroll.scrollTo(0, 0, 500)
+    },
     changePage(current) {
       console.log('当前轮播图序号为:' + current)
     },
