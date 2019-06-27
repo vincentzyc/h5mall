@@ -4,21 +4,21 @@
       <div class="address">
         <span>广州市</span>
       </div>
-      <div class="search-wrap flex flex-auto flex-center">
+      <div class="search-wrap flex flex-auto flex-center pd-r10">
         <div class="search-input flex flex-auto" @click="test()">
           <i class="cubeic-search"></i>
           <input type="text" placeholder="搜索" class="flex-auto" disabled>
         </div>
       </div>
-      <i class="scan cubeic-scan"></i>
+      <!-- <i class="scan cubeic-scan" @click="$refs.camera.click()"></i> -->
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  methods:{
-    test(){
+  methods: {
+    test() {
       console.log(11111111);
     }
   }
@@ -36,11 +36,11 @@ export default {
   padding: 0 10px 0 15px;
 }
 
-.scan {
-  padding: 0 10px;
-  font-size: 30px;
-  font-weight: lighter;
-}
+// .scan {
+//   padding: 0 10px;
+//   font-size: 30px;
+//   font-weight: lighter;
+// }
 
 .search-input {
   line-height: 30px;

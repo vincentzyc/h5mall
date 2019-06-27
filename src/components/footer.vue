@@ -7,19 +7,23 @@
       </router-link>
       <router-link class="flex-auto" to="/publish" tag="li" active-class="active">
         <div class="icon publish"></div>
-        <h5 class="title">发布采购</h5>
+        <h5 class="title">TAB1</h5>
+        <!-- <h5 class="title">发布采购</h5> -->
       </router-link>
       <router-link class="flex-auto" to="/cart" tag="li" active-class="active">
         <div class="icon cart"></div>
-        <h5 class="title">购物车</h5>
+        <h5 class="title">TAB2</h5>
+        <!-- <h5 class="title">购物车</h5> -->
       </router-link>
       <router-link class="flex-auto" to="/message" tag="li" active-class="active">
         <div class="icon message"></div>
-        <h5 class="title">消息</h5>
+        <h5 class="title">TAB3</h5>
+        <!-- <h5 class="title">消息</h5> -->
       </router-link>
       <router-link class="flex-auto" to="/me" tag="li" active-class="active">
         <div class="icon me"></div>
-        <h5 class="title">我的</h5>
+        <h5 class="title">TAB4</h5>
+        <!-- <h5 class="title">我的</h5> -->
       </router-link>
     </ul>
   </footer>

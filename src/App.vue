@@ -9,13 +9,11 @@
   </div>
 </template>
 <script>
-import Home from "@/views/home";
 import vFooter from "@/components/footer.vue";
 
 export default {
   name: "app",
   components: {
-    Home,
     vFooter
   },
   data() {
