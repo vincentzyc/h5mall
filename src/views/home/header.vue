@@ -10,7 +10,6 @@
           <input type="text" placeholder="搜索" class="flex-auto" disabled>
         </div>
       </div>
-      <!-- <i class="scan cubeic-scan" @click="$refs.camera.click()"></i> -->
     </div>
   </header>
 </template>
@@ -35,12 +34,6 @@ export default {
 .address {
   padding: 0 10px 0 15px;
 }
-
-// .scan {
-//   padding: 0 10px;
-//   font-size: 30px;
-//   font-weight: lighter;
-// }
 
 .search-input {
   line-height: 30px;
