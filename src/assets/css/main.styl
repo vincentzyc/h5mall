@@ -24,6 +24,17 @@ $orange-color = #fb8b44;
   z-index: 9999;
 }
 
+.detail-back {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  z-index: 99;
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  color: #fff;
+}
+
 .border-tag {
   font-weight: lighter;
   color: #fff;
@@ -36,10 +47,18 @@ $orange-color = #fb8b44;
   border-radius: 8px;
 }
 
-.banner-slide {
+.common-slide {
   width: 100%;
 
-  .banner-slide-item {
+  .detail-slide-item {
+    height: 300px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .common-slide-item {
     height: 180px;
 
     img {

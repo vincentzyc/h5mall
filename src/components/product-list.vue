@@ -1,6 +1,12 @@
 <template>
   <div class="product-list">
-    <div v-for="(item, index) in items" :label="item.label" :key="item.label+index" class="flex item">
+    <div
+      v-for="(item, index) in items"
+      :label="item.label"
+      :key="item.label+index"
+      class="flex item"
+      @click="$router.push('/products/detail?id='+item.id)"
+    >
       <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img">
       <div class="item-content mg-l10 flex-auto flex flex-column">
         <h4 class="bold txtover lh24">{{item.title}}</h4>
@@ -77,7 +83,7 @@ export default {
     font-size: 6px;
     padding: 2px 5px 1px 5px;
     margin-right: 5px;
-    border:1px solid transparent;
+    border: 1px solid transparent;
     border-top-left-radius: 8px;
     border-bottom-right-radius: 8px;
     background: #fc4d56;

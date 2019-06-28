@@ -3,8 +3,8 @@
     <v-header/>
     <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
       <div class="scroll-wrapper">
-        <cube-slide ref="slide" :data="items" class="banner-slide">
-          <cube-slide-item v-for="(item, index) in items" :key="index" class="banner-slide-item">
+        <cube-slide ref="slide" :data="items" class="common-slide">
+          <cube-slide-item v-for="(item, index) in items" :key="index" class="common-slide-item">
             <a :href="item.url">
               <img :src="item.image">
             </a>
