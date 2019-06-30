@@ -1,7 +1,7 @@
 <template>
   <base-page>
-    <div class="container">
-      <i class="cubeic-back detail-back"></i>
+    <div class="container fs14">
+      <i class="cubeic-back detail-back" @click="$router.back()"></i>
       <cube-slide ref="slide" :data="items" class="common-slide">
         <cube-slide-item v-for="(item, index) in items" :key="index" class="detail-slide-item">
           <a :href="item.url">
@@ -14,7 +14,7 @@
         <div class="flex-auto">
           <h3 class="fs16 bold lh30">商品名称名称</h3>
           <p class="fs12 c999">鼓掌：鼓掌鼓掌鼓掌</p>
-          <div class="lh30">
+          <div class="flex align-middle mg-t5">
             <span class="price ctheme fs16 mg-r10">￥99</span>
             <span class="border-tag">新品上市</span>
             <span class="border-tag">品质保障</span>
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="flex pd-l10 pd-r10 pd-t20 pd-b20 bgfff mg-t15">
+      <div class="flex pd-l10 pd-r10 pd-t20 pd-b20 bgfff mg-t15 align-middle">
         <div class="flex flex-auto align-middle">
           <img src="@/assets/img/discount.png" alt="优惠券" class="discount">
           <span class="mg-l5 fs16">优惠券领取</span>
@@ -38,7 +38,7 @@
       </div>
 
       <div class="specs bgfff pd-l10 pd-r10 pd-t20 pd-b20 mg-t15">
-        <h3 class="mg-b20">商品规格</h3>
+        <h3 class="mg-b20 fs14">商品规格</h3>
         <table>
           <tr>
             <td class="c666">产品名称</td>
@@ -56,12 +56,25 @@
       </div>
 
       <div class="detail-info bgfff mg-t15">
-        <div class="flex tabs lh30 text-center fs14 c333 pd10">
-          <div class="flex-auto" :class="{active:activeTab===1}" @click="activeTab=1">图片</div>
-          <div class="flex-auto" :class="{active:activeTab===2}" @click="activeTab=2">文字</div>
-          <div class="flex-auto" :class="{active:activeTab===3}" @click="activeTab=3">评价</div>
-          <div class="flex-auto" :class="{active:activeTab===4}" @click="activeTab=4">推荐</div>
-        </div>
+        <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee">
+          <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30"></cube-tab>
+        </cube-tab-bar>
+        <cube-tab-panels class="mg-b10">
+          <cube-tab-panel class="img-panel" v-show="selectedLabel==='图片'">
+            <img :src="BASE_URL + 'static/img/banner1.png'" alt>
+            <img :src="BASE_URL + 'static/img/banner2.png'" alt>
+            <img :src="BASE_URL + 'static/img/banner3.png'" alt>
+          </cube-tab-panel>
+          <cube-tab-panel class="text-panel" v-show="selectedLabel==='文字'">
+            <p v-html="$util.textBr(detailText)"></p>
+          </cube-tab-panel>
+          <cube-tab-panel class="comment-panel" v-show="selectedLabel==='评价'">
+            <vComment :list="commentList"></vComment>
+          </cube-tab-panel>
+          <cube-tab-panel class="recommend-panel" v-show="selectedLabel==='推荐'">
+            <vRecommend></vRecommend>
+          </cube-tab-panel>
+        </cube-tab-panels>
       </div>
 
       <h3>{{$route.query.id}}</h3>
@@ -71,16 +84,18 @@
 
 
 <script>
-// import vHeader from "./header.vue";
+import vComment from "./comment.vue";
+import vRecommend from "./recommend.vue";
 
 export default {
   name: "home",
   components: {
-    // vHeader,
+    vComment, vRecommend
   },
   data() {
     return {
-      activeTab: 1,
+      selectedLabel: '图片',
+      tabs: ['图片', '文字', '评价', '推荐'],
       items: [
         {
           url: 'http://www.didichuxing.com/',
@@ -94,7 +109,13 @@ export default {
           url: 'http://www.didichuxing.com/',
           image: this.BASE_URL + 'static/img/banner3.png'
         }
-      ]
+      ],
+      detailText: '描述文字@BR@描述文字描述@BR@文字描述文字描述@BR@文字描述文字描述文@BR@字描述文字',
+      commentList: [{
+        score: 4
+      }, {
+        score: 5
+      }]
     }
   },
   methods: {
@@ -133,10 +154,40 @@ th, td {
   border: 1px solid #999;
 }
 
-.tabs {
-  .active {
-    color: #fc4d56;
-    border-bottom: 1px solid #fc4d56;
+.img-panel {
+  img {
+    width: 100%;
+    float: left;
+  }
+}
+
+.text-panel {
+  padding: 10px;
+
+  p {
+    line-height: 26px;
+    color: #333;
+    font-size: 14px;
+  }
+}
+
+.comment-panel {
+  & /deep/ {
+    .userimg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .comment-img {
+      width: 66px;
+      height: 66px;
+      margin-right: 10px;
+    }
+
+    .cube-rate-item {
+      width: 10px;
+      margin-right: 5px;
+    }
   }
 }
 </style>

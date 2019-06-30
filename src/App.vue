@@ -7,7 +7,9 @@
         </keep-alive>
       </transition>
     </div>
-    <v-footer></v-footer>
+    <div v-show="!fullscreen">
+      <v-footer></v-footer>
+    </div>
   </div>
 </template>
 <script>
@@ -29,7 +31,7 @@ export default {
       const toDepth = to.path.split('/').length;
       const fromDepth = from.path.split('/').length;
       this.fullscreen = toDepth === 2 ? false : true;
-      this.transitionName = toDepth === fromDepth ? 'fade' : toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      this.transitionName = toDepth === fromDepth ? 'fade' : toDepth < fromDepth ? 'slide-right' : 'slide-left';
     }
   }
 }
@@ -47,9 +49,11 @@ html {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
   bottom: 50px;
-  width: 100%;
   overflow: auto;
+  font-size: 14px;
+  z-index: 10;
   -webkit-overflow-scrolling: touch;
 }
 .base-content.fullscreen {

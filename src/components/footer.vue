@@ -34,11 +34,10 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 50px;
   border-top: 1px solid #eee;
   background: #fff;
-  z-index: 5;
 
   li {
     .title {

@@ -175,7 +175,7 @@ export default {
 		return currentdate;
 	},
 	/**
-	 * 缓冲函数
+	 * 滚动条缓冲函数
 	 * @param {Object} dom 目标dom
 	 * @param {Number} destination 目标位置
 	 * @param {Number} rate 缓动率
@@ -204,5 +204,17 @@ export default {
 			requestAnimationFrame(step);
 		};
 		step();
-	}
+  },
+  /**
+   * 文本截取换行
+   * @param {文本字符} text 
+   */
+  textBr(text){
+    let brstr = '';
+    let arr = text.split("@BR@");
+    arr.forEach( v=>{
+      brstr += v+"</br>"
+    })
+    return brstr;
+  }
 }

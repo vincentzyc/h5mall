@@ -8,18 +8,15 @@
 	<link rel="icon" href="<%= BASE_URL %>favicon.ico">
 	<title>H5-DEMO</title>
 	<script type="text/javascript">
-		!function(e, t) {
-			function n() {
-				var n = s.getBoundingClientRect().width;
-				t = t || 540, n > t && (n = t);
-				var i = 100 * n / e;
-				s.style.fontSize = i + "px"
-			}
-			var i, o = document,
+		! function(a, b) {
+			function h() { var d = e.getBoundingClientRect().width;
+				b = b || 540, d > b && (d = b), f = 100 * d / a, e.style.fontSize = f + "px", c.body && i() }
+
+			function i() { c.body.style.position = "relative", c.body.style.fontSize = 14 / f + "rem", c.body.style.margin = "0 auto", c.body.style.maxWidth = b + "px" } var g, c = document,
 				d = window,
-				s = o.documentElement;
-			n(), d.addEventListener("resize", function() { clearTimeout(i), i = setTimeout(n, 300) }, !1), d.addEventListener("pageshow", function(e) { e.persisted && (clearTimeout(i), i = setTimeout(n, 300)) }, !1), d.addEventListener("DOMContentLoaded", function() { o.body.style.position = "relative", o.body.style.fontSize = "14px", o.body.style.margin = "0 auto", o.body.style.maxWidth = t + "px" }, !1)
-		}(720, 640);
+				e = c.documentElement,
+				f = 14;
+			h(), d.addEventListener("resize", function() { clearTimeout(g), g = setTimeout(h(), 300) }, !1), d.addEventListener("pageshow", function(a) { a.persisted && (clearTimeout(g), g = setTimeout(h(), 300)) }, !1), d.addEventListener("DOMContentLoaded", function() { i() }, !1) }(720, 640);
 	</script>
 </head>
 

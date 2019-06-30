@@ -11,8 +11,8 @@ import {
   // Loading,
   // Tip,
   // Toolbar,
-  // TabBar,
-  // TabPanels,
+  TabBar,
+  TabPanels,
   // // form
   // Checkbox,
   // CheckboxGroup,
@@ -22,7 +22,7 @@ import {
   // Textarea,
   // Select,
   // Switch,
-  // Rate,
+  Rate,
   // Validator,
   // Upload,
   // Form,
@@ -52,8 +52,8 @@ Vue.use(Button);
 // Vue.use(Loading)
 // Vue.use(Tip)
 // Vue.use(Toolbar)
-// Vue.use(TabBar)
-// Vue.use(TabPanels)
+Vue.use(TabBar)
+Vue.use(TabPanels)
 // Vue.use(Checkbox)
 // Vue.use(CheckboxGroup);
 // Vue.use(Radio)
@@ -62,7 +62,7 @@ Vue.use(Button);
 // Vue.use(Textarea)
 // Vue.use(Select)
 // Vue.use(Switch)
-// Vue.use(Rate)
+Vue.use(Rate)
 // Vue.use(Validator)
 // Vue.use(Upload)
 // Vue.use(Form)
