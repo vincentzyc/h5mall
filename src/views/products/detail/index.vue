@@ -2,6 +2,15 @@
   <base-page>
     <div class="container fs14">
       <i class="cubeic-back detail-back" @click="$router.back()"></i>
+      <div class="drop-down-menu">
+        <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%">
+        <transition name="fade">
+          <div class="menu" v-show="showDropDownMenu">
+            <p class="border-beee">分享</p>
+            <p>收藏店铺</p>
+          </div>
+        </transition>
+      </div>
       <cube-slide ref="slide" :data="items" class="common-slide">
         <cube-slide-item v-for="(item, index) in items" :key="index" class="detail-slide-item">
           <a :href="item.url">
@@ -94,6 +103,7 @@ export default {
   },
   data() {
     return {
+      showDropDownMenu: false,
       selectedLabel: '图片',
       tabs: ['图片', '文字', '评价', '推荐'],
       items: [
@@ -155,6 +165,29 @@ export default {
   height: 20px;
 }
 
+.drop-down-menu {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  z-index: 99;
+  width: 34px;
+  height: 34px;
+  border-radius: 50px;
+
+  .menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 80px;
+    padding: 0 10px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    color: #333;
+    background-color: #fff;
+  }
+}
+
 table {
   width: 90%;
   border-collapse: collapse;
@@ -167,9 +200,9 @@ table {
 th, td {
   font-weight: normal;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
-  padding: 15px 0;
+  padding: 10px 0;
   border: 1px solid #999;
 }
 

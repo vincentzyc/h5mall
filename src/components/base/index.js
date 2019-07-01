@@ -1,5 +1,4 @@
 import BasePage from './base-page'; //页面组件
-import BaseView from './base-view'; //路由嵌套组件
 import Loading from "./loading"; // loading
 import InputItem from "./input-item"; // 可格式化输入框组件
 import HorizontalPicker from "./horizontal-picker"; // 横向滑动自动选择组件
@@ -10,7 +9,6 @@ const install = function(Vue) {
 	if (install.installed) return;
 
 	Vue.component(BasePage.name, BasePage); //注册组件
-	Vue.component(BaseView.name, BaseView); //注册组件
 	Vue.component(InputItem.name, InputItem); //注册组件
 	Vue.component(HorizontalPicker.name, HorizontalPicker); //注册组件
 

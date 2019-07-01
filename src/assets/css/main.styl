@@ -2,6 +2,43 @@ $theme-color = #fc4d56;
 $orange-color = #fb8b44;
 
 // common
+#app, body, html {
+  height: 100%;
+  width: 100%;
+}
+
+.base-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  overflow: auto;
+  font-size: 14px;
+  z-index: 10;
+  -webkit-overflow-scrolling: touch;
+}
+
+.base-content.fullscreen {
+  bottom: 0;
+}
+
+.fade-enter-active, .fade-leave-active, .slide-left-enter-active, .slide-left-leave-active, .slide-right-enter-active, .slide-right-leave-active {
+  transition: 0.3s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+.slide-left-enter, .slide-left-leave-active {
+  transform: translate(100%, 0);
+}
+
+.slide-right-enter, .slide-right-leave-active {
+  transform: translate(-100%, 0);
+}
+
 .widthfull {
   width: 100%;
 }
