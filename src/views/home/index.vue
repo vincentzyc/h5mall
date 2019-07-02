@@ -4,7 +4,7 @@
     <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="items" class="common-slide">
-          <cube-slide-item v-for="(item, index) in items" :key="index" class="common-slide-item">
+          <cube-slide-item v-for="(item, index) in items" :key="index">
             <a :href="item.url">
               <img :src="item.image">
             </a>
@@ -12,6 +12,13 @@
         </cube-slide>
         <v-tabs/>
         <FineStore/>
+        <cube-slide ref="slide" :data="items" class="common-slide store-slide">
+          <cube-slide-item v-for="(item, index) in items" :key="index">
+            <a :href="item.url">
+              <img :src="item.image">
+            </a>
+          </cube-slide-item>
+        </cube-slide>
         <vRecommend/>
       </div>
     </cube-scroll>

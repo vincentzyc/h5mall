@@ -11,13 +11,16 @@
           </div>
         </transition>
       </div>
-      <cube-slide ref="slide" :data="items" class="common-slide">
-        <cube-slide-item v-for="(item, index) in items" :key="index" class="detail-slide-item">
-          <a :href="item.url">
-            <img :src="item.image">
-          </a>
-        </cube-slide-item>
-      </cube-slide>
+
+      <div class="common-slide detail-slide">
+        <cube-slide ref="slide" :data="items">
+          <cube-slide-item v-for="(item, index) in items" :key="index">
+            <a :href="item.url">
+              <img :src="item.image">
+            </a>
+          </cube-slide-item>
+        </cube-slide>
+      </div>
 
       <div class="flex product-info bgfff pd10">
         <div class="flex-auto">
@@ -85,9 +88,9 @@
           </cube-tab-panel>
         </cube-tab-panels>
       </div>
-
       <h3>{{$route.query.id}}</h3>
     </div>
+    <vFooter></vFooter>
   </base-page>
 </template>
 
@@ -95,11 +98,12 @@
 <script>
 import vComment from "./comment.vue";
 import vRecommend from "./recommend.vue";
+import vFooter from "./footer.vue";
 
 export default {
   name: "home",
   components: {
-    vComment, vRecommend
+    vComment, vRecommend, vFooter
   },
   data() {
     return {
@@ -161,6 +165,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
+
 .discount {
   height: 20px;
 }

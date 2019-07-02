@@ -1,5 +1,4 @@
-$theme-color = #fc4d56;
-$orange-color = #fb8b44;
+@import './color.styl';
 
 // common
 #app, body, html {
@@ -44,15 +43,15 @@ $orange-color = #fb8b44;
 }
 
 .border-beee {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #eee;
 }
 
 .ctheme {
-  color: $theme-color;
+  color: $color-theme;
 }
 
 .corange {
-  color: $orange-color;
+  color: $color-orange;
 }
 
 // /common
@@ -83,28 +82,26 @@ $orange-color = #fb8b44;
   padding: 2px 5px 1px 5px;
   margin-right: 5px;
   background: #fff;
-  color: $theme-color;
-  border: 1px solid $theme-color;
+  color: $color-theme;
+  border: 1px solid $color-theme;
   border-radius: 8px;
 }
 
 .common-slide {
+  height: 180px;
   width: 100%;
 
-  .detail-slide-item {
-    height: 300px;
-
-    img {
-      width: 100%;
-    }
+  img {
+    width: 100%;
+    height: 100%;
   }
 
-  .common-slide-item {
-    height: 180px;
+  &.detail-slide {
+    height: 300px;
+  }
 
-    img {
-      width: 100%;
-    }
+  &.store-slide {
+    height: 150px;
   }
 
   .cube-slide-dots {
@@ -115,11 +112,11 @@ $orange-color = #fb8b44;
     span {
       height: 10px;
       border-radius: 100%;
-      border: 1px solid $theme-color;
+      border: 1px solid $color-theme;
       background: transparent;
 
       &.active {
-        background: $theme-color;
+        background: $color-theme;
       }
     }
   }
@@ -140,8 +137,8 @@ $orange-color = #fb8b44;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 5;
-  background: -webkit-linear-gradient(left, $orange-color, $theme-color); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(right, $orange-color, $theme-color); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(right, $orange-color, $theme-color); /* Firefox 3.6 - 15 */
-  background: linear-gradient(to right, $orange-color, $theme-color); /* 标准的语法 */
+  background: -webkit-linear-gradient(left, $color-orange, $color-theme); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, $color-orange, $color-theme); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, $color-orange, $color-theme); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, $color-orange, $color-theme); /* 标准的语法 */
 }
