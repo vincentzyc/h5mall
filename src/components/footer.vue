@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer-wrap flex flex-center">
+  <footer class="footer-wrap border-teee flex flex-center">
     <ul class="flex text-center widthfull">
       <router-link class="flex-auto" to="/home" tag="li" active-class="active">
         <div class="icon home"></div>
@@ -12,8 +12,7 @@
       </router-link>
       <router-link class="flex-auto" to="/cart" tag="li" active-class="active">
         <div class="icon cart"></div>
-        <h5 class="title">TAB2</h5>
-        <!-- <h5 class="title">购物车</h5> -->
+        <h5 class="title">购物车</h5>
       </router-link>
       <router-link class="flex-auto" to="/message" tag="li" active-class="active">
         <div class="icon message"></div>
@@ -22,8 +21,7 @@
       </router-link>
       <router-link class="flex-auto" to="/me" tag="li" active-class="active">
         <div class="icon me"></div>
-        <h5 class="title">TAB4</h5>
-        <!-- <h5 class="title">我的</h5> -->
+        <h5 class="title">我的</h5>
       </router-link>
     </ul>
   </footer>
@@ -31,14 +29,6 @@
 
 <style lang="stylus" scoped>
 .footer-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  border-top: 1px solid #eee;
-  background: #fff;
-
   li {
     .title {
       font-size: 12px;

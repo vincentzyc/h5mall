@@ -23,14 +23,6 @@
 @import '~@/assets/css/color.styl';
 
 .footer-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  text-align: center;
-  height: 50px;
-
   .icon {
     width: 30px;
     height: 30px;

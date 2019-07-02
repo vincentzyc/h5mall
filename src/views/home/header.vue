@@ -1,7 +1,7 @@
 <template>
   <header class="header-bg">
-    <div class="flex header-wrap">
-      <div class="address">
+    <div class="flex fs14 cfff">
+      <div class="address pd-r10 pd-l15">
         <span>广州市</span>
       </div>
       <div class="search-wrap flex flex-auto flex-center pd-r10">
@@ -26,14 +26,6 @@ export default {
 
 
 <style lang="stylus" scoped>
-.header-wrap {
-  font-size: 14px;
-  color: #fff;
-}
-
-.address {
-  padding: 0 10px 0 15px;
-}
 
 .search-input {
   line-height: 30px;

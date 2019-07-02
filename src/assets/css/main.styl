@@ -46,6 +46,14 @@
   border-bottom: 1px solid #eee;
 }
 
+.border-teee {
+  border-top: 1px solid #eee;
+}
+
+.bgtheme {
+  background: $color-theme;
+}
+
 .ctheme {
   color: $color-theme;
 }
@@ -54,7 +62,10 @@
   color: $color-orange;
 }
 
-// /common
+.lh50 {
+  line-height: 50px;
+}
+
 .backtop {
   position: fixed;
   right: 15px;
@@ -141,4 +152,15 @@
   background: -o-linear-gradient(right, $color-orange, $color-theme); /* Opera 11.1 - 12.0 */
   background: -moz-linear-gradient(right, $color-orange, $color-theme); /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, $color-orange, $color-theme); /* 标准的语法 */
+}
+
+.footer-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  text-align: center;
+  height: 50px;
+  z-index: 99;
 }

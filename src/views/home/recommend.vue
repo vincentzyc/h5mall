@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend-wrap bgfff mg-t15">
+  <div class="recommend-wrap bgfff">
     <div class="flex lh30 border-beee pd5 pd-l10 pd-r10">
       <h5 class="flex-auto c333">为您推荐</h5>
       <div class="c999 fs12">
