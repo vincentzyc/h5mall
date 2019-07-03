@@ -97,7 +97,7 @@
 
 <script>
 import vComment from "./comment.vue";
-import vRecommend from "./recommend.vue";
+import vRecommend from "@/components/recommend.vue";
 import vFooter from "./footer.vue";
 
 export default {

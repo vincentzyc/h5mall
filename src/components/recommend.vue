@@ -9,7 +9,7 @@
     >
       <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img">
       <div class="mg-t5">
-        <h4 class="txtover lh20">{{item.introduce}}</h4>
+        <h4 class="textover lh20">{{item.introduce}}</h4>
         <div class="ctheme fs16 lh20 mg-t5">￥33</div>
       </div>
     </div>

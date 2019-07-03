@@ -181,19 +181,19 @@ strong,
 
 /*超出部分省略号*/
 
-.txtover {
+.textover {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
-.txtover-2 {
+.textover2 {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 }
-.txtover-3 {
+.textover3 {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
