@@ -56,7 +56,7 @@
         <div class="flex-auto">
           <div class="text-right pd-r10 c666" v-show="!showDelete">总计：￥99.99</div>
         </div>
-        <div class="col-3 pay bgtheme cfff">{{showDelete?'删除':'结算'}}</div>
+        <div class="col-3 pay cfff" :class="showDelete?'bgorange':'bgtheme'">{{showDelete?'删除':'结算'}}</div>
       </div>
     </footer>
   </base-page>
