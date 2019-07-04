@@ -7,7 +7,7 @@
       class="item col-6"
       @click="$router.push('/products/detail?id='+item.id)"
     >
-      <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img">
+      <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img" />
       <div class="mg-t5">
         <h4 class="textover lh20">{{item.introduce}}</h4>
         <div class="ctheme fs16 lh20 mg-t5">￥33</div>
@@ -41,6 +41,7 @@ export default {
 <style lang="stylus" scoped>
 .recommend-list {
   padding-bottom: 0;
+  overflow: hidden;
 
   .item {
     padding: 10px;
