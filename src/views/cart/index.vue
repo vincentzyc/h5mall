@@ -124,6 +124,32 @@ export default {
           price: 899,
           id: 3
         }],
+      }, {
+        storeId: 1,
+        storeName: '京东自营',
+        allCheck: false,
+        products: [{
+          check: false,
+          number: 1,
+          title: '杜兰特成为完全自由球员加盟篮网1',
+          img: 'store3.png',
+          price: 123,
+          id: 33
+        }, {
+          check: false,
+          number: 1,
+          title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼2',
+          img: 'store1.png',
+          price: 65,
+          id: 31
+        }, {
+          check: false,
+          number: 1,
+          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯3',
+          img: 'store2.png',
+          price: 158,
+          id: 32
+        }],
       }],
       recommendList: [{
         title: '常规赛MVP',
@@ -172,6 +198,7 @@ export default {
       })
     },
     delect() {
+      if (this.allSelect) this.stores = []
       // this.stores.forEach((s, si,sarr) => {
       //   console.log(si,sarr);
       //   if (s.allCheck) {
