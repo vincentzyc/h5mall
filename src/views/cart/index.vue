@@ -125,8 +125,8 @@ export default {
           id: 3
         }],
       }, {
-        storeId: 1,
-        storeName: '京东自营',
+        storeId: 3,
+        storeName: '天猫超市',
         allCheck: false,
         products: [{
           check: false,
@@ -198,17 +198,17 @@ export default {
       })
     },
     delect() {
-      if (this.allSelect) this.stores = []
-      // this.stores.forEach((s, si,sarr) => {
-      //   console.log(si,sarr);
-      //   if (s.allCheck) {
-      //     sarr.splice(si, 1)
-      //   } else {
-      //     s.products.forEach((v, vi,varr) => {
-      //       if (v.check) varr.products.splice(vi, 1)
-      //     })
-      //   }
-      // })
+      if (this.allSelect) return this.stores = [];
+      let newArr = this.stores.filter((s, si, sarr) => {
+        if (!s.allCheck) {
+          let newPro = s.products.filter((v, vi, varr) => {
+            return v.check === false
+          })
+          sarr[si].products = newPro;
+          return sarr
+        }
+      })
+      this.stores = newArr
     },
     pay() { }
   }
