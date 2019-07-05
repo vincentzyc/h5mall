@@ -198,17 +198,24 @@ export default {
       })
     },
     delect() {
-      if (this.allSelect) return this.stores = [];
-      let newArr = this.stores.filter((s, si, sarr) => {
-        if (!s.allCheck) {
-          let newPro = s.products.filter((v, vi, varr) => {
-            return v.check === false
+      this.$createDialog({
+        type: 'confirm',
+        content: '是否确定删除选中商品',
+        onConfirm: () => {
+          if (this.allSelect) return this.stores = [];
+          let newArr = this.stores.filter((s, si, sarr) => {
+            if (!s.allCheck) {
+              let newPro = s.products.filter((v, vi, varr) => {
+                return v.check === false
+              })
+              sarr[si].products = newPro;
+              return sarr
+            }
           })
-          sarr[si].products = newPro;
-          return sarr
-        }
-      })
-      this.stores = newArr
+          this.stores = newArr
+        },
+        onCancel: () => { }
+      }).show()
     },
     pay() { }
   }

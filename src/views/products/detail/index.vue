@@ -88,7 +88,7 @@
           </cube-tab-panel>
         </cube-tab-panels>
       </div>
-      <h3>{{$route.query.id}}</h3>
+      <!-- <h3>{{$route.query.id}}</h3> -->
     </div>
     <vFooter></vFooter>
   </base-page>
