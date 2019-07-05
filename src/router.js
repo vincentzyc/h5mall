@@ -40,6 +40,11 @@ export default new VueRouter({
       component: () => import("./views/products/detail")
     },
     {
+      path: "/store/detail",
+      name: "storeDetail",
+      component: () => import("./views/store/detail")
+    },
+    {
       path: "/page/button",
       name: "button",
       component: () => import("./views/button")

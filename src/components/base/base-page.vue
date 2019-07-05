@@ -1,7 +1,7 @@
 <template>
   <div class="base-page">
     <main class="wrapper">
-      <slot/>
+      <slot />
     </main>
   </div>
 </template>
@@ -26,6 +26,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
+    padding-top: 44px;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }

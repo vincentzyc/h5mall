@@ -18,8 +18,10 @@
               <div class="flex align-middle pd10 c666 bgfff">
                 <cube-checkbox v-model="store.allCheck" class="store-check" @input="storeCheck(index)"></cube-checkbox>
                 <span class="store"></span>
-                <span class="mg-l10 mg-r10">{{store.storeName}}</span>
-                <i class="fs16 cubeic-arrow"></i>
+                <div class="flex align-middle mg-l10" @click="$router.push('/store/detail?id='+store.storeId)">
+                  <span class="mg-r10">{{store.storeName}}</span>
+                  <i class="fs16 cubeic-arrow"></i>
+                </div>
               </div>
               <!-- 店铺 商品 -->
               <div class="product-item" v-for="item in store.products" :key="item.id">
@@ -225,10 +227,6 @@ export default {
 .content-wrap {
   width: 100%;
   height: 100%;
-}
-
-.empty-wrap {
-  margin-top: 44px;
 }
 
 .empty-cart {
