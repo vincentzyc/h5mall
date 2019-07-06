@@ -9,6 +9,20 @@
         <div class="col-2"></div>
       </div>
     </header>
+    <div class="bgfff mg-t15 pd10 flex">
+      <img src="@/assets/img/store3.png" alt="商家logo" class="square88 flex-none" />
+      <div class="flex flex-auto pd-l10">
+        <div class="flex-auto">
+          <div class="flex align-middle ">
+            <h3 class="lh30 fs18 mg-r10">周氏云商城</h3>
+            <img src="@/assets/img/identity.png" alt="商家logo" class="identity"/>
+          </div>
+          <p class="lh24">商家介绍商家介绍商家介绍</p>
+          <p class="lh26">用户评分</p>
+        </div>
+        <img src="@/assets/img/logo.png" alt="二维码" class="qrcode" />
+      </div>
+    </div>
     <div class="bgfff mg-t15">
       <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee">
         <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30 width100"></cube-tab>
@@ -70,6 +84,17 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.qrcode {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.identity {
+  width: 20px;
+  height: 15px;
+}
+
 .store-info {
   li {
     padding: 15px 10px;
