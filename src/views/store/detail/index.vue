@@ -13,12 +13,16 @@
       <img src="@/assets/img/store3.png" alt="商家logo" class="square88 flex-none" />
       <div class="flex flex-auto pd-l10">
         <div class="flex-auto">
-          <div class="flex align-middle ">
+          <div class="flex align-middle">
             <h3 class="lh30 fs18 mg-r10">周氏云商城</h3>
-            <img src="@/assets/img/identity.png" alt="商家logo" class="identity"/>
+            <img src="@/assets/img/identity.png" alt="商家logo" class="identity" />
           </div>
           <p class="lh24">商家介绍商家介绍商家介绍</p>
-          <p class="lh26">用户评分</p>
+          <div class="flex align-middle store cyellow fs10">
+            <p class="lh26 mg-r5">用户评分</p>
+            <cube-rate v-model="score" disabled></cube-rate>
+            <span>{{score}}分</span>
+          </div>
         </div>
         <img src="@/assets/img/logo.png" alt="二维码" class="qrcode" />
       </div>
@@ -61,6 +65,7 @@ export default {
   },
   data() {
     return {
+      score: 4,
       selectedLabel: '商品信息',
       tabs: ['商品信息', '商家信息'],
       items: [{
@@ -99,6 +104,13 @@ export default {
   li {
     padding: 15px 10px;
     border-bottom: 1px solid #eee;
+  }
+}
+
+.store {
+  & /deep/ .cube-rate-item {
+    width: 10px;
+    margin-right: 5px;
   }
 }
 </style>
