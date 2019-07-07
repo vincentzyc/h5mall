@@ -18,10 +18,10 @@
             <img src="@/assets/img/identity.png" alt="商家logo" class="identity" />
           </div>
           <p class="lh24">商家介绍商家介绍商家介绍</p>
-          <div class="flex align-middle store cyellow fs10">
-            <p class="lh26 mg-r5">用户评分</p>
+          <div class="flex align-middle store fs10">
+            <p class="lh26 mg-r5 c666">用户评分</p>
             <cube-rate v-model="score" disabled></cube-rate>
-            <span>{{score}}分</span>
+            <span class="cyellow">{{score}}分</span>
           </div>
         </div>
         <img src="@/assets/img/logo.png" alt="二维码" class="qrcode" />
