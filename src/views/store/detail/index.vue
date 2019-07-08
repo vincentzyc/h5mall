@@ -1,15 +1,6 @@
 <template>
   <base-page>
-    <header class="header-bg">
-      <div class="flex fs14 cfff">
-        <div class="col-2">
-          <i class="cubeic-back" @click="$router.back()"></i>
-        </div>
-        <div class="flex-auto">店铺详情</div>
-        <div class="col-2"></div>
-      </div>
-    </header>
-
+    <common-header title="店铺详情" />
     <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
       <div class="pd-b50">
         <div class="bgfff mg-t15 pd10 flex">
@@ -45,7 +36,7 @@
                   <li>所在地：广东省广州市</li>
                   <li>注册时间：2019.07.07</li>
                   <li class="flex">
-                    <span class="flex-auto">备注</span>
+                    <span class="flex-auto">店铺介绍</span>
                     <i class="cubeic-arrow c666"></i>
                   </li>
                   <li class="flex">

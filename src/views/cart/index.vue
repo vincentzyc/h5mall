@@ -1,14 +1,8 @@
 <template>
   <base-page>
-    <header class="header-bg">
-      <div class="flex fs14 cfff">
-        <div class="col-2"></div>
-        <div class="flex-auto">购物车</div>
-        <div class="col-2">
-          <span v-if="stores.length>0" @click="showDelete=!showDelete">{{showDelete?'完成':'编辑'}}</span>
-        </div>
-      </div>
-    </header>
+    <common-header title="购物车">
+      <span slot="right" v-if="stores.length>0" @click="showDelete=!showDelete">{{showDelete?'完成':'编辑'}}</span>
+    </common-header>
     <div class="content-wrap" v-if="stores.length>0">
       <div class="content">
         <cube-scroll ref="scroll">
