@@ -66,6 +66,7 @@
       </div>
     </footer>
 
+    <!-- 店铺介绍 -->
     <page-popup ref="pagePopup" class="pd-t44">
       <div class="pd10">
         <common-header title="店铺介绍" hideBack>
