@@ -35,7 +35,7 @@
                   <li>主营：阿迪，Nike</li>
                   <li>所在地：广东省广州市</li>
                   <li>注册时间：2019.07.07</li>
-                  <li class="flex">
+                  <li class="flex" @click="$refs.pagePopup.open()">
                     <span class="flex-auto">店铺介绍</span>
                     <i class="cubeic-arrow c666"></i>
                   </li>
@@ -65,6 +65,21 @@
         <h5 class="fs12 c999">打电话</h5>
       </div>
     </footer>
+
+    <page-popup ref="pagePopup" class="pd-t44">
+      <div class="pd10">
+        <common-header title="店铺介绍" hideBack>
+          <i slot="left" class="cubeic-back" @click="$refs.pagePopup.close()"></i>
+        </common-header>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+      </div>
+    </page-popup>
   </base-page>
 </template>
 
@@ -137,6 +152,8 @@ export default {
 }
 
 .footer-wrap {
+  border-top: 1px solid #eee;
+
   &>div {
     &:not(:last-child) {
       border-right: 1px solid #eee;
