@@ -3,7 +3,7 @@
     <div class="container fs14">
       <i class="cubeic-back detail-back" @click="$router.back()"></i>
       <div class="drop-down-menu">
-        <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%">
+        <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
         <transition name="fade">
           <div class="menu" v-show="showDropDownMenu">
             <p class="border-beee">分享</p>
@@ -16,7 +16,7 @@
         <cube-slide ref="slide" :data="items">
           <cube-slide-item v-for="(item, index) in items" :key="index">
             <a :href="item.url">
-              <img :src="item.image">
+              <img :src="item.image" />
             </a>
           </cube-slide-item>
         </cube-slide>
@@ -43,7 +43,7 @@
 
       <div class="flex pd-l10 pd-r10 pd-t20 pd-b20 bgfff mg-t15 align-middle">
         <div class="flex flex-auto align-middle">
-          <img src="@/assets/img/discount.png" alt="优惠券" class="discount">
+          <img src="@/assets/img/discount.png" alt="优惠券" class="discount" />
           <span class="mg-l5 fs16">优惠券领取</span>
         </div>
         <i class="cubeic-arrow"></i>
@@ -73,9 +73,9 @@
         </cube-tab-bar>
         <cube-tab-panels class="mg-b10">
           <cube-tab-panel class="img-panel" v-show="selectedLabel==='图片'">
-            <img :src="BASE_URL + 'static/img/banner1.png'" alt>
-            <img :src="BASE_URL + 'static/img/banner2.png'" alt>
-            <img :src="BASE_URL + 'static/img/banner3.png'" alt>
+            <img :src="BASE_URL + 'static/img/banner1.png'" alt />
+            <img :src="BASE_URL + 'static/img/banner2.png'" alt />
+            <img :src="BASE_URL + 'static/img/banner3.png'" alt />
           </cube-tab-panel>
           <cube-tab-panel class="text-panel" v-show="selectedLabel==='文字'">
             <p v-html="$util.textBr(detailText)"></p>
@@ -252,6 +252,27 @@ th, td {
     .cube-rate-item {
       width: 10px;
       margin-right: 5px;
+    }
+
+    .reply {
+      position: relative;
+      background: #f7f7f7;
+      padding: 10px;
+      margin-top: 15px;
+
+      .title {
+        color: #405067;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        border-bottom: 18px solid #f7f7f7;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+      }
     }
   }
 }
