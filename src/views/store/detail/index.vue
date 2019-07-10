@@ -1,7 +1,7 @@
 <template>
   <base-page>
     <common-header title="店铺详情" />
-    <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
+    <cube-scroll ref="scroll">
       <div class="pd-b50">
         <div class="bgfff mg-t15 pd10 flex">
           <img src="@/assets/img/store3.png" alt="商家logo" class="square88 flex-none" />

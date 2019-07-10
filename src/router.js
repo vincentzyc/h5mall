@@ -45,6 +45,11 @@ export default new VueRouter({
       component: () => import("./views/store/detail")
     },
     {
+      path: "/home/search",
+      name: "homeSearch",
+      component: () => import("./views/search")
+    },
+    {
       path: "/page/button",
       name: "button",
       component: () => import("./views/button")

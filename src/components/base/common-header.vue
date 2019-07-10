@@ -1,12 +1,12 @@
 <template>
   <header class="header-bg">
     <div class="flex fs14 cfff">
-      <div class="col-2">
+      <div class="pd-r10 pd-l10 minwidth50 textover">
         <i class="cubeic-back" @click="$router.back()" v-show="!hideBack"></i>
         <slot name="left"></slot>
       </div>
-      <div class="flex-auto">{{title}}</div>
-      <div class="col-2">
+      <div class="flex flex-auto flex-center textover">{{title}}</div>
+      <div class="pd-r10 pd-l10 minwidth50 textover">
         <slot name="right"></slot>
       </div>
     </div>

@@ -9,9 +9,15 @@
   border-radius: 10px;
 }
 
+.cube-toast .cube-popup-content {
+  color: #fff;
+  background-color: rgba(37, 38, 45, 0.7);
+  border-radius:8px;
+}
+
 // /reset cube-ui
 
-// common
+// base common
 #app, body, html {
   height: 100%;
   width: 100%;
@@ -51,6 +57,14 @@
 
 .widthfull {
   width: 100%;
+}
+
+.heightfull {
+  height: 100%;
+}
+
+.minwidth50 {
+  min-width: 50px;
 }
 
 .width100 {
@@ -115,6 +129,13 @@
   padding-bottom: 50px;
 }
 
+.border-radius5 {
+  border-radius: 5px;
+}
+
+// / base common
+
+// page common
 .backtop {
   position: fixed;
   right: 15px;
@@ -133,6 +154,16 @@
   background-color: rgba(0, 0, 0, 0.2);
   padding: 10px;
   color: #fff;
+}
+
+.search-tag {
+  float: left;
+  color: #999;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .border-tag {
@@ -206,6 +237,45 @@
   background: -o-linear-gradient(right, $color-orange, $color-theme); /* Opera 11.1 - 12.0 */
   background: -moz-linear-gradient(right, $color-orange, $color-theme); /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, $color-orange, $color-theme); /* 标准的语法 */
+}
+
+.search-input {
+  line-height: 30px;
+  border-radius: 22px;
+  margin: 6px 0;
+  padding: 0 10px;
+  background: rgba(255, 255, 255, 0.3);
+
+  input {
+    width: 100%;
+    color: #fff;
+    border: none;
+    margin-left: 5px;
+    outline: none;
+    background: transparent;
+
+    &:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #fff;
+      opacity: 1;
+    }
+
+    &::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: #fff;
+      opacity: 1;
+    }
+
+    &:-ms-input-placeholder {
+      color: #fff;
+      opacity: 1;
+    }
+
+    &::-webkit-input-placeholder {
+      color: #fff;
+      opacity: 1;
+    }
+  }
 }
 
 .footer-wrap {
