@@ -15,7 +15,8 @@
       </div>
     </header>
     <div class="heightfull pd-t10">
-      <div class="heightfull bgfff pd10">
+      <ProductList :items="productList" v-if="productList.length>0" />
+      <div class="heightfull bgfff pd10" v-else>
         <div class="flex">
           <p class="flex-auto">历史搜索</p>
           <i class="cubeic-delete c999 fs16" @click="deleteHistory()" v-if="searchList.length>0"></i>
@@ -32,11 +33,16 @@
 </template>
 
 <script>
+import ProductList from '@/components/product-list-s.vue';
 export default {
+  components: {
+    ProductList
+  },
   data() {
     return {
       keyWord: '',
-      searchList: []
+      searchList: [],
+      productList: []
     }
   },
   methods: {
@@ -50,6 +56,32 @@ export default {
     search(keyWord) {
       console.log(keyWord);
       this.saveHistory(keyWord);
+      if (keyWord) {
+        this.productList = [{
+          title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
+          img: 'store1.png',
+          id: 1
+        }, {
+          title: '杜兰特成为完全自由球员加盟',
+          img: 'store2.png',
+          id: 2
+        }, {
+          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
+          img: 'store3.png',
+          id: 3
+        }, {
+          title: '杜兰特成为完全自由球员加盟',
+          img: 'store2.png',
+          id: 4
+        }, {
+          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
+          img: 'store3.png',
+          id: 5
+        }]
+      } else {
+        this.productList = []
+      }
+
     },
     clickHistory(keyWord) {
       this.keyWord = keyWord;
