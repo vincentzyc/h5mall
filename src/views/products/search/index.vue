@@ -26,6 +26,45 @@
         <ProductList :items="productList" v-if="productList.length>0" />
       </cube-scroll>
     </div>
+
+    <transition name="popup-slide-left">
+      <div v-show="pageVisible" class="max640 page-popup top88">
+        <div v-show="selectedTabs==='全部'">
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+          <div class="lh30">111111111</div>
+        </div>
+        <div v-show="selectedTabs==='全国'">
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+          <div class="lh30">2222222222</div>
+        </div>
+      </div>
+    </transition>
   </base-page>
 </template>
 
@@ -37,6 +76,7 @@ export default {
   },
   data() {
     return {
+      pageVisible: false,
       selectedTabs: '全部',
       tabs: [{
         label: '全部',
@@ -112,8 +152,7 @@ export default {
     search(keyWord) {
     },
     clickHandler(label) {
-      // if you clicked home tab, then print 'Home'
-      console.log(label)
+      this.selectedTabs === label ? this.pageVisible = !this.pageVisible : "";
     }
   }
 }
@@ -127,6 +166,10 @@ export default {
   height: 100%;
   overflow: hidden;
   padding-top: 44px;
+}
+
+.top88 {
+  top: 88px;
 }
 
 .icon {
@@ -144,7 +187,7 @@ export default {
   right: 0;
   color: #333;
   text-align: center;
-  z-index 99
+  z-index: 99;
   height: 44px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
