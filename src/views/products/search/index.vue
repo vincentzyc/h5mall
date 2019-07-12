@@ -30,38 +30,10 @@
     <transition name="popup-slide-left">
       <div v-show="pageVisible" class="max640 page-popup top88">
         <div v-show="selectedTabs==='全部'">
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
-          <div class="lh30">111111111</div>
+          <Categories />
         </div>
         <div v-show="selectedTabs==='全国'">
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
-          <div class="lh30">2222222222</div>
+          <Citys />
         </div>
       </div>
     </transition>
@@ -70,9 +42,11 @@
 
 <script>
 import ProductList from '@/components/product-list.vue';
+import Categories from './categories.vue';
+import Citys from './citys.vue';
 export default {
   components: {
-    ProductList
+    ProductList, Categories, Citys
   },
   data() {
     return {
@@ -152,7 +126,30 @@ export default {
     search(keyWord) {
     },
     clickHandler(label) {
-      this.selectedTabs === label ? this.pageVisible = !this.pageVisible : "";
+      switch (label) {
+        case '全部':
+          if (this.selectedTabs !== '全部') {
+            this.pageVisible = true
+          } else {
+            this.pageVisible = !this.pageVisible;
+          }
+          break;
+        case '全国':
+          if (this.selectedTabs !== '全国') {
+            this.pageVisible = true
+          } else {
+            this.pageVisible = !this.pageVisible;
+          }
+          break;
+        case '价格':
+          this.pageVisible = false;
+          break;
+        case '成交笔数':
+          this.pageVisible = false;
+          break;
+        default:
+          break;
+      }
     }
   }
 }
