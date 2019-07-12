@@ -50,6 +50,7 @@ export default {
   },
   data() {
     return {
+      keyWord:'',
       pageVisible: false,
       selectedTabs: '全部',
       tabs: [{

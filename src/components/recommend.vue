@@ -1,12 +1,6 @@
 <template>
   <div class="recommend-list">
-    <div
-      v-for="(item, index) in list"
-      :label="item.label"
-      :key="item.label+index"
-      class="item col-6"
-      @click="$router.push('/products/detail?id='+item.id)"
-    >
+    <div v-for="item in list" :key="item.id" class="item col-6" @click="$router.push('/products/detail?id='+item.id)">
       <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img" />
       <div class="mg-t5">
         <h4 class="textover lh20">{{item.introduce}}</h4>
@@ -27,12 +21,6 @@ export default {
   data() {
     return {
 
-    }
-  },
-  methods: {
-    clickHandler(label) {
-      // if you clicked home tab, then print 'Home'
-      console.log(label)
     }
   }
 }

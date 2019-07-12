@@ -1,9 +1,8 @@
 <template>
   <div class="product-list">
     <div
-      v-for="(item, index) in items"
-      :label="item.label"
-      :key="item.label+index"
+      v-for="item in items"
+      :key="item.id"
       class="flex item"
       @click="$router.push('/products/detail?id='+item.id)"
     >
@@ -40,12 +39,6 @@ export default {
   data() {
     return {
 
-    }
-  },
-  methods: {
-    clickHandler(label) {
-      // if you clicked home tab, then print 'Home'
-      console.log(label)
     }
   }
 }

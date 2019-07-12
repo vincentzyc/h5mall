@@ -72,18 +72,18 @@
           <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30"></cube-tab>
         </cube-tab-bar>
         <cube-tab-panels class="mg-b10">
-          <cube-tab-panel class="img-panel" v-show="selectedLabel==='图片'">
+          <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
             <img :src="BASE_URL + 'static/img/banner1.png'" alt />
             <img :src="BASE_URL + 'static/img/banner2.png'" alt />
             <img :src="BASE_URL + 'static/img/banner3.png'" alt />
           </cube-tab-panel>
-          <cube-tab-panel class="text-panel" v-show="selectedLabel==='文字'">
+          <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
             <p v-html="$util.textBr(detailText)"></p>
           </cube-tab-panel>
-          <cube-tab-panel class="comment-panel" v-show="selectedLabel==='评价'">
+          <cube-tab-panel class="comment-panel" label="评价" v-show="selectedLabel==='评价'">
             <vComment :list="commentList"></vComment>
           </cube-tab-panel>
-          <cube-tab-panel class="recommend-panel" v-show="selectedLabel==='推荐'">
+          <cube-tab-panel class="recommend-panel" label="推荐" v-show="selectedLabel==='推荐'">
             <vRecommend :list="recommendList"></vRecommend>
           </cube-tab-panel>
         </cube-tab-panels>

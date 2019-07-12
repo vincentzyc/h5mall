@@ -1,12 +1,6 @@
 <template>
   <div class="product-list">
-    <div
-      v-for="(item, index) in items"
-      :label="item.label"
-      :key="item.label+index"
-      class="flex item bgfff pd10 border-beee"
-      @click="$router.push('/products/detail?id='+item.id)"
-    >
+    <div v-for="item in items" :key="item.id" class="flex item bgfff pd10 border-beee" @click="$router.push('/products/detail?id='+item.id)">
       <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img flex-none square88" />
       <div class="mg-l10 flex-auto flex flex-column">
         <h4 class="bold textover2 lh22">{{item.title}}</h4>

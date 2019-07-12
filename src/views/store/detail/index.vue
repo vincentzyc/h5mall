@@ -26,10 +26,10 @@
             <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30 width100"></cube-tab>
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
-            <cube-tab-panel class="img-panel" v-show="selectedLabel==='商品信息'">
+            <cube-tab-panel class="img-panel" label="商品信息" v-show="selectedLabel==='商品信息'">
               <ProductList :items="items" />
             </cube-tab-panel>
-            <cube-tab-panel class="text-panel" v-show="selectedLabel==='商家信息'">
+            <cube-tab-panel class="text-panel" label="商家信息" v-show="selectedLabel==='商家信息'">
               <div class="store-info">
                 <ul>
                   <li>主营：阿迪，Nike</li>
