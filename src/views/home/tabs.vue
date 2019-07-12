@@ -1,7 +1,13 @@
 <template>
   <div class="row flex flex-wrap tabs-wrap">
-    <div v-for="(item, index) in tabs" :label="item.label" :key="item.label+index" class="tabs-item flex-none">
-      <img :src="require(`@/assets/img/${item.icon}`)" alt>
+    <div
+      v-for="(item, index) in tabs"
+      :label="item.label"
+      :key="item.label+index"
+      class="tabs-item flex-none"
+      @click="$router.push('/products/search')"
+    >
+      <img :src="require(`@/assets/img/${item.icon}`)" alt />
       <h5>{{item.label}}</h5>
     </div>
   </div>

@@ -81,7 +81,6 @@ export default {
       } else {
         this.productList = []
       }
-
     },
     clickHistory(keyWord) {
       this.keyWord = keyWord;
