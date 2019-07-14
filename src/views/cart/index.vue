@@ -58,7 +58,11 @@
               <span class="fs16">￥{{totalPrice}}</span>
             </div>
           </div>
-          <div class="col-3 pay cfff" :class="showDelete?'bgorange':'bgtheme'" @click="showDelete?delect():pay()">{{showDelete?'删除':'结算'}}</div>
+          <div
+            class="col-3 pay cfff"
+            :class="showDelete?'bgorange':'bgtheme'"
+            @click="showDelete?delect():pay()"
+          >{{showDelete?'删除':'结算'}}</div>
         </div>
       </footer>
     </div>
@@ -77,7 +81,6 @@
 
 <script>
 import vRecommend from "@/components/recommend.vue";
-import { debuglog } from 'util';
 export default {
   name: "cart",
   components: {
@@ -201,9 +204,7 @@ export default {
           if (this.allSelect) return this.stores = [];
           let newArr = this.stores.filter((s, si, sarr) => {
             if (!s.allCheck) {
-              let newPro = s.products.filter((v, vi, varr) => {
-                return v.check === false
-              })
+              let newPro = s.products.filter(v => v.check === false)
               sarr[si].products = newPro;
               return sarr
             }
