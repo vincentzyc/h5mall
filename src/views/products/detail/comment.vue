@@ -7,7 +7,7 @@
           <div class="flex align-middle">
             <div class="flex-auto">
               <div class="username lh30 fs14">云云云</div>
-              <div class="score corange fs10">
+              <div class="score cyellow fs10">
                 <cube-rate v-model="item.score" disabled></cube-rate>
                 {{item.score}}分
               </div>
@@ -22,7 +22,10 @@
           </div>
         </div>
       </div>
-      <div class="borderddd pd10 lh22 mg-t10">回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容</div>
+      <div class="reply">
+        <p class="mg-b5 title">商家回复</p>
+        <p class="lh20 fs12 c666">商家回复商家回复商家回复商家回复商家回复商家回复</p>
+      </div>
     </div>
   </div>
 </template>

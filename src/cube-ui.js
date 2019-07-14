@@ -28,7 +28,7 @@ import {
   // Form,
   // // popup
   // Popup,
-  // Toast,
+  Toast,
   Picker,
   // CascadePicker,
   // DatePicker,
@@ -67,7 +67,7 @@ Vue.use(Rate)
 // Vue.use(Upload)
 // Vue.use(Form)
 // Vue.use(Popup)
-// Vue.use(Toast)
+Vue.use(Toast)
 Vue.use(Picker);
 // Vue.use(CascadePicker)
 // Vue.use(DatePicker)
