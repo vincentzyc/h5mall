@@ -125,6 +125,7 @@ export default {
   },
   methods: {
     search(keyWord) {
+      console.log(keyWord)
     },
     clickHandler(label) {
       switch (label) {
