@@ -29,12 +29,8 @@
 
     <transition name="popup-slide-left">
       <div v-show="pageVisible" class="max640 page-popup top88">
-        <div v-show="selectedTabs==='全部'">
-          <Categories />
-        </div>
-        <div v-show="selectedTabs==='全国'">
-          <Citys />
-        </div>
+        <Categories v-show="selectedTabs==='全部'" />
+        <Citys v-show="selectedTabs==='全国'" />
       </div>
     </transition>
   </base-page>
@@ -50,7 +46,7 @@ export default {
   },
   data() {
     return {
-      keyWord:'',
+      keyWord: '',
       pageVisible: false,
       selectedTabs: '全部',
       tabs: [{

@@ -1,11 +1,15 @@
 <template>
-  <div class="flex">
-    <ul class="flex-none col-4">
-      <li v-for="item in data" :key="item.label" @click="selectNav=item" class="lh30 border-bddd">{{item.label}}</li>
-    </ul>
-    <ul class="flex-auto">
-      <li v-for="item in selectNav.items" :key="item" class="lh30 border-bddd">{{item}}</li>
-    </ul>
+  <div class="flex side-nav">
+    <div class="flex-none col-4 nav">
+      <ul>
+        <li v-for="item in data" :key="item.label" @click="selectNav=item" class="lh30 border-bddd textover" style="line-height:200px">{{item.label}}</li>
+      </ul>
+    </div>
+    <div class="flex-auto nav-panel">
+      <ul v-if="selectNav">
+        <li v-for="item in selectNav.items" :key="item" class="lh30 border-bddd textover">{{item}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -24,3 +28,17 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.side-nav {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  .nav, .nav-panel {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+</style>
