@@ -28,9 +28,9 @@
     </div>
 
     <transition name="popup-slide-left">
-      <div v-show="pageVisible" class="max640 page-popup top88">
-        <Categories v-show="selectedTabs==='全部'" />
-        <Citys v-show="selectedTabs==='全国'" />
+      <div v-show="pageVisible" class="max640 page-popup top88 search-popup">
+        <Categories v-show="selectedTabs==='全部'" class="categories" />
+        <Citys v-show="selectedTabs==='全国'" class="citys" />
       </div>
     </transition>
   </base-page>
@@ -208,6 +208,23 @@ export default {
 .cube-tab_active .icon-sort {
   &:after {
     background: url('~@/assets/img/seach-sort.png') no-repeat 0 0 / 100% 100%;
+  }
+}
+
+.search-popup /deep/ {
+  .categories {
+  }
+
+  .citys {
+    .panel-item {
+      line-height: 44px;
+      border-bottom: 1px solid #eee;
+      color: #666;
+    }
+
+    .panel-item.active {
+      color: $color-theme;
+    }
   }
 }
 </style>
