@@ -213,6 +213,17 @@ export default {
 
 .search-popup /deep/ {
   .categories {
+    .panel-item {
+      line-height: 44px;
+      border: 1px solid #666;
+      color: #666;
+      width: 33%;
+      float: left;
+    }
+
+    .panel-item.active {
+      color: $color-theme;
+    }
   }
 
   .citys {
