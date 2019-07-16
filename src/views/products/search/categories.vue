@@ -3,14 +3,17 @@
     <SideNav :data="categories" panelSlot>
       <template v-slot="{selectNav}">
         <ul class="pd10 clearfix">
-          <li class="panel-item" @click="selectItem=selectNav.label" :class="{active:selectItem===selectNav.label}" v-show="selectNav.label!=='全国'">全部</li>
           <li
-            v-for="item in selectNav.items"
-            :key="item"
-            class="textover panel-item"
-            @click="selectItem=item"
-            :class="{active:selectItem===item}"
-          >{{item}}</li>
+            class="panel-item fullwidth"
+            @click="selectItem=selectNav.label"
+            :class="{active:selectItem===selectNav.label}"
+            v-show="selectNav.label!=='全国'"
+          >
+            <span>全部</span>
+          </li>
+          <li v-for="item in selectNav.items" :key="item" class="textover panel-item" @click="selectItem=item" :class="{active:selectItem===item}">
+            <span>{{item}}</span>
+          </li>
         </ul>
       </template>
     </SideNav>

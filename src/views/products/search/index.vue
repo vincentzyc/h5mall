@@ -214,15 +214,34 @@ export default {
 .search-popup /deep/ {
   .categories {
     .panel-item {
-      line-height: 44px;
-      border: 1px solid #666;
-      color: #666;
       width: 33%;
       float: left;
+      margin-bottom: 10px;
+
+      span {
+        display: inline-block;
+        width: 80%;
+        font-size: 12px;
+        line-height: 36px;
+        border: 1px solid #999;
+        color: #666;
+        border-radius: 5px;
+      }
+    }
+
+    .panel-item.fullwidth {
+      width: 100%;
+
+      span {
+        width: 90%;
+      }
     }
 
     .panel-item.active {
-      color: $color-theme;
+      span {
+        border-color: $color-theme;
+        color: $color-theme;
+      }
     }
   }
 
