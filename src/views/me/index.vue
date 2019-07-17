@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <v-header></v-header>
+    <!-- <v-header></v-header> -->
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">
         <div class="text-center mg20">我的</div>
@@ -8,7 +8,7 @@
         <div class="text-center mg20">到底啦</div>
       </div>
     </cube-scroll>
-    <v-footer></v-footer>
+    <!-- <v-footer></v-footer> -->
   </base-page>
 </template>
 
