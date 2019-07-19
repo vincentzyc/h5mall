@@ -4,7 +4,7 @@ module.exports = {
   productionSourceMap: false,
 
   devServer: {
-    port: 3020
+    port: 3020,
     // proxy: 'http://xxx.com'
   },
   chainWebpack: config => {

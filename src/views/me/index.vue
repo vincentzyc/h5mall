@@ -1,6 +1,7 @@
 <template>
   <base-page>
     <!-- <v-header></v-header> -->
+    <img src="@/assets/img/me-bg.jpg" alt="">
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">
         <div class="text-center mg20">我的</div>
