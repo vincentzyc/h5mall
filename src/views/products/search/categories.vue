@@ -1,64 +1,62 @@
 <template>
   <div class="heightfull">
-    <SideNav :data="categories" panelSlot>
-      <template v-slot="{selectNav}">
-        <ul class="pd10 clearfix">
+    <SideNav>
+      <template slot="navSlot">
+        <ul v-if="categories.length>0">
           <li
-            class="panel-item fullwidth"
-            @click="selectItem=selectNav.label"
-            :class="{active:selectItem===selectNav.label}"
-            v-show="selectNav.label!=='全国'"
-          >
-            <span>全部</span>
-          </li>
-          <li v-for="item in selectNav.items" :key="item" class="textover panel-item" @click="selectItem=item" :class="{active:selectItem===item}">
-            <span>{{item}}</span>
-          </li>
+            v-for="item in categories"
+            :key="item.name"
+            @click="handleNav(item)"
+            class="textover"
+            :class="{active:selectNav.name===item.name}"
+          >{{item.name}}</li>
+        </ul>
+      </template>
+      <template slot="panelSlot">
+        <ul class="pd10" v-if="selectNav">
+          <li
+            class="panel-item width96"
+            @click="selectItem=selectNav.name"
+            :class="{active:selectItem===selectNav.name}"
+            v-show="selectNav.name!=='全部'"
+          >全部</li>
+          <li
+            v-for="item in selectNav.classificationTwo"
+            :key="item.classifyName"
+            class="textover panel-item"
+            @click="selectItem=item.classifyName"
+            :class="{active:selectItem.classifyName===item.classifyName}"
+          >{{item.classifyName}}</li>
         </ul>
       </template>
     </SideNav>
   </div>
 </template>
 <script>
-import SideNav from '@/components/side-nav';
-const categories = [
-  {
-    label: "全部",
-    items: []
-  },
-  {
-    label: "北京市",
-    items: ['北京城区']
-  },
-  {
-    label: "广东省",
-    items: ['广州', '深圳', '珠海', '汕头', '韶关', '佛山', '江门', '湛江', '茂名', '肇庆', '惠州', '梅州', '汕尾', '河源', '阳江', '清远', '东莞', '中山', '潮州', '揭阳', '云浮']
-  },
-  {
-    label: "上海市",
-    items: ['上海城区']
-  },
-  {
-    label: "天津市",
-    items: ['天津城区']
-  },
-  {
-    label: "重庆市",
-    items: ['重庆城区']
-  }
-]
+import SideNav from './side-nav';
 export default {
   components: {
     SideNav
   },
   data() {
     return {
-      categories: categories,
+      categories: [],
+      selectNav: '',
       selectItem: ''
     }
   },
   methods: {
-
+    handleNav(item) {
+      this.selectNav = item;
+    }
+  },
+  async created() {
+    let res = await this.$api.Product.productClassify('');
+    this.categories = res.classify;
+    this.categories.unshift({
+      classificationTwo: [],
+      name: "全部"
+    })
   }
 }
 </script>

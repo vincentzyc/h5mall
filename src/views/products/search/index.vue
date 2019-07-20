@@ -17,7 +17,7 @@
     <cube-tab-bar v-model="selectedTabs" inline @click="clickHandler" class="search-wrap">
       <cube-tab v-for="item in tabs" :label="item.label" :key="item.label">
         <span>{{item.label}}</span>
-        <i :class="[item.icon,'icon',selectedTabs===item.label&&item.icon==='cubeic-select'?'rotate180':'']"></i>
+        <i :class="[item.icon,'icon',selectedTabs===item.label&&item.icon==='cubeic-select'?'':'rotate180']"></i>
       </cube-tab>
     </cube-tab-bar>
 
@@ -181,7 +181,6 @@ export default {
   left: 0;
   right: 0;
   color: #333;
-  text-align: center;
   z-index: 99;
   height: 44px;
   background-color: #fff;
@@ -197,7 +196,7 @@ export default {
   &:after {
     content: '';
     position: absolute;
-    top: -2px;
+    top: 0;
     left: 0;
     width: 36px;
     height: 20px;
@@ -213,20 +212,21 @@ export default {
 
 .search-popup /deep/ {
   .categories {
-    .panel-item {
-      width: 33%;
-      float: left;
-      margin-bottom: 10px;
+    .width96 {
+      width: 96%;
+    }
 
-      span {
-        display: inline-block;
-        width: 80%;
-        font-size: 12px;
-        line-height: 36px;
-        border: 1px solid #999;
-        color: #666;
-        border-radius: 5px;
-      }
+    .panel-item {
+      display: inline-block;
+      min-width: 30%;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      margin-right: 3%;
+      font-size: 12px;
+      border: 1px solid #999;
+      color: #666;
+      border-radius: 5px;
     }
 
     .panel-item.fullwidth {
@@ -247,6 +247,7 @@ export default {
 
   .citys {
     .panel-item {
+      text-align: center;
       line-height: 44px;
       border-bottom: 1px solid #eee;
       color: #666;

@@ -1,21 +1,10 @@
 <template>
   <div class="flex side-nav">
     <div class="flex-none nav" :class="navClass">
-      <ul>
-        <li
-          v-for="item in data"
-          :key="item.label"
-          @click="handleNav(item)"
-          class="textover"
-          :class="{active:selectNav.label===item.label}"
-        >{{item.label}}</li>
-      </ul>
+      <slot name="navSlot" />
     </div>
     <div class="flex-auto nav-panel">
-      <ul v-if="!panelSlot&&selectNav" class="pd10">
-        <li v-for="item in selectNav.items" :key="item" class="lh30 border-beee textover">{{item}}</li>
-      </ul>
-      <slot v-if="panelSlot&&selectNav" :selectNav="selectNav" />
+      <slot name="panelSlot" />
     </div>
   </div>
 </template>
@@ -23,32 +12,15 @@
 <script>
 export default {
   props: {
-    data: {
-      type: Array,
-      required: true
-    },
     navClass: {
       type: String,
       default: 'col-4'
-    },
-    panelSlot: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
     return {
       selectNav: ''
     }
-  },
-  methods: {
-    handleNav(item) {
-      this.selectNav = item;
-      this.$emit('selectNav', item)
-    }
-  },
-  created() {
-    this.selectNav = this.data[0]
   }
 }
 </script>
@@ -68,7 +40,7 @@ export default {
     text-align: center;
   }
 
-  .nav {
+  .nav /deep/ {
     background: #eee;
 
     li {
