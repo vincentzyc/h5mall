@@ -10,7 +10,7 @@ const createInterface = arr => {
   arr.forEach(v => {
     Interface[v.name] = param => {
       return new Promise(reslove => {
-        Api.axiosPost(v.url, param, v.backData).then(res => reslove(res))
+        Api.axiosPost(v.url, param, v.backType, v.encrypt).then(res => reslove(res))
       })
     }
   });
@@ -30,30 +30,37 @@ const Api = {
     if (this.env() === 'test') return "http://test.xxx.com/";
     return "http://xxx.com/";
   },
-  axiosPost(url, data, backData) {
-    let { key, iv, ...encryptData } = Crypto.encrypt(data);
+  axiosPost(url, data, backType = 'success', encrypt = true) {
+    if (encrypt) {
+      var { key, iv, ...encryptData } = Crypto.encrypt(data);
+      data = encryptData;
+    }
     return new Promise(resolve => {
-      vm.$axios.post(url, encryptData).then(res => {
+      vm.$axios.post(url, data).then(res => {
         if (res.status !== 200) {
           console.log('请求失败', res);
-          if (backData === 'getError') resolve({ error: true });
+          if (backType === 'getError') resolve({ error: true });
           return vm.$createDialog({ content: res.message || '网络繁忙' }).show();
         }
-        let decryptData = '';
-        try {
-          decryptData = JSON.parse(Crypto.decrypt(res.data, key, iv));
-        } catch (error) {
-          console.log('------------JSON.parse fail------------');
-          return vm.$createDialog({ content: '数据异常' }).show();
+        let backData = '';
+        if (encrypt) {
+          try {
+            backData = JSON.parse(Crypto.decrypt(res.data, key, iv));
+          } catch (error) {
+            console.log('------------JSON.parse fail------------');
+            return vm.$createDialog({ content: '数据异常' }).show();
+          }
+        } else {
+          backData = res.data;
         }
-        let { code, msg, ...result } = decryptData;
-        if (backData === 'allData') return resolve(decryptData);
+        let { code, msg, ...result } = backData;
+        if (backType === 'allData') return resolve(backData);
         if (code === '1') return resolve(result || '');
-        if (backData === 'getError') resolve({ error: true });
+        if (backType === 'getError') resolve({ error: true });
         vm.$createDialog({ content: msg || '服务器异常' }).show();
       }).catch(error => {
         console.log(error);
-        if (backData === 'getError') resolve({ error: true });
+        if (backType === 'getError') resolve({ error: true });
         vm.$createDialog({ content: '网络异常' }).show();
       });
     })
