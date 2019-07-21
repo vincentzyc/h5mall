@@ -38,18 +38,10 @@ export default {
     }
   },
   methods: {
-    cryptoTest() {
-      let data = { phone: '18812345678', codeType: '0' };
-      let aaa = this.$util.setSStorage('aaa',data,true);
-      let bbb = this.$util.getSStorage('aaa',true);
-      console.log(bbb);
-      // let { key, iv, ...strData } = Crypto.encrypt(data);
-      // this.$axios.post('/appUser/verificationCode', strData).then(res => {
-      //   let real_res = Crypto.decrypt(res.data, key, iv);
-      //   console.log(real_res);
-      // }).catch(error => {
-      //   console.log(error);
-      // });
+    async cryptoTest() {
+      let data = { level: 1 };
+      let aaa = await this.$api.Common.getRegionAll(data);
+      console.log(aaa);
     },
     async cryptoTest1() {
       let data = { pageNum: 1 };

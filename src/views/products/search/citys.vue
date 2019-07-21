@@ -58,7 +58,12 @@ export default {
   async created() {
     let data = { level: 1 };
     let res = await this.$api.Common.getRegionAll(data);
-    this.address = res.region
+    this.address = res.region;
+    this.address.unshift({
+      citys: [],
+      province: "全国"
+    });
+    this.selectNav = this.address[0]
   }
 }
 </script>

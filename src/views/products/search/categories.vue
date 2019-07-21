@@ -18,7 +18,6 @@
             class="panel-item width96"
             @click="selectItem=selectNav.name"
             :class="{active:selectItem===selectNav.name}"
-            v-show="selectNav.name!=='全部'"
           >全部</li>
           <li
             v-for="item in selectNav.classificationTwo"
@@ -57,6 +56,7 @@ export default {
       classificationTwo: [],
       name: "全部"
     })
+    this.selectNav = this.categories[0]
   }
 }
 </script>
