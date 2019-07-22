@@ -2,7 +2,7 @@
   <div id="app">
     <div class="base-content" :class="{fullscreen:fullscreen}">
       <transition :name="transitionName">
-        <keep-alive>
+        <keep-alive include="home">
           <router-view class="base-view"></router-view>
         </keep-alive>
       </transition>

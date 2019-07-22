@@ -2,6 +2,7 @@ import Vue from "vue";
 import Crypto from "../crypto.js"
 import Common from './common.js';
 import Product from './product.js';
+import Store from './store.js';
 
 const vm = new Vue()
 
@@ -20,6 +21,7 @@ const createInterface = arr => {
 const Api = {
   Common: createInterface(Common),
   Product: createInterface(Product),
+  Store:createInterface(Store),
   env() {
     if (process.env.NODE_ENV === "development" || window.location.href.includes('192.168')) return "development";
     if (window.location.href.includes('test-mgr')) return 'test';

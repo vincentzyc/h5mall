@@ -3,19 +3,19 @@
     <v-header />
     <cube-scroll ref="scroll" :scrollEvents="['scroll']" :options="options" @scroll="scroll" @pulling-up="onPullingUp">
       <div class="scroll-wrapper">
-        <cube-slide ref="slide" :data="items" class="common-slide">
-          <cube-slide-item v-for="(item, index) in items" :key="index">
-            <a :href="item.url">
-              <img :src="item.image" />
+        <cube-slide ref="slide" :data="topItems" class="common-slide">
+          <cube-slide-item v-for="(item, index) in topItems" :key="index">
+            <a :href="'/#/store/detail?id='+item.farmer_id">
+              <img :src="item.img" />
             </a>
           </cube-slide-item>
         </cube-slide>
         <v-tabs />
         <FineStore />
-        <cube-slide ref="slide" :data="items" class="common-slide store-slide">
-          <cube-slide-item v-for="(item, index) in items" :key="index">
-            <a :href="item.url">
-              <img :src="item.image" />
+        <cube-slide ref="slide" :data="middleItems" class="common-slide store-slide">
+          <cube-slide-item v-for="(item, index) in middleItems" :key="index">
+            <a :href="'/#/store/detail?id='+item.farmer_id">
+              <img :src="item.img" />
             </a>
           </cube-slide-item>
         </cube-slide>
@@ -54,20 +54,8 @@ export default {
           }
         }
       },
-      items: [
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner1.png'
-        },
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner2.png'
-        },
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner3.png'
-        }
-      ]
+      topItems: [],
+      middleItems: []
     }
   },
   methods: {
@@ -88,8 +76,14 @@ export default {
       setTimeout(() => {
         this.$refs.slide.refresh();
         this.$refs.scroll.refresh();
-      }, 0);
+      }, 10);
     });
+  },
+  async created() {
+    let res = await this.$api.Product.carouselList();
+    this.topItems = res.top;
+    this.middleItems = res.middle;
+    this.$refs.slide.refresh();
   }
 };
 </script>

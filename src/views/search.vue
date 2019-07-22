@@ -102,9 +102,6 @@ export default {
       }).show()
     }
   },
-  activated() {
-    this.setDefaultKey();
-  },
   created() {
     this.searchList = this.$util.getLStorage('searchHistory') || [];
     this.setDefaultKey()

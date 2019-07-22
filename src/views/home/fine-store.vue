@@ -8,9 +8,9 @@
       </div>
     </div>
     <div class="row flex">
-      <div v-for="(item, index) in tabs" :label="item.label" :key="item.label+index" class="store-item col-4">
-        <img :src="require(`@/assets/img/${item.img}`)" alt>
-        <h5 class="fs12">{{item.label}}</h5>
+      <div v-for="(item, index) in tabs" :label="item.name" :key="item.name+index" class="store-item col-4">
+        <img :src="item.img" alt />
+        <h5 class="fs12">{{item.name}}</h5>
       </div>
     </div>
   </div>
@@ -20,23 +20,12 @@
 export default {
   data() {
     return {
-      tabs: [{
-        label: '京东自营',
-        img: 'store1.png'
-      }, {
-        label: '竹海李氏山货',
-        img: 'store2.png'
-      }, {
-        label: '周氏野货',
-        img: 'store3.png'
-      }]
+      tabs: []
     }
   },
-  methods: {
-    clickHandler(label) {
-      // if you clicked home tab, then print 'Home'
-      console.log(label)
-    }
+  async created() {
+    let res = await this.$api.Store.bestShop();
+    this.tabs = res.recommendList;
   }
 }
 </script>
