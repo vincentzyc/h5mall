@@ -1,27 +1,22 @@
 <template>
   <div class="product-list">
-    <div
-      v-for="item in items"
-      :key="item.id"
-      class="flex item"
-      @click="$router.push('/products/detail?id='+item.id)"
-    >
-      <img :src="require(`@/assets/img/${item.img}`)" alt class="item-img flex-none">
+    <div v-for="item in items" :key="item.id" class="flex item" @click="$router.push('/products/detail?id='+item.id)">
+      <img :src="item.carousel_img.split(',')[0]" alt class="item-img flex-none" />
       <div class="item-content mg-l10 flex-auto flex flex-column">
-        <h4 class="bold textover lh24">{{item.title}}</h4>
+        <h4 class="bold textover lh24">{{item.name}}</h4>
         <p class="fs12 mg-b5 c999 textover lh16">{{item.introduce}}</p>
         <div class="flex">
-          <span v-for="(tag,index) in item.tags" :key="tag+index" class="tag-item">{{tag}}</span>
+          <span v-for="tag in item.tags" :key="tag.id" class="tag-item">{{tag.name}}</span>
         </div>
         <div class="flex flex-auto ctheme fs16">
-          <span class="flex align-middle">￥33</span>
+          <span class="flex align-middle">￥{{item.price}}</span>
         </div>
         <div class="flex fs10">
           <div class="adress flex-auto">
             <i class="cubeic-location"></i>
-            <span class="c666">广东省广州市</span>
+            <span class="c666">{{adress(item)}}</span>
           </div>
-          <span class="sale">已售：3</span>
+          <span class="sale">已售：{{item.virtual_num}}</span>
         </div>
       </div>
     </div>
@@ -39,6 +34,11 @@ export default {
   data() {
     return {
 
+    }
+  },
+  methods: {
+    adress(v) {
+      return `${v.production_province || ''} ${v.production_city || ''} ${v.production_place || ''}`
     }
   }
 }

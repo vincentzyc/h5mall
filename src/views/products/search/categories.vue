@@ -13,12 +13,8 @@
         </ul>
       </template>
       <template slot="panelSlot">
-        <ul class="pd10" v-if="selectNav">
-          <li
-            class="panel-item width96"
-            @click="selectItem=selectNav.name"
-            :class="{active:selectItem===selectNav.name}"
-          >全部</li>
+        <ul class="pd10 text-left" v-if="selectNav">
+          <li class="panel-item width96" @click="selectItem=selectNav.name" :class="{active:selectItem===selectNav.name}">全部</li>
           <li
             v-for="item in selectNav.classificationTwo"
             :key="item.classifyName"
@@ -47,6 +43,12 @@ export default {
   methods: {
     handleNav(item) {
       this.selectNav = item;
+      this.$emit('setCategories', item.name)
+    },
+    setNav(name) {
+      let narr = this.categories.filter(v => v.name === name);
+      if (narr.length > 0) this.selectNav = narr[0];
+      this.$emit('setCategories', name)
     }
   },
   async created() {
@@ -56,7 +58,8 @@ export default {
       classificationTwo: [],
       name: "全部"
     })
-    this.selectNav = this.categories[0]
+    this.selectNav = this.categories[0];
+    this.setNav(this.$route.query.type);
   }
 }
 </script>

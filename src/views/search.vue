@@ -8,14 +8,17 @@
         <div class="search-wrap flex flex-auto flex-center textover">
           <div class="search-input flex flex-auto">
             <i class="cubeic-search"></i>
-            <input type="text" placeholder="搜索" class="flex-auto" v-model="keyWord" />
+            <input type="text" placeholder="搜索" class="flex-auto" v-model="param.keywords" />
           </div>
         </div>
-        <div class="pd-r10 pd-l10 minwidth50 textover" @click="search(keyWord)">搜索</div>
+        <div class="pd-r10 pd-l10 minwidth50 textover" @click="search(param.keywords)">搜索</div>
       </div>
     </header>
     <div class="heightfull pd-t10">
       <ProductList :items="productList" v-if="productList.length>0" />
+      <div v-else-if="searchNull">
+        <p class="text-center lh30 c999 mg-t20">暂无符合条件的商品</p>
+      </div>
       <div class="heightfull bgfff pd10" v-else>
         <div class="flex">
           <p class="flex-auto">历史搜索</p>
@@ -40,50 +43,47 @@ export default {
   },
   data() {
     return {
-      keyWord: '',
+      param: {
+        keywords: '',
+        pageNum: '1'
+      },
+      searchNull: false,
       searchList: [],
       productList: []
     }
   },
+  watch: {
+    'param.keywords'(n) {
+      if (n.length === 0) this.searchNull = false;
+    }
+  },
   methods: {
+    setDefaultKey() {
+      let q = this.$route.query.key;
+      if (q) {
+        this.param.keywords = q;
+        this.search(q)
+      }
+    },
     saveHistory(keyWord) {
       if (keyWord === '') return;
-      let arr = this.$util.getLocalStorage('searchHistory') || [];
+      let arr = this.$util.getLStorage('searchHistory') || [];
       arr.push(keyWord);
       this.searchList = [...new Set(arr)];
-      this.$util.setLocalStorage('searchHistory', this.searchList)
+      this.$util.setLStorage('searchHistory', this.searchList)
     },
-    search(keyWord) {
-      console.log(keyWord);
-      this.saveHistory(keyWord);
+    async search(keyWord) {
       if (keyWord) {
-        this.productList = [{
-          title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
-          img: 'store1.png',
-          id: 1
-        }, {
-          title: '杜兰特成为完全自由球员加盟',
-          img: 'store2.png',
-          id: 2
-        }, {
-          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-          img: 'store3.png',
-          id: 3
-        }, {
-          title: '杜兰特成为完全自由球员加盟',
-          img: 'store2.png',
-          id: 4
-        }, {
-          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-          img: 'store3.png',
-          id: 5
-        }]
+        let res = await this.$api.Product.productSearch(this.param);
+        this.productList = res.shops;
+        this.searchNull = res.shops.length > 0 ? false : true;
+        this.saveHistory(keyWord);
       } else {
         this.productList = []
       }
     },
     clickHistory(keyWord) {
-      this.keyWord = keyWord;
+      this.param.keywords = keyWord;
       this.search(keyWord);
     },
     deleteHistory() {
@@ -102,8 +102,12 @@ export default {
       }).show()
     }
   },
+  activated() {
+    this.setDefaultKey();
+  },
   created() {
-    this.searchList = this.$util.getLocalStorage('searchHistory') || [];
+    this.searchList = this.$util.getLStorage('searchHistory') || [];
+    this.setDefaultKey()
   }
 }
 </script>

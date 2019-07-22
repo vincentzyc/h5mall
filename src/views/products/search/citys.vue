@@ -14,20 +14,15 @@
       </template>
       <template slot="panelSlot">
         <ul class="pd10" v-if="selectNav">
-          <li class="panel-item">
+          <li class="panel-item" v-if="selectNav.province==='全国'">
             <cube-checkbox v-model="checked" position="right">全国</cube-checkbox>
           </li>
-          <li
-            class="panel-item"
-            @click="selectItem=selectNav.province"
-            :class="{active:selectItem===selectNav.province}"
-            v-show="selectNav.province!=='全国'"
-          >全部</li>
+          <li class="panel-item" @click="selectCity(selectNav.province)" :class="{active:selectItem===selectNav.province}" v-else>全部</li>
           <li
             v-for="item in selectNav.citys"
             :key="item.citys"
             class="textover panel-item"
-            @click="selectItem=item"
+            @click="selectCity(item)"
             :class="{active:selectItem===item}"
           >{{item.city}}</li>
         </ul>
@@ -53,6 +48,11 @@ export default {
   methods: {
     handleNav(item) {
       this.selectNav = item;
+      this.$emit('setCitys', item.province)
+    },
+    selectCity(item) {
+      this.selectItem = item;
+      this.$emit('setCitys', item.city)
     }
   },
   async created() {

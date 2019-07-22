@@ -1,29 +1,29 @@
 <template>
   <base-page>
-    <v-header/>
-    <cube-scroll ref="scroll" :scrollEvents="['scroll']" @scroll="scroll">
+    <v-header />
+    <cube-scroll ref="scroll" :scrollEvents="['scroll']" :options="options" @scroll="scroll" @pulling-up="onPullingUp">
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="items" class="common-slide">
           <cube-slide-item v-for="(item, index) in items" :key="index">
             <a :href="item.url">
-              <img :src="item.image">
+              <img :src="item.image" />
             </a>
           </cube-slide-item>
         </cube-slide>
-        <v-tabs/>
-        <FineStore/>
+        <v-tabs />
+        <FineStore />
         <cube-slide ref="slide" :data="items" class="common-slide store-slide">
           <cube-slide-item v-for="(item, index) in items" :key="index">
             <a :href="item.url">
-              <img :src="item.image">
+              <img :src="item.image" />
             </a>
           </cube-slide-item>
         </cube-slide>
-        <vRecommend/>
+        <vRecommend ref="recommend" />
       </div>
     </cube-scroll>
     <div class="backtop" @click="scrollTo()" v-show="backtop">
-      <img src="@/assets/img/totop.png" alt="回到顶部" width="100%">
+      <img src="@/assets/img/totop.png" alt="回到顶部" width="100%" />
     </div>
   </base-page>
 </template>
@@ -34,7 +34,6 @@ import vHeader from "./header.vue";
 import vTabs from "./tabs.vue";
 import FineStore from "./fine-store.vue";
 import vRecommend from "./recommend.vue";
-
 
 export default {
   name: "home",
@@ -47,6 +46,14 @@ export default {
   data() {
     return {
       backtop: false,
+      upLoadMore: true,
+      options: {
+        pullUpLoad: {
+          txt: {
+            noMore: '没有更多了...'
+          }
+        }
+      },
       items: [
         {
           url: 'http://www.didichuxing.com/',
@@ -69,7 +76,12 @@ export default {
     },
     scrollTo() {
       this.$refs.scroll.scrollTo(0, 0, 500)
-    }
+    },
+    async onPullingUp() {
+      if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
+      this.upLoadMore = await this.$refs.recommend.getRecommend();
+      if (!this.upLoadMore) this.$refs.scroll.forceUpdate();
+    },
   },
   mounted() {
     this.$nextTick(function () {

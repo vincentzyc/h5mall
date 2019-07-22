@@ -5,7 +5,7 @@
       :label="item.label"
       :key="item.label+index"
       class="tabs-item flex-none"
-      @click="$router.push('/products/search')"
+      @click="$router.push('/products/search?type='+item.label)"
     >
       <img :src="require(`@/assets/img/${item.icon}`)" alt />
       <h5>{{item.label}}</h5>
@@ -18,48 +18,37 @@ export default {
   data() {
     return {
       tabs: [{
-        label: '标题一',
-        // label: '果蔬生鲜',
+        label: '果蔬生鲜',
         icon: 'tab01.png'
       }, {
-        label: '标题二',
-        // label: '肉类',
+        label: '肉类',
         icon: 'tab02.png'
       }, {
-        label: '标题三',
-        // label: '干货坚果',
+        label: '干货坚果',
         icon: 'tab03.png'
       }, {
-        label: '标题四',
-        // label: '家乡特产',
+        label: '家乡特产',
         icon: 'tab04.png'
       }, {
-        label: '标题五',
-        // label: '速食',
+        label: '速食',
         icon: 'tab05.png'
       }, {
-        label: '标题六',
-        // label: '中药补品',
+        label: '中药补品',
         icon: 'tab06.png'
       }, {
-        label: '标题七',
-        // label: '海产',
+        label: '海产',
         icon: 'tab07.png'
       }, {
-        label: '标题八',
-        // label: '花卉苗木',
+        label: '花卉苗木',
         icon: 'tab08.png'
       }, {
-        label: '标题九',
-        // label: '粮油米面',
+        label: '粮油米面',
         icon: 'tab09.png'
       }, {
-        label: '标题十',
-        // label: '农作艺品',
+        label: '农作艺品',
         icon: 'tab10.png'
       }, {
-        label: '标题十一',
-        // label: '更多',
+        label: '更多',
         icon: 'tab11.png'
       }]
     }
