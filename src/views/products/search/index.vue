@@ -152,13 +152,13 @@ export default {
         case 2:
           this.param.salenum_sort = '';
           this.param.price_sort = this.param.price_sort === '1' ? '2' : '1';
-          this.search();
+          this.search(1);
           this.pageVisible = false;
           break;
         case 3:
           this.param.price_sort = '';
           this.param.salenum_sort = this.param.salenum_sort === '1' ? '2' : '1';
-          this.search();
+          this.search(1);
           this.pageVisible = false;
           break;
         default:

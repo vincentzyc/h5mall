@@ -10,7 +10,7 @@
             <span class="sale-num">已售：{{item.virtual_num}}</span>
           </div>
           <div class="flex align-middle">
-            <span class="ctheme fs16">￥33</span>
+            <span class="ctheme fs16">￥{{item.price}}</span>
           </div>
         </div>
       </div>

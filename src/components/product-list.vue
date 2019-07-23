@@ -16,8 +16,8 @@
             <i class="cubeic-location"></i>
             <span class="c666">{{adress(item)}}</span>
           </div>
-          <!-- <span class="sale">已售：{{item.virtual_num}}</span> -->
-          <span class="sale">已售：{{item.buy_num}}</span>
+          <span class="sale">已售：{{item.virtual_num}}</span>
+          <!-- <span class="sale">已售：{{item.buy_num}}</span> -->
         </div>
       </div>
     </div>
