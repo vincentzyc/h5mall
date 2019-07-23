@@ -1,11 +1,11 @@
 <template>
   <div class="row flex flex-wrap tabs-wrap">
     <div
-      v-for="(item, index) in tabs"
+      v-for="item in tabs"
       :label="item.name"
       :key="item.name"
       class="tabs-item flex-none"
-      @click="$router.push('/products/search?type='+item.name)"
+      @click="$router.push('/products/search?id='+item.parent_id)"
     >
       <img :src="item.img" alt />
       <h5>{{item.name}}</h5>

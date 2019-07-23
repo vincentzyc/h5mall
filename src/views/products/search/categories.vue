@@ -5,21 +5,21 @@
         <ul v-if="categories.length>0">
           <li
             v-for="item in categories"
-            :key="item.name"
+            :key="item.parent_id"
             @click="handleNav(item)"
             class="textover"
-            :class="{active:selectNav.name===item.name}"
+            :class="{active:selectNav.parent_id===item.parent_id}"
           >{{item.name}}</li>
         </ul>
       </template>
       <template slot="panelSlot">
         <ul class="pd10 text-left" v-if="selectNav">
-          <li class="panel-item width96" @click="selectItem=selectNav.name" :class="{active:selectItem===selectNav.name}">全部</li>
+          <li class="panel-item width96" @click="selectCategories(selectNav)" :class="{active:selectItem===selectNav.name}">全部</li>
           <li
             v-for="item in selectNav.classificationTwo"
             :key="item.classifyName"
             class="textover panel-item"
-            @click="selectItem=item.classifyName"
+            @click="selectCategories(item)"
             :class="{active:selectItem.classifyName===item.classifyName}"
           >{{item.classifyName}}</li>
         </ul>
@@ -45,10 +45,15 @@ export default {
       this.selectNav = item;
       this.$emit('setCategories', item.name)
     },
-    setNav(name) {
-      let narr = this.categories.filter(v => v.name === name);
+    selectCategories(item) {
+      this.selectItem = item;
+      this.$emit('setCategories', item)
+    },
+    setNav(id) {
+      let narr = this.categories.filter(v => v.parent_id === Number(id));
       if (narr.length > 0) this.selectNav = narr[0];
-      this.$emit('setCategories', name)
+      console.log(this.selectNav);
+      this.$emit('setCategories', this.selectNav)
     }
   },
   async created() {
@@ -59,7 +64,7 @@ export default {
       name: "全部"
     })
     this.selectNav = this.categories[0];
-    this.setNav(this.$route.query.type);
+    this.setNav(this.$route.query.id);
   }
 }
 </script>

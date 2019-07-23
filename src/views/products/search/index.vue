@@ -24,6 +24,10 @@
     <div class="container bgfff">
       <cube-scroll ref="scroll">
         <ProductList :items="productList" v-if="productList.length>0" />
+        <div class="mg-t20 text-center" v-else>
+          <img src="@/assets/img/seach-empty.png" alt class="width100 mg-t20" />
+          <p class="c999 fs12 mg-t10">我们还很小，需要您的呵护...</p>
+        </div>
       </cube-scroll>
     </div>
 
@@ -40,6 +44,7 @@
 import ProductList from '@/components/product-list.vue';
 import Categories from './categories.vue';
 import Citys from './citys.vue';
+
 export default {
   components: {
     ProductList, Categories, Citys
@@ -76,14 +81,30 @@ export default {
   },
   methods: {
     setCategories(n) {
-      this.tabs[0].label = n
+      if (typeof n === 'string') this.tabs[0].label = n;
+      if (typeof n === 'object') {
+        this.tabs[0].label = n.classifyName || n.name;
+        this.param.parent_type_id = n.parent_id || '';
+        this.param.type_id = n.classify_id || '';
+        this.search()
+      }
     },
     setCitys(n) {
-      this.tabs[1].label = n
+      if (typeof n === 'string') this.tabs[1].label = n;
+      if (typeof n === 'object') {
+        this.tabs[1].label = n.city || n.province;
+        this.param.production_province = n.province !== '全国' ? n.province || '' : '';
+        this.param.production_city = n.city || '';
+        this.search()
+      }
     },
-    async search() {
+    async search(pageNum = '1') {
+      this.param.pageNum = pageNum;
+      console.log(this.param);
       let res = await this.$api.Product.productSearch(this.param);
+      console.log(res);
       this.productList = res.shops;
+      this.pageVisible = false
     },
     searchKeyWord(keyWord) {
       this.$router.push('/home/search?key=' + keyWord)
@@ -105,18 +126,21 @@ export default {
           }
           break;
         case 2:
+          this.param.salenum_sort = '';
+          this.param.price_sort = this.param.price_sort === '1' ? '2' : '1';
+          this.search();
           this.pageVisible = false;
           break;
         case 3:
+          this.param.price_sort = '';
+          this.param.salenum_sort = this.param.salenum_sort === '1' ? '2' : '1';
+          this.search();
           this.pageVisible = false;
           break;
         default:
           break;
       }
     }
-  },
-  created() {
-    this.search()
   }
 }
 </script>
@@ -210,10 +234,8 @@ export default {
     }
 
     .panel-item.active {
-      span {
-        border-color: $color-theme;
-        color: $color-theme;
-      }
+      border-color: $color-theme;
+      color: $color-theme;
     }
   }
 
