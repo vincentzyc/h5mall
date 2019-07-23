@@ -40,6 +40,11 @@ export default {
       selectItem: ''
     }
   },
+  watch: {
+    '$route'(to, from) {
+      if (from.path === '/home') this.setNav(this.$route.query.id);
+    }
+  },
   methods: {
     handleNav(item) {
       this.selectNav = item;

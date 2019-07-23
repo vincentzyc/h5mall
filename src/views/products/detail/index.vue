@@ -105,7 +105,7 @@ import vRecommend from "@/components/recommend.vue";
 import vFooter from "./footer.vue";
 
 export default {
-  name: "home",
+  name: "productDetail",
   components: {
     vComment, vRecommend, vFooter
   },
@@ -168,6 +168,10 @@ export default {
         this.$refs.scroll.refresh();
       }, 100);
     });
+  },
+  async created() {
+    let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
+    console.log(res);
   }
 };
 </script>

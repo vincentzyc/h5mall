@@ -46,6 +46,7 @@ import Categories from './categories.vue';
 import Citys from './citys.vue';
 
 export default {
+  name: "searchList",
   components: {
     ProductList, Categories, Citys
   },

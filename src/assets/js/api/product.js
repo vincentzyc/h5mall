@@ -16,4 +16,7 @@ export default [{
 }, {
   name: "productSearch",
   url: "/appProduct/productSearch"  //商品搜索(分页)
+}, {
+  name: "productDetail",
+  url: "/appProduct/productDetail"  //商品详情
 }]
