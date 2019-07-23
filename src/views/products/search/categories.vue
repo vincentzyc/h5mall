@@ -52,7 +52,6 @@ export default {
     setNav(id) {
       let narr = this.categories.filter(v => v.parent_id === Number(id));
       if (narr.length > 0) this.selectNav = narr[0];
-      console.log(this.selectNav);
       this.$emit('setCategories', this.selectNav)
     }
   },

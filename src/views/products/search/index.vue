@@ -22,7 +22,7 @@
     </cube-tab-bar>
 
     <div class="container bgfff">
-      <cube-scroll ref="scroll">
+      <cube-scroll ref="scroll" :data="productList" :options="options" @pulling-up="onPullingUp">
         <ProductList :items="productList" v-if="productList.length>0" />
         <div class="mg-t20 text-center" v-else>
           <img src="@/assets/img/seach-empty.png" alt class="width100 mg-t20" />
@@ -51,6 +51,15 @@ export default {
   },
   data() {
     return {
+      pullUpLoad: {
+        txt: {
+          noMore: '没有更多了...'
+        }
+      },
+      options: {
+        pullUpLoad: true
+      },
+      upLoadMore: true,
       keyWord: '',
       param: {
         pageNum: '1',//	string	是	当前页数	
@@ -86,7 +95,7 @@ export default {
         this.tabs[0].label = n.classifyName || n.name;
         this.param.parent_type_id = n.parent_id || '';
         this.param.type_id = n.classify_id || '';
-        this.search()
+        this.search(1)
       }
     },
     setCitys(n) {
@@ -95,16 +104,31 @@ export default {
         this.tabs[1].label = n.city || n.province;
         this.param.production_province = n.province !== '全国' ? n.province || '' : '';
         this.param.production_city = n.city || '';
-        this.search()
+        this.search(1)
       }
     },
-    async search(pageNum = '1') {
-      this.param.pageNum = pageNum;
+    async onPullingUp() {
+      if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
+      this.param.pageNum++;
+      this.upLoadMore = await this.search();
+    },
+    async search(pageNum) {
+      if (pageNum) this.param.pageNum = pageNum;
+      if (pageNum === 1) {
+        this.upLoadMore = true;
+        this.$refs.scroll.scrollTo(0, 0, 100)
+      }
       console.log(this.param);
       let res = await this.$api.Product.productSearch(this.param);
       console.log(res);
-      this.productList = res.shops;
-      this.pageVisible = false
+      if (this.param.pageNum === 1) {
+        this.productList = res.shops;
+        this.options.pullUpLoad = res.shops.length < 10 ? false : this.pullUpLoad;
+      } else {
+        this.productList.push(...res.shops);
+      }
+      this.pageVisible = false;
+      return res.shops.length === 10
     },
     searchKeyWord(keyWord) {
       this.$router.push('/home/search?key=' + keyWord)
