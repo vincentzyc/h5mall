@@ -223,11 +223,12 @@ export default {
   },
   /**
    * 文本截取换行
-   * @param {文本字符} text 
+   * @param {String} text 文本字符
+   * @param {String} sign 换行标识 
    */
-  textBr(text) {
+  textBr(text,sign) {
     let brstr = '';
-    let arr = text.split("@BR@");
+    let arr = text.split(sign);
     arr.forEach(v => {
       brstr += v + "</br>"
     })
