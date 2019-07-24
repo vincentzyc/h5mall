@@ -1,46 +1,42 @@
 <template>
   <base-page>
-    <div class="container fs14">
-      <cube-scroll ref="scroll">
+    <div id="detail_wrap" class="container fs14">
+      <div v-if="allInfo">
         <i class="cubeic-back detail-back" @click="$router.back()"></i>
         <div class="drop-down-menu">
           <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
           <transition name="fade">
             <div class="menu" v-show="showDropDownMenu">
-              <p class="border-beee">分享</p>
+              <!-- <p class="border-beee">分享</p> -->
               <p>收藏店铺</p>
             </div>
           </transition>
         </div>
 
         <div class="common-slide detail-slide">
-          <cube-slide ref="slide" :data="items" :auto-play="false">
-            <cube-slide-item v-for="(item, index) in items" :key="index">
-              <video controls v-if="index===0" style="width:100%;height:100%">
-                <source src="https://www.runoob.com/try/demo_source/movie.mp4" type="video/mp4" />
+          <cube-slide ref="slide" :data="carousel" :auto-play="false">
+            <cube-slide-item v-for="(item, index) in carousel" :key="index">
+              <img :src="item.url" v-if="item.type==='img'" />
+              <video controls v-if="item.type==='video'" style="width:100%;height:100%">
+                <source :src="item.url" type="video/mp4" />
               </video>
-              <a :href="item.url" v-else>
-                <img :src="item.image" />
-              </a>
             </cube-slide-item>
           </cube-slide>
         </div>
 
         <div class="flex product-info bgfff pd10">
-          <div class="flex-auto">
-            <h3 class="fs16 bold lh30">商品名称名称</h3>
-            <p class="fs12 c999">鼓掌：鼓掌鼓掌鼓掌</p>
+          <div class="flex-auto col-9">
+            <h3 class="fs16 bold lh30 textover">{{allInfo.name}}</h3>
+            <p class="fs12 c999">产地：{{allInfo.production_place}}</p>
             <div class="flex align-middle mg-t5">
-              <span class="price ctheme fs16 mg-r10">￥99</span>
-              <span class="border-tag">新品上市</span>
-              <span class="border-tag">品质保障</span>
-              <span class="border-tag">春节特供</span>
+              <span class="price ctheme fs16 mg-r10">￥{{allInfo.price}}</span>
+              <span class="border-tag" v-for="item in allInfo.tagList" :key="item">{{item}}</span>
             </div>
           </div>
-          <div class="flex flex-center">
+          <div class="flex flex-center flex-none col-3">
             <div class="text-right">
-              <div class="mg-b15 c666">已售19</div>
-              <span class="border-tag">包邮</span>
+              <div class="mg-b15 fs12 c666">已售{{allInfo.virtual_num}}</div>
+              <span class="border-tag" v-if="allInfo.is_ems===1">包邮</span>
             </div>
           </div>
         </div>
@@ -58,15 +54,15 @@
           <table>
             <tr>
               <td class="c666">产品名称</td>
-              <td class="c333">产品名称产品名称产品名称产品名称产品名称</td>
+              <td class="c333">{{allInfo.name}}</td>
               <td class="c666">单位</td>
-              <td class="c333">个</td>
+              <td class="c333">{{allInfo.unit}}</td>
             </tr>
             <tr>
               <td class="c666">用途</td>
-              <td class="c333">食用</td>
+              <td class="c333">{{allInfo.application}}</td>
               <td class="c666">类型</td>
-              <td class="c333">鸡肉</td>
+              <td class="c333">{{allInfo.type_name}}</td>
             </tr>
           </table>
         </div>
@@ -77,12 +73,11 @@
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
-              <img :src="BASE_URL + 'static/img/banner1.png'" alt />
-              <img :src="BASE_URL + 'static/img/banner2.png'" alt />
-              <img :src="BASE_URL + 'static/img/banner3.png'" alt />
+              <img v-for="item in allInfo.img.split(',')" :key="item" :src="item" alt class="tab-panel-img" />
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
-              <p v-html="$util.textBr(detailText)"></p>
+              <!-- <p v-html="$util.textBr(allInfo.introduction,'@BR@')"></p> -->
+              <p>{{allInfo.introduction}}</p>
             </cube-tab-panel>
             <cube-tab-panel class="comment-panel" label="评价" v-show="selectedLabel==='评价'">
               <vComment :list="commentList"></vComment>
@@ -92,8 +87,9 @@
             </cube-tab-panel>
           </cube-tab-panels>
         </div>
-      </cube-scroll>
+      </div>
     </div>
+
     <vFooter></vFooter>
   </base-page>
 </template>
@@ -111,67 +107,83 @@ export default {
   },
   data() {
     return {
+      allInfo: '',
+      pageNum: 0,
+      loadMore: true,
+      carousel: [],
       showDropDownMenu: false,
       selectedLabel: '图片',
       tabs: ['图片', '文字', '评价', '推荐'],
-      items: [
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner1.png'
-        },
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner1.png'
-        },
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner2.png'
-        },
-        {
-          url: 'http://www.didichuxing.com/',
-          image: this.BASE_URL + 'static/img/banner3.png'
-        }
-      ],
-      detailText: '描述文字@BR@描述文字描述@BR@文字描述文字描述@BR@文字描述文字描述文@BR@字描述文字',
-      commentList: [{
-        score: 4
-      }, {
-        score: 5
-      }],
-      recommendList: [{
-        title: '常规赛MVP',
-        introduce: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
-        img: 'store1.png',
-        tags: ['限时特价', '新品上市', '包邮'],
-        id: 1
-      }, {
-        title: '京东自营',
-        introduce: '杜兰特不执行球员选项 将成为完全自由球员',
-        img: 'store2.png',
-        tags: ['限时特价', '质保赔付', '新品上市', '包邮'],
-        id: 2
-      }, {
-        title: '周氏云商城',
-        introduce: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-        img: 'store3.png',
-        tags: ['限时特价', '新品上市', '不包邮'],
-        id: 3
-      }]
+      commentList: [],
+      recommendList: []
     }
   },
   methods: {
-
+    getCarousel() {
+      let imgs = [], video = [];
+      if (!this.allInfo) return;
+      if (this.allInfo.carousel_img) {
+        imgs = this.allInfo.carousel_img.split(",").map(v => {
+          return {
+            type: 'img',
+            url: v
+          }
+        });
+      }
+      if (this.allInfo.video) {
+        video = this.allInfo.video.split(",").map(v => {
+          return {
+            type: 'video',
+            url: v
+          }
+        });
+      }
+      this.carousel = [...imgs, ...video]
+    },
+    async getRecommend() {
+      if (!this.allInfo) this.recommendList = [];
+      if (!this.loadMore) return;
+      this.pageNum++
+      let param = {
+        product_id: this.allInfo.id,
+        type_id: this.allInfo.type_id,
+        pageNum: this.pageNum
+      }
+      let res = await this.$api.Product.getRecommend(param);
+      this.loadMore = (res.recommendList || []).length === 10;
+      this.recommendList.push(...res.recommendList)
+    },
+    scrollBottom() {
+      let el = document.getElementById("detail_wrap");
+      let scrollTop = 0, clientHeight = 0, scrollHeight = 0;
+      el.onscroll = () => {
+        scrollTop = el.scrollTop;
+        clientHeight = el.clientHeight || el.offsetHeight;
+        scrollHeight = el.scrollHeight;
+        if (scrollTop + clientHeight === scrollHeight) this.getRecommend()
+      };
+    },
+    async getCommentList() {
+      if (!this.allInfo) this.commentList = [];
+      let res = await this.$api.Product.getCommentList({ product_id: this.allInfo.id });
+      console.log(res);
+      this.commentList = res.list
+    }
   },
   mounted() {
     this.$nextTick(function () {
-      setTimeout(() => {
-        this.$refs.scroll.refresh();
-      }, 100);
+      this.scrollBottom()
     });
   },
   async created() {
+    this.$loading.open();
     let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
     console.log(res);
+    this.allInfo = res.product_info;
+    this.getCarousel();
+    this.getCommentList();
+    this.getRecommend();
+    this.$loading.close();
   }
 };
 </script>
