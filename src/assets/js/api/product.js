@@ -19,4 +19,10 @@ export default [{
 }, {
   name: "productDetail",
   url: "/appProduct/productDetail"  //商品详情
+},{
+  name:"getRecommend",
+  url:"/appProduct/recommend"  //推荐（商品详情页）
+},{
+  name:"getCommentList",
+  url:"/appProduct/productAppraiseList"  //商品详情的评价列表
 }]
