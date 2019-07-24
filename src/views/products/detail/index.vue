@@ -80,10 +80,16 @@
               <p>{{allInfo.introduction}}</p>
             </cube-tab-panel>
             <cube-tab-panel class="comment-panel" label="评价" v-show="selectedLabel==='评价'">
-              <vComment :list="commentList"></vComment>
+              <vComment :list="commentList" v-if="commentList.length>0"></vComment>
+              <div v-else>
+                <p class="mg20 lh30 text-center">暂无评价</p>
+              </div>
             </cube-tab-panel>
             <cube-tab-panel class="recommend-panel" label="推荐" v-show="selectedLabel==='推荐'">
-              <vRecommend :list="recommendList"></vRecommend>
+              <vRecommend :list="recommendList" v-if="recommendList.length>0"></vRecommend>
+              <div v-else>
+                <p class="mg20 lh30 text-center">暂无推荐产品</p>
+              </div>
             </cube-tab-panel>
           </cube-tab-panels>
         </div>

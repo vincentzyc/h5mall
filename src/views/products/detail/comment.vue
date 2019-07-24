@@ -1,5 +1,5 @@
 <template>
-  <div v-if="list.length>0">
+  <div>
     <div class="pd10 border-beee" v-for="(item,index) in list" :key="index">
       <div class="flex">
         <img :src="item.user_head_img" alt="用户头像" class="userimg flex-none" />
@@ -12,7 +12,7 @@
                 {{item.appraise_star}}分
               </div>
             </div>
-            <span class="c666">{{item.create_time}}</span>
+            <span class="c666">{{$util.getFormatDate('yyyy-mm-dd',item.create_time)}}</span>
           </div>
           <div class="mg-t10">
             <p class="lh30">{{item.appraise_content}}</p>
@@ -20,14 +20,11 @@
           </div>
         </div>
       </div>
-      <div class="reply">
+      <div class="reply" v-if="item.shop_replay">
         <p class="mg-b5 title">商家回复</p>
         <p class="lh20 fs12 c666">{{item.shop_replay}}</p>
       </div>
     </div>
-  </div>
-  <div v-else>
-    <p class="mg20 lh30 text-center">暂无评价</p>
   </div>
 </template>
 

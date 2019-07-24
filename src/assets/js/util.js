@@ -1,6 +1,13 @@
 import Crypto from "./crypto.js"
 
 export default {
+  /**
+   * 获取数据类型
+   * @param value 需要判断的值
+   */
+  getType(value) {
+    return Object.prototype.toString.call(value).slice(8, -1)
+  },
 	/**
 	 * 设置cookie
 	 * @param key  key
@@ -155,8 +162,8 @@ export default {
   getFormatDate(formatType, formatDate) {
     let type = formatType || 'yyyy-mm-dd hh:mm:ss';
     let date = new Date();
-    if (Object.prototype.toString.call(formatDate) === "[object Date]") date = formatDate;
-    if (Object.prototype.toString.call(formatDate) === "[object Number]") date = new Date(formatDate);
+    if (this.getType(formatDate) === "Date") date = formatDate;
+    if (this.getType(formatDate) === "Number") date = new Date(formatDate);
     let currentdate = '';
     let month = date.getMonth() + 1;
     let strDate = date.getDate();
