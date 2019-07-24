@@ -154,7 +154,9 @@ export default {
 	 */
   getFormatDate(formatType, formatDate) {
     let type = formatType || 'yyyy-mm-dd hh:mm:ss';
-    let date = Object.prototype.toString.call(formatDate) === "[object Date]" ? formatDate : new Date();
+    let date = new Date();
+    if (Object.prototype.toString.call(formatDate) === "[object Date]") date = formatDate;
+    if (Object.prototype.toString.call(formatDate) === "[object Number]") date = new Date(formatDate);
     let currentdate = '';
     let month = date.getMonth() + 1;
     let strDate = date.getDate();
@@ -226,7 +228,7 @@ export default {
    * @param {String} text 文本字符
    * @param {String} sign 换行标识 
    */
-  textBr(text,sign) {
+  textBr(text, sign) {
     let brstr = '';
     let arr = text.split(sign);
     arr.forEach(v => {
