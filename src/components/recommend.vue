@@ -1,6 +1,6 @@
 <template>
   <div class="recommend-list">
-    <div v-for="item in list" :key="item.id" class="item col-6" @click="$router.push('/products/detail?id='+item.id)">
+    <div v-for="item in list" :key="item.id" class="item col-6" @click="viewDetail(item.id)">
       <img :src="item.img" alt class="item-img" />
       <div class="mg-t5">
         <h4 class="textover lh20">{{item.name}}</h4>
@@ -18,9 +18,10 @@ export default {
       type: Array
     }
   },
-  data() {
-    return {
-
+  methods: {
+    viewDetail(id) {
+      this.$router.push('/products/detail?id=' + id);
+      // window.location.reload();
     }
   }
 }

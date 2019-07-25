@@ -7,7 +7,7 @@
           <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
           <transition name="fade">
             <div class="menu" v-show="showDropDownMenu">
-              <!-- <p class="border-beee">分享</p> -->
+              <p class="border-beee">分享</p>
               <p>收藏店铺</p>
             </div>
           </transition>
@@ -124,6 +124,14 @@ export default {
       recommendList: []
     }
   },
+  watch: {
+    '$route'(to, from) {
+      if (to.name === 'productsDetail') {
+        Object.assign(this.$data, this.$options.data());
+        this.init();
+      }
+    }
+  },
   methods: {
     getCarousel() {
       let imgs = [], video = [];
@@ -147,7 +155,7 @@ export default {
       this.carousel = [...imgs, ...video]
     },
     async getRecommend() {
-      if (!this.allInfo) this.recommendList = [];
+      if (!this.allInfo) return this.recommendList = [];
       if (!this.loadMore) return;
       this.pageNum++
       let param = {
@@ -166,14 +174,23 @@ export default {
         scrollTop = el.scrollTop;
         clientHeight = el.clientHeight || el.offsetHeight;
         scrollHeight = el.scrollHeight;
-        if (scrollTop + clientHeight === scrollHeight) this.getRecommend()
+        if (scrollTop + clientHeight >= scrollHeight) this.getRecommend()
       };
     },
     async getCommentList() {
-      if (!this.allInfo) this.commentList = [];
+      if (!this.allInfo) return this.commentList = [];
       let res = await this.$api.Product.getCommentList({ product_id: this.allInfo.id });
-      console.log(res);
       this.commentList = res.list
+    },
+    async init() {
+      this.$loading.open();
+      let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
+      console.log(res);
+      this.allInfo = res.product_info;
+      this.getCarousel();
+      this.getCommentList();
+      this.getRecommend();
+      this.$loading.close();
     }
   },
   mounted() {
@@ -181,15 +198,8 @@ export default {
       this.scrollBottom()
     });
   },
-  async created() {
-    this.$loading.open();
-    let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
-    console.log(res);
-    this.allInfo = res.product_info;
-    this.getCarousel();
-    this.getCommentList();
-    this.getRecommend();
-    this.$loading.close();
+  created() {
+    this.init()
   }
 };
 </script>
