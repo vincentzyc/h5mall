@@ -11,16 +11,18 @@
                 <h3 class="lh30 fs16 mg-r10">{{aData.shop.name}}</h3>
                 <div class="identity"></div>
               </div>
-              <p class="fs12 lh24">{{aData.shop.description}}</p>
+              <p class="fs12 lh20 textover2">{{aData.shop.description}}</p>
               <div class="flex align-middle store cyellow fs10">
                 <p class="lh26 mg-r5">用户评分</p>
-                <cube-rate v-model="aData.shop.score" disabled></cube-rate>
-                <span>{{aData.shop.score}}分</span>
+                <div v-if="aData.shop.score>0">
+                  <cube-rate v-model="aData.shop.score" disabled></cube-rate>
+                  <span>{{aData.shop.score}}分</span>
+                </div>
+                <p v-else class="c999">暂无评分！</p>
               </div>
             </div>
             <div class="flex-none">
-            <img v-if="aData.shop.img" :src="aData.shop.img" alt="二维码" class="qrcode" />
-            <!-- <img v-if="aData.shop.qr_code" :src="aData.shop.qr_code" alt="二维码" class="qrcode" /> -->
+              <img v-if="aData.shop.qr_code" :src="aData.shop.qr_code" alt="二维码" class="qrcode" />
             </div>
           </div>
         </div>

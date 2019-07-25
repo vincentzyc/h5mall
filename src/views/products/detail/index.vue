@@ -125,7 +125,7 @@ export default {
     }
   },
   watch: {
-    '$route'(to, from) {
+    '$route'(to) {
       if (to.name === 'productsDetail') {
         Object.assign(this.$data, this.$options.data());
         this.init();

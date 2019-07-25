@@ -19,7 +19,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Crypto from "@/assets/js/crypto";
+
 export default {
   data() {
     return {
