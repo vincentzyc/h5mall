@@ -67,8 +67,9 @@ export default {
     },
     async onPullingUp() {
       if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
-      this.upLoadMore = await this.$refs.recommend.getRecommend();
-      if (!this.upLoadMore) this.$refs.scroll.forceUpdate();
+      let res = await this.$refs.recommend.getRecommend();
+      this.upLoadMore = res.upLoadMore;
+      this.$refs.scroll.forceUpdate(res.hasData);
     },
   },
   mounted() {

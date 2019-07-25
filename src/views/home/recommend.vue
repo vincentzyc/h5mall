@@ -28,7 +28,10 @@ export default {
       this.pageNum++;
       let res = await this.$api.Product.sysRecommend({ pageNum: this.pageNum });
       this.items.push(...res.list);
-      return res.list.length === 10
+      return {
+        upLoadMore: res.list.length === 10,
+        hasData: res.list.length > 0
+      }
     }
   },
   created() {

@@ -17,7 +17,7 @@
           <cube-slide ref="slide" :data="carousel" :auto-play="false">
             <cube-slide-item v-for="(item, index) in carousel" :key="index">
               <img :src="item.url" v-if="item.type==='img'" />
-              <video controls v-if="item.type==='video'" style="width:100%;height:100%">
+              <video controls v-if="item.type==='video'" class="video-wrap" @click="videoPlay($event)">
                 <source :src="item.url" type="video/mp4" />
               </video>
             </cube-slide-item>
@@ -41,10 +41,10 @@
           </div>
         </div>
 
-        <div class="flex pd-l10 pd-r10 pd-t20 pd-b20 bgfff mg-t15 align-middle">
+        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle">
           <div class="flex flex-auto align-middle">
             <img src="@/assets/img/discount.png" alt="优惠券" class="discount" />
-            <span class="mg-l5 fs16">优惠券领取</span>
+            <span class="mg-l5 fs14">优惠券领取</span>
           </div>
           <i class="cubeic-arrow"></i>
         </div>
@@ -133,6 +133,9 @@ export default {
     }
   },
   methods: {
+    videoPlay(e) {
+      e.target.paused ? e.target.play() : e.target.pause();
+    },
     getCarousel() {
       let imgs = [], video = [];
       if (!this.allInfo) return;
@@ -216,6 +219,12 @@ export default {
 
 .discount {
   height: 20px;
+}
+
+.video-wrap {
+  width: 100%;
+  height: 100%;
+  z-idnex: 999;
 }
 
 .drop-down-menu {

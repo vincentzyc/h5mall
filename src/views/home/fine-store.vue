@@ -8,7 +8,13 @@
       </div>
     </div>
     <div class="row flex">
-      <div v-for="(item, index) in tabs" :label="item.name" :key="item.name+index" class="store-item col-4">
+      <div
+        v-for="(item, index) in tabs"
+        :label="item.name"
+        :key="item.name+index"
+        class="store-item col-4"
+        @click="$router.push('/store/detail?id='+item.id)"
+      >
         <img :src="item.img" alt />
         <h5 class="fs12">{{item.name}}</h5>
       </div>

@@ -1,33 +1,39 @@
 <template>
   <base-page>
     <common-header title="店铺详情" />
-    <cube-scroll ref="scroll">
-      <div class="pd-b50">
+    <div class="content-wrap" v-if="aData">
+      <cube-scroll ref="scroll" :options="options" @pulling-up="onPullingUp">
         <div class="bgfff mg-t15 pd10 flex">
-          <img src="@/assets/img/store3.png" alt="商家logo" class="square88 flex-none" />
+          <img :src="aData.shop.img" alt="商家logo" class="square88 flex-none" />
           <div class="flex flex-auto pd-l10">
             <div class="flex-auto">
               <div class="flex align-middle">
-                <h3 class="lh30 fs18 mg-r10">周氏云商城</h3>
+                <h3 class="lh30 fs16 mg-r10">{{aData.shop.name}}</h3>
                 <div class="identity"></div>
               </div>
-              <p class="lh24">商家介绍商家介绍商家介绍</p>
+              <p class="fs12 lh24">{{aData.shop.description}}</p>
               <div class="flex align-middle store cyellow fs10">
                 <p class="lh26 mg-r5">用户评分</p>
-                <cube-rate v-model="score" disabled></cube-rate>
-                <span>{{score}}分</span>
+                <cube-rate v-model="aData.shop.score" disabled></cube-rate>
+                <span>{{aData.shop.score}}分</span>
               </div>
             </div>
-            <img src="@/assets/img/logo.png" alt="二维码" class="qrcode" />
+            <div class="flex-none">
+            <img v-if="aData.shop.img" :src="aData.shop.img" alt="二维码" class="qrcode" />
+            <!-- <img v-if="aData.shop.qr_code" :src="aData.shop.qr_code" alt="二维码" class="qrcode" /> -->
+            </div>
           </div>
         </div>
         <div class="bgfff mg-t15">
-          <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee">
+          <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee" @click="changeTab">
             <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30 width100"></cube-tab>
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="商品信息" v-show="selectedLabel==='商品信息'">
-              <ProductList :items="items" />
+              <ProductList :items="productList" v-if="productList.length>0" />
+              <div v-else>
+                <p class="mg20 lh30 text-center">暂无商品</p>
+              </div>
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="商家信息" v-show="selectedLabel==='商家信息'">
               <div class="store-info">
@@ -48,8 +54,8 @@
             </cube-tab-panel>
           </cube-tab-panels>
         </div>
-      </div>
-    </cube-scroll>
+      </cube-scroll>
+    </div>
 
     <footer class="flex footer-wrap align-middle">
       <div class="flex flex-center flex-auto" @click="isLike=!isLike">
@@ -92,40 +98,73 @@ export default {
   },
   data() {
     return {
+      aData: "",
+      pageNum: 0,
+      upLoadMore: true,
+      pullUpLoad: {
+        txt: {
+          noMore: '没有更多了...'
+        }
+      },
+      options: {
+        pullUpLoad: {
+          txt: {
+            noMore: '没有更多了...'
+          }
+        }
+      },
       isIdentity: true,
       isLike: false,
       score: 4,
       selectedLabel: '商品信息',
       tabs: ['商品信息', '商家信息'],
-      items: [{
-        title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
-        img: 'store1.png',
-        id: 1
-      }, {
-        title: '杜兰特成为完全自由球员加盟',
-        img: 'store2.png',
-        id: 2
-      }, {
-        title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-        img: 'store3.png',
-        id: 3
-      }, {
-        title: '杜兰特成为完全自由球员加盟',
-        img: 'store2.png',
-        id: 4
-      }, {
-        title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-        img: 'store3.png',
-        id: 5
-      }]
+      productList: []
     };
   },
-  computed: {
-
+  methods: {
+    changeTab(tab) {
+      this.options.pullUpLoad = tab === '商家信息' ? false : this.pullUpLoad;
+    },
+    async onPullingUp() {
+      if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
+      let res = await this.getDetail();
+      this.upLoadMore = res.upLoadMore;
+      this.$refs.scroll.forceUpdate(res.hasData);
+    },
+    async getDetail() {
+      this.pageNum++;
+      let param = {
+        pageNum: this.pageNum,
+        shop_id: this.$route.query.id
+      }
+      console.log(param);
+      let res = await this.$api.Store.shopDetail(param);
+      console.log(res);
+      this.aData = {
+        shop: res.shop,
+        farmer: res.farmer
+      };
+      this.productList.push(...res.productList);
+      return {
+        upLoadMore: res.productList.length === 10,
+        hasData: res.productList.length > 0
+      }
+    }
+  },
+  created() {
+    this.getDetail()
   }
 };
 </script>
 <style lang="stylus" scoped>
+.content-wrap {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+}
+
 .qrcode {
   width: 30px;
   height: 30px;
