@@ -1,7 +1,7 @@
 <template>
   <base-page>
     <div id="detail_wrap" class="container fs14">
-      <div v-if="allInfo">
+      <div v-if="Data">
         <i class="cubeic-back detail-back" @click="$router.back()"></i>
         <div class="drop-down-menu">
           <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
@@ -26,17 +26,17 @@
 
         <div class="flex product-info bgfff pd10">
           <div class="flex-auto col-9">
-            <h3 class="fs16 bold lh30 textover">{{allInfo.name}}</h3>
-            <p class="fs12 c999">产地：{{allInfo.production_place}}</p>
+            <h3 class="fs16 bold lh30 textover">{{Data.name}}</h3>
+            <p class="fs12 c999">产地：{{Data.production_place}}</p>
             <div class="flex align-middle mg-t5">
-              <span class="price ctheme fs16 mg-r10">￥{{allInfo.price}}</span>
-              <span class="border-tag" v-for="item in allInfo.tagList" :key="item">{{item}}</span>
+              <span class="price ctheme fs16 mg-r10">￥{{Data.price}}</span>
+              <span class="border-tag" v-for="item in Data.tagList" :key="item">{{item}}</span>
             </div>
           </div>
           <div class="flex flex-center flex-none col-3">
             <div class="text-right">
-              <div class="mg-b15 fs12 c666">已售{{allInfo.virtual_num}}</div>
-              <span class="border-tag" v-if="allInfo.is_ems===1">包邮</span>
+              <div class="mg-b15 fs12 c666">已售{{Data.virtual_num}}</div>
+              <span class="border-tag" v-if="Data.is_ems===1">包邮</span>
             </div>
           </div>
         </div>
@@ -49,20 +49,26 @@
           <i class="cubeic-arrow"></i>
         </div>
 
+        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle fs12" v-if="Data.specs.length>0">
+          <span class="flex-none mg-r15">已选</span>
+          <div class="flex-auto">{{Data.specs[0].specsName}}</div>
+          <i class="cubeic-arrow"></i>
+        </div>
+
         <div class="specs bgfff pd-l10 pd-r10 pd-t20 pd-b20 mg-t15">
           <h3 class="mg-b20 fs14">商品规格</h3>
           <table>
             <tr>
               <td class="c666">产品名称</td>
-              <td class="c333">{{allInfo.name}}</td>
+              <td class="c333">{{Data.name}}</td>
               <td class="c666">单位</td>
-              <td class="c333">{{allInfo.unit}}</td>
+              <td class="c333">{{Data.unit}}</td>
             </tr>
             <tr>
               <td class="c666">用途</td>
-              <td class="c333">{{allInfo.application}}</td>
+              <td class="c333">{{Data.application}}</td>
               <td class="c666">类型</td>
-              <td class="c333">{{allInfo.type_name}}</td>
+              <td class="c333">{{Data.type_name}}</td>
             </tr>
           </table>
         </div>
@@ -73,11 +79,11 @@
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
-              <img v-for="item in allInfo.img.split(',')" :key="item" :src="item" alt class="tab-panel-img" />
+              <img v-for="item in Data.img.split(',')" :key="item" :src="item" alt class="tab-panel-img" />
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
-              <!-- <p v-html="$util.textBr(allInfo.introduction,'@BR@')"></p> -->
-              <p>{{allInfo.introduction}}</p>
+              <!-- <p v-html="$util.textBr(Data.introduction,'@BR@')"></p> -->
+              <p>{{Data.introduction}}</p>
             </cube-tab-panel>
             <cube-tab-panel class="comment-panel" label="评价" v-show="selectedLabel==='评价'">
               <vComment :list="commentList" v-if="commentList.length>0"></vComment>
@@ -96,7 +102,7 @@
       </div>
     </div>
 
-    <vFooter></vFooter>
+    <vFooter @emitPopup="emitPopup" :specs="Data.specs"></vFooter>
   </base-page>
 </template>
 
@@ -113,7 +119,7 @@ export default {
   },
   data() {
     return {
-      allInfo: '',
+      Data: '',
       pageNum: 0,
       loadMore: true,
       carousel: [],
@@ -133,22 +139,24 @@ export default {
     }
   },
   methods: {
+    emitPopup(v) {
+    },
     videoPlay(e) {
       e.target.paused ? e.target.play() : e.target.pause();
     },
     getCarousel() {
       let imgs = [], video = [];
-      if (!this.allInfo) return;
-      if (this.allInfo.carousel_img) {
-        imgs = this.allInfo.carousel_img.split(",").map(v => {
+      if (!this.Data) return;
+      if (this.Data.carousel_img) {
+        imgs = this.Data.carousel_img.split(",").map(v => {
           return {
             type: 'img',
             url: v
           }
         });
       }
-      if (this.allInfo.video) {
-        video = this.allInfo.video.split(",").map(v => {
+      if (this.Data.video) {
+        video = this.Data.video.split(",").map(v => {
           return {
             type: 'video',
             url: v
@@ -158,12 +166,12 @@ export default {
       this.carousel = [...imgs, ...video]
     },
     async getRecommend() {
-      if (!this.allInfo) return this.recommendList = [];
+      if (!this.Data) return this.recommendList = [];
       if (!this.loadMore) return;
       this.pageNum++
       let param = {
-        product_id: this.allInfo.id,
-        type_id: this.allInfo.type_id,
+        product_id: this.Data.id,
+        type_id: this.Data.type_id,
         pageNum: this.pageNum
       }
       let res = await this.$api.Product.getRecommend(param);
@@ -181,15 +189,15 @@ export default {
       };
     },
     async getCommentList() {
-      if (!this.allInfo) return this.commentList = [];
-      let res = await this.$api.Product.getCommentList({ product_id: this.allInfo.id });
+      if (!this.Data) return this.commentList = [];
+      let res = await this.$api.Product.getCommentList({ product_id: this.Data.id });
       this.commentList = res.list
     },
     async init() {
       this.$loading.open();
       let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
       console.log(res);
-      this.allInfo = res.product_info;
+      this.Data = res.product_info;
       this.getCarousel();
       this.getCommentList();
       this.getRecommend();
