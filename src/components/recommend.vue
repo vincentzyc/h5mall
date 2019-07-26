@@ -1,7 +1,12 @@
 <template>
   <div class="recommend-list">
-    <div v-for="item in list" :key="item.id" class="item col-6" @click="viewDetail(item.id)">
-      <img :src="item.img" alt class="item-img" />
+    <div
+      v-for="item in list"
+      :key="item.id"
+      class="item col-6"
+      @click="viewDetail(item.id)"
+    >
+      <img v-lazy="item.img" class="item-img" />
       <div class="mg-t5">
         <h4 class="textover lh20">{{item.name}}</h4>
         <div class="ctheme fs16 lh20 mg-t5">￥{{item.price}}</div>
@@ -44,6 +49,7 @@ export default {
   .item-img {
     width: 100%;
     height: 150px;
+    min-height: 150px;
   }
 }
 </style>
