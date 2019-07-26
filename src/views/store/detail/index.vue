@@ -1,28 +1,28 @@
 <template>
   <base-page>
     <common-header title="店铺详情" />
-    <div class="content-wrap" v-if="aData">
+    <div class="content-wrap" v-if="Data">
       <cube-scroll ref="scroll" :options="options" @pulling-up="onPullingUp">
         <div class="bgfff mg-t15 pd10 flex">
-          <img :src="aData.shop.img" alt="商家logo" class="square88 flex-none" />
+          <img :src="Data.shop.img" alt="商家logo" class="square88 flex-none" />
           <div class="flex flex-auto pd-l10">
             <div class="flex-auto">
               <div class="flex align-middle">
-                <h3 class="lh30 fs16 mg-r10">{{aData.shop.name}}</h3>
-                <div class="identity"></div>
+                <h3 class="lh30 fs16 mg-r10">{{Data.shop.name}}</h3>
+                <div class="identity" :class="{active:Data.farmer.verify_state===1}"></div>
               </div>
-              <p class="fs12 lh20 textover2">{{aData.shop.description}}</p>
+              <p class="fs12 lh20 textover2">{{Data.shop.description}}</p>
               <div class="flex align-middle store cyellow fs10">
                 <p class="lh26 mg-r5">用户评分</p>
-                <div v-if="aData.shop.score>0">
-                  <cube-rate v-model="aData.shop.score" disabled></cube-rate>
-                  <span>{{aData.shop.score}}分</span>
+                <div v-if="Data.star>0">
+                  <cube-rate v-model="Data.star" disabled></cube-rate>
+                  <span>{{Data.star}}分</span>
                 </div>
                 <p v-else class="c999">暂无评分！</p>
               </div>
             </div>
             <div class="flex-none">
-              <img v-if="aData.shop.qr_code" :src="aData.shop.qr_code" alt="二维码" class="qrcode" />
+              <img v-if="Data.shop.qr_code" :src="Data.shop.qr_code" alt="二维码" class="qrcode" />
             </div>
           </div>
         </div>
@@ -40,9 +40,9 @@
             <cube-tab-panel class="text-panel" label="商家信息" v-show="selectedLabel==='商家信息'">
               <div class="store-info">
                 <ul>
-                  <li>主营：阿迪，Nike</li>
-                  <li>所在地：广东省广州市</li>
-                  <li>注册时间：2019.07.07</li>
+                  <li>主营：{{Data.shop.type_name}}</li>
+                  <li>所在地：{{Data.shop.shop_province+Data.shop.shop_district+Data.shop.shop_city}}</li>
+                  <li>注册时间：{{$util.getFormatDate('yyyy-mm-dd', Data.shop.create_time)}}</li>
                   <li class="flex" @click="$refs.pagePopup.open()">
                     <span class="flex-auto">店铺介绍</span>
                     <i class="cubeic-arrow c666"></i>
@@ -70,23 +70,17 @@
       </div>
       <div class="flex flex-center flex-auto">
         <div class="icon call"></div>
-        <h5 class="fs12 c999">打电话</h5>
+        <h5 class="fs12 c999" @click="phone(Data.shop.telephone)">打电话</h5>
       </div>
     </footer>
 
     <!-- 店铺介绍 -->
     <page-popup ref="pagePopup" position="right" class="pd-t44">
-      <div class="pd10">
+      <div class="pd10" v-if="Data">
         <common-header title="店铺介绍" hideBack>
           <i slot="left" class="cubeic-back" @click="$refs.pagePopup.close()"></i>
         </common-header>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
-        <p class="lh24">店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍店铺介绍</p>
+        <p class="lh24">{{Data.shop.note}}</p>
       </div>
     </page-popup>
   </base-page>
@@ -100,7 +94,7 @@ export default {
   },
   data() {
     return {
-      aData: "",
+      Data: "",
       pageNum: 0,
       upLoadMore: true,
       pullUpLoad: {
@@ -124,6 +118,17 @@ export default {
     };
   },
   methods: {
+    phone(telephone) {
+      this.$createDialog({
+        type: 'confirm',
+        content: telephone,
+        confirmBtn: {
+          text: '拨打',
+          active: true,
+          href: 'tel:18814137454'
+        }
+      }).show()
+    },
     changeTab(tab) {
       this.options.pullUpLoad = tab === '商家信息' ? false : this.pullUpLoad;
     },
@@ -142,19 +147,19 @@ export default {
       console.log(param);
       let res = await this.$api.Store.shopDetail(param);
       console.log(res);
-      this.aData = {
-        shop: res.shop,
-        farmer: res.farmer
-      };
-      this.productList.push(...res.productList);
+      let { productList, ...Data } = res;
+      this.Data = Data;
+      this.productList.push(...productList);
       return {
         upLoadMore: res.productList.length === 10,
         hasData: res.productList.length > 0
       }
     }
   },
-  created() {
-    this.getDetail()
+  async created() {
+    this.$loading.open();
+    await this.getDetail();
+    this.$loading.close();
   }
 };
 </script>
@@ -176,6 +181,10 @@ export default {
 .identity {
   width: 20px;
   height: 15px;
+  background: #ddd url('~@/assets/img/store-detail.png') no-repeat -76px -5px / 100px 66px;
+}
+
+.identity.active {
   background: url('~@/assets/img/store-detail.png') no-repeat -77px -30px / 100px 66px;
 }
 
