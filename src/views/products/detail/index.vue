@@ -49,9 +49,9 @@
           <i class="cubeic-arrow"></i>
         </div>
 
-        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle fs12" v-if="Data.specs.length>0">
+        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle fs12" @click="$refs.footer.showPopup()" v-if="Data.specs.length>0">
           <span class="flex-none mg-r15">已选</span>
-          <div class="flex-auto">{{Data.specs[0].specsName}}</div>
+          <div class="flex-auto">{{$refs.footer.selectSpecs.specsName||''}}</div>
           <i class="cubeic-arrow"></i>
         </div>
 
@@ -102,7 +102,7 @@
       </div>
     </div>
 
-    <vFooter @emitPopup="emitPopup" :specs="Data.specs"></vFooter>
+    <vFooter @emitPopup="emitPopup" :Data="Data" ref="footer"></vFooter>
   </base-page>
 </template>
 

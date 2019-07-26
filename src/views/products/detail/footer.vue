@@ -6,7 +6,7 @@
           <div class="icon cart"></div>
           <h5 class="fs12 c999">购物车</h5>
         </div>
-        <div class="col-2">
+        <div class="col-2" @click="$router.push('/store/detail?id='+Data.shop_id)">
           <div class="icon store"></div>
           <h5 class="fs12 c999">店铺</h5>
         </div>
@@ -14,7 +14,7 @@
           <div class="icon seller"></div>
           <h5 class="fs12 c999">联系卖家</h5>
         </div>
-        <div class="col-3 add-cart">加入购物车</div>
+        <div class="col-3 add-cart" @click="showPopup()">加入购物车</div>
         <div class="col-3 pay" @click="showPopup()">立即支付</div>
       </div>
     </footer>
@@ -33,7 +33,7 @@
         <div class="specs-info">
           <p class="lh30 fs12">选择规格</p>
           <ul class="specs-content">
-            <li :class="{active:selectSpecs.id===item.id}" v-for="item in specs" :key="item.id" @click="selectSpecs=item">{{item.specsName}}</li>
+            <li :class="{active:selectSpecs.id===item.id}" v-for="item in Data.specs" :key="item.id" @click="selectSpecs=item">{{item.specsName}}</li>
           </ul>
         </div>
         <div class="flex handle">
@@ -47,21 +47,15 @@
 
 <script>
 export default {
-  props: {
-    specs: {
-      type: Array,
-      default: () => []
-    }
-  },
+  props: ['Data'],
   data() {
     return {
       selectSpecs: ''
     }
   },
   watch: {
-    specs(n) {
-      console.log(n);
-      this.selectSpecs = n[0] || ''
+    Data(n) {
+      this.selectSpecs = n.specs[0] || ''
     }
   },
   methods: {
