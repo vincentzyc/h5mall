@@ -55,6 +55,7 @@ export default {
   },
   watch: {
     Data(n) {
+      if (!n) return;
       this.selectSpecs = n.specs[0] || ''
     }
   },

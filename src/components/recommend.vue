@@ -6,7 +6,7 @@
       class="item col-6"
       @click="viewDetail(item.id)"
     >
-      <img v-lazy="item.img" class="item-img" />
+      <img v-lazy="item.carousel_img.split(',')[0]" class="item-img" />
       <div class="mg-t5">
         <h4 class="textover lh20">{{item.name}}</h4>
         <div class="ctheme fs16 lh20 mg-t5">￥{{item.price}}</div>
