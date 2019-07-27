@@ -14,6 +14,35 @@
           <div class="flex-auto">积分(20)</div>
         </div>
       </div>
+      <ul class="info-list">
+        <li>钱包：￥1111</li>
+        <li class="flex">
+          <span class="flex-auto">我关注的商家</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+        <li class="flex">
+          <span class="flex-auto">收货地址</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+      </ul>
+      <ul class="info-list">
+        <li class="flex">
+          <span class="flex-auto">联系客服</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+        <li class="flex">
+          <span class="flex-auto">成为农户</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+        <li class="flex">
+          <span class="flex-auto">设置</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+        <li class="flex">
+          <span class="flex-auto">关注公共号</span>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+      </ul>
       <div class="scroll-wrapper">
         <div class="text-center mg20">我的</div>
         <div style="height:1500px;width:100%;background:#999"></div>
@@ -84,6 +113,16 @@ export default {
   color: #fff;
   line-height: 44px;
   background: rgba(0, 0, 0, 0.15);
+}
+
+.info-list {
+  background: #fff;
+  margin-bottom: 15px;
+
+  li {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+  }
 }
 </style>
 
