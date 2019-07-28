@@ -36,8 +36,8 @@ strong,
 .thin {
 	font-weight: lighter;
 }
-.bold{
-  font-weight: bold;
+.bold {
+	font-weight: bold;
 }
 .container {
 	position: relative;
@@ -180,11 +180,19 @@ strong,
 /*flex end*/
 
 /*超出部分省略号*/
-
+/* 必须固定宽度 */
 .textover {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+/* 可用于flex布局自适应宽度 */
+.textover1 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }
 .textover2 {
 	overflow: hidden;
