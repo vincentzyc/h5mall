@@ -14,9 +14,37 @@
           <div class="flex-auto">积分(20)</div>
         </div>
       </div>
+      <div class="bgfff mg-b15">
+        <div class="flex pd15 border-beee">
+          <span class="flex-auto">我的订单</span>
+          <span class="c999 mg-r10 fs12">查看全部</span>
+          <i class="cubeic-arrow c666"></i>
+        </div>
+        <ul class="flex order-state">
+          <li>
+            <img src="@/assets/img/menu.png" alt />
+            <div>待付款</div>
+          </li>
+          <li>
+            <img src="@/assets/img/menu.png" alt />
+            <div>待发货</div>
+          </li>
+          <li>
+            <img src="@/assets/img/menu.png" alt />
+            <div>待收货</div>
+          </li>
+          <li>
+            <img src="@/assets/img/menu.png" alt />
+            <div>待评价</div>
+          </li>
+        </ul>
+      </div>
       <ul class="info-list">
-        <li>钱包：￥1111</li>
         <li class="flex">
+          <span class="flex-auto">钱包：</span>
+          <strong class="ctheme">￥1111</strong>
+        </li>
+        <li class="flex" @click="$router.push('/me/likestore')">
           <span class="flex-auto">我关注的商家</span>
           <i class="cubeic-arrow c666"></i>
         </li>
@@ -43,21 +71,14 @@
           <i class="cubeic-arrow c666"></i>
         </li>
       </ul>
-      <div class="scroll-wrapper">
-        <div class="text-center mg20">我的</div>
-        <div style="height:1500px;width:100%;background:#999"></div>
-        <div class="text-center mg20">到底啦</div>
-      </div>
       <!-- </cube-scroll> -->
     </div>
   </base-page>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
-  name: "home",
+  name: "me",
   components: {
   },
   data() {
@@ -112,15 +133,32 @@ export default {
   text-align: center;
   color: #fff;
   line-height: 44px;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.order-state {
+  padding: 20px 0;
+  color: #999;
+
+  li {
+    text-align: center;
+    width: 25%;
+  }
+
+  img {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 10px;
+  }
 }
 
 .info-list {
   background: #fff;
   margin-bottom: 15px;
+  padding: 0 10px;
 
   li {
-    padding: 15px 10px;
+    padding: 20px 10px;
     border-bottom: 1px solid #eee;
   }
 }

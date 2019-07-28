@@ -16,7 +16,7 @@
 // import vFooter from "./footer.vue";
 
 export default {
-  name: "home",
+  name: "message",
   components: {
     // 'v-header': vHeader,
     // 'v-footer': vFooter
