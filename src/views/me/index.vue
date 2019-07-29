@@ -22,51 +22,58 @@
         </div>
         <ul class="flex order-state">
           <li>
-            <img src="@/assets/img/menu.png" alt />
+            <div class="state state1"></div>
             <div>待付款</div>
           </li>
           <li>
-            <img src="@/assets/img/menu.png" alt />
+            <div class="state state2"></div>
             <div>待发货</div>
           </li>
           <li>
-            <img src="@/assets/img/menu.png" alt />
+            <div class="state state3"></div>
             <div>待收货</div>
           </li>
           <li>
-            <img src="@/assets/img/menu.png" alt />
+            <div class="state state4"></div>
             <div>待评价</div>
           </li>
         </ul>
       </div>
       <ul class="info-list">
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon1"></div>
           <span class="flex-auto">钱包：</span>
           <strong class="ctheme">￥1111</strong>
         </li>
-        <li class="flex" @click="$router.push('/me/likestore')">
+        <li class="flex align-middle" @click="$router.push('/me/likestore')">
+          <div class="icon icon2"></div>
           <span class="flex-auto">我关注的商家</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon3"></div>
           <span class="flex-auto">收货地址</span>
           <i class="cubeic-arrow c666"></i>
         </li>
       </ul>
       <ul class="info-list">
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon4"></div>
           <span class="flex-auto">联系客服</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon5"></div>
           <span class="flex-auto">成为农户</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon6"></div>
           <span class="flex-auto">设置</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex">
+        <li class="flex align-middle">
+          <div class="icon icon7"></div>
           <span class="flex-auto">关注公共号</span>
           <i class="cubeic-arrow c666"></i>
         </li>
@@ -150,6 +157,28 @@ export default {
     height: 36px;
     margin-bottom: 10px;
   }
+
+  .state {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 10px auto;
+  }
+
+  .state1 {
+    background: url('~@/assets/img/me.png') no-repeat -240px 0 / auto 100%;
+  }
+
+  .state2 {
+    background: url('~@/assets/img/me.png') no-repeat -279px 0 / auto 100%;
+  }
+
+  .state3 {
+    background: url('~@/assets/img/me.png') no-repeat -319px 0 / auto 100%;
+  }
+
+  .state4 {
+    background: url('~@/assets/img/me.png') no-repeat -358px 0 / auto 100%;
+  }
 }
 
 .info-list {
@@ -158,8 +187,41 @@ export default {
   padding: 0 10px;
 
   li {
-    padding: 20px 10px;
+    padding: 12px 5px;
     border-bottom: 1px solid #eee;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon1 {
+    background: url('~@/assets/img/me.png') no-repeat -44px -1px / auto 100%;
+  }
+
+  .icon2 {
+    background: url('~@/assets/img/me.png') no-repeat -21px -1px / auto 100%;
+  }
+
+  .icon3 {
+    background: url('~@/assets/img/me.png') no-repeat -67px -1px / auto 100%;
+  }
+
+  .icon4 {
+    background: url('~@/assets/img/me.png') no-repeat -89px -1px / auto 100%;
+  }
+
+  .icon5 {
+    background: url('~@/assets/img/me.png') no-repeat -113px -1px / auto 100%;
+  }
+
+  .icon6 {
+    background: url('~@/assets/img/me.png') no-repeat -136px -1px / auto 100%;
+  }
+
+  .icon7 {
+    background: url('~@/assets/img/me.png') no-repeat 0 -1px / auto 100%;
   }
 }
 </style>

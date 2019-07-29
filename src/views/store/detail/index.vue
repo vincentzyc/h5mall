@@ -125,7 +125,7 @@ export default {
         confirmBtn: {
           text: '拨打',
           active: true,
-          href: 'tel:18814137454'
+          href: 'tel:' + telephone
         }
       }).show()
     },
