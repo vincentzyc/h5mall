@@ -79,7 +79,7 @@
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
-              <img v-for="item in Data.img.split(',')" :key="item" :src="item" alt class="tab-panel-img" />
+              <img v-for="item in Data.img.split(',')" :key="item" v-lazy="item" alt class="tab-panel-img" />
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
               <!-- <p v-html="$util.textBr(Data.introduction,'@BR@')"></p> -->
