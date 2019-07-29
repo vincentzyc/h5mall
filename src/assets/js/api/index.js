@@ -42,6 +42,7 @@ const Api = {
         if (res.status !== 200) {
           console.log('请求失败', res);
           if (backType === 'getError') resolve({ error: true });
+          vm.$loading.close();
           return vm.$createDialog({ content: res.message || '网络繁忙' }).show();
         }
         let backData = '';
@@ -50,6 +51,7 @@ const Api = {
             backData = JSON.parse(Crypto.decrypt(res.data, key, iv));
           } catch (error) {
             console.log('------------JSON.parse fail------------');
+            vm.$loading.close();
             return vm.$createDialog({ content: '数据异常' }).show();
           }
         } else {
@@ -59,10 +61,12 @@ const Api = {
         if (backType === 'allData') return resolve(backData);
         if (code === '1') return resolve(result || '');
         if (backType === 'getError') resolve({ error: true });
+        vm.$loading.close();
         vm.$createDialog({ content: msg || '服务器异常' }).show();
       }).catch(error => {
         console.log(error);
         if (backType === 'getError') resolve({ error: true });
+        vm.$loading.close();
         vm.$createDialog({ content: '网络异常' }).show();
       });
     })
