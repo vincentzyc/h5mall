@@ -35,6 +35,21 @@ export default new VueRouter({
       component: () => import("./views/me")
     },
     {
+      path: "/me/login",
+      name: "login",
+      component: () => import("./views/me/login")
+    },
+    {
+      path: "/me/register",
+      name: "register",
+      component: () => import("./views/me/register")
+    },
+    {
+      path: "/me/forgetpsw",
+      name: "forgetpsw",
+      component: () => import("./views/me/forget-password")
+    },
+    {
       path: "/me/likestore",
       name: "likeStore",
       component: () => import("./views/me/like-store")

@@ -1,6 +1,6 @@
 <template>
   <input
-    class="md-input-item-input"
+    class="yui-base-input-item"
     :type="inputType"
     :name="name"
     v-model="inputBindValue"
@@ -259,10 +259,10 @@ export default {
 
     // MARK: public methods
     focus() {
-      this.$el.querySelector('.md-input-item-input').focus()
+      this.$el.querySelector('.yui-base-input-item').focus()
     },
     blur() {
-      this.$el.querySelector('.md-input-item-input').blur()
+      this.$el.querySelector('.yui-base-input-item').blur()
     },
     getValue() {
       return this.inputValue
