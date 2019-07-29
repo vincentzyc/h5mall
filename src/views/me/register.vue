@@ -27,7 +27,7 @@
           <label class="flex-none input-title">确认密码：</label>
           <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
         </div>
-        <cube-checkbox v-model="checked" shape="square" class="agree">登录即代表您同意掌农的用户协议和隐私条款</cube-checkbox>
+        <cube-checkbox v-model="checked" shape="square" class="agree">登录即代表您同意用户协议和隐私条款</cube-checkbox>
         <cube-button :primary="true" class="reg-btn" @click="submit()">注册</cube-button>
       </div>
     </div>
@@ -69,9 +69,6 @@ export default {
           this.disabled = false;
         }
       );
-      // this.$createDialog({
-      //   content: '验证码已发送'
-      // }).show()
       this.$createToast({
         txt: '验证码已发送',
         type: 'txt'
@@ -87,7 +84,7 @@ export default {
       this.sendcCode();
     },
     checkInfo() {
-      if (!this.checked) return "请同意掌农服务协议";
+      if (!this.checked) return "请同意服务协议";
       if (this.formData.phone === "") return "请输入手机号";
       if (!this.$util.checkMobile(this.formData.phone)) return "手机号输入有误";
       if (this.formData.checkCode === "") return "请输入验证码";
