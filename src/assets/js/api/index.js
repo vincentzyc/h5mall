@@ -27,11 +27,6 @@ const Api = {
     if (window.location.href.includes('test-mgr')) return 'test';
     return 'production'
   },
-  baseUrl() {
-    if (this.env() === "development") return "http://192.168.xxx.xxx:xxxx/";
-    if (this.env() === 'test') return "http://test.xxx.com/";
-    return "http://xxx.com/";
-  },
   axiosPost(url, data, backType = 'success', encrypt = true) {
     if (encrypt) {
       var { key, iv, ...encryptData } = Crypto.encrypt(data);
