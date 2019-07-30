@@ -35,7 +35,16 @@
           <ul class="specs-content">
             <li :class="{active:selectSpecs.id===item.id}" v-for="item in Data.specs" :key="item.id" @click="selectSpecs=item">{{item.specsName}}</li>
           </ul>
+          <div class="flex align-middle mg-b10">
+            <span class="c666 fs12">购买数量</span>
+            <div class="flex align-middle flex-auto justify-end">
+              <span class="icon cut" @click="number = number>1?number-1:1"></span>
+              <span class="mg5">{{number}}</span>
+              <span class="icon add" @click="number = number+1"></span>
+            </div>
+          </div>
         </div>
+
         <div class="flex handle">
           <div class="flex-auto btn add-cart">加入购物车</div>
           <div class="flex-auto btn pay" @click="handlePay()">立即购买</div>
@@ -50,7 +59,8 @@ export default {
   props: ['Data'],
   data() {
     return {
-      selectSpecs: ''
+      selectSpecs: '',
+      number: 1
     }
   },
   watch: {
@@ -135,30 +145,38 @@ export default {
     left: 15px;
     right: 15px;
     bottom: 50px;
+    font-size: 12px;
+    overflow-y: auto;
 
-    .specs-content {
-      position: absolute;
-      top: 30px;
-      bottom: 0;
-      font-size: 12px;
-      overflow-y: auto;
+    li {
+      display: inline-block;
+      margin-bottom: 15px;
+      margin-right: 15px;
+      padding: 10px 15px;
+      border-radius: 20px;
+      background: #eee;
+      color: #333;
+      border: 1px solid transparent;
+    }
 
-      li {
-        display: inline-block;
-        margin-bottom: 15px;
-        margin-right: 15px;
-        padding: 10px 15px;
-        border-radius: 20px;
-        background: #eee;
-        color: #333;
-        border: 1px solid transparent;
-      }
+    li.active {
+      background: $color-theme-light-sss;
+      border-color: $color-theme;
+      color: $color-theme;
+    }
 
-      li.active {
-        background: $color-theme-light;
-        border-color: $color-theme;
-        color: $color-theme;
-      }
+    .icon {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+    }
+
+    .cut {
+      background: url('~@/assets/img/cart.png') no-repeat 0px 0px / auto 140px;
+    }
+
+    .add {
+      background: url('~@/assets/img/cart.png') no-repeat 0px -30px / auto 140px;
     }
   }
 

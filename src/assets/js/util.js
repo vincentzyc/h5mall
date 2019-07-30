@@ -114,14 +114,19 @@ export default {
   // 		return 'others';
   // 	}
   // },
+  /**
+	 * 判断是否Android或者iOS嵌入
+	 */
   checkDevice() {
     let u = navigator.userAgent;
-    if (/(Android|Adr)/i.test(u)) {
+    let isAndroid = u.indexOf('zhangnongnetAndroid') > -1; //Android嵌入
+    let isiOS = u.indexOf('zhangnongnetIOS') > -1; //iOS嵌入
+    if (isAndroid) {
       return 'android';
-    } else if (/(iPhone|iPad|iPod|iOS)/i.test(u)) {
+    } else if (isiOS) {
       return 'ios';
     } else {
-      return 'pc';
+      return 'h5';
     }
   },
 	/**
