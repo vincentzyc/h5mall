@@ -117,7 +117,7 @@ export default {
   /**
 	 * 判断是否Android或者iOS嵌入
 	 */
-  checkDevice() {
+  platform() {
     let u = navigator.userAgent;
     let isAndroid = u.indexOf('zhangnongnetAndroid') > -1; //Android嵌入
     let isiOS = u.indexOf('zhangnongnetIOS') > -1; //iOS嵌入

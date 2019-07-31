@@ -2,15 +2,17 @@
   <base-page>
     <div id="detail_wrap" class="container fs14">
       <div v-if="Data">
-        <i class="cubeic-back detail-back" @click="$router.back()"></i>
-        <div class="drop-down-menu">
-          <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
-          <transition name="fade">
-            <div class="menu" v-show="showDropDownMenu">
-              <p class="border-beee">分享</p>
-              <p>收藏店铺</p>
-            </div>
-          </transition>
+        <div v-if="$util.platform()==='h5'">
+          <i class="cubeic-back detail-back" @click="$router.back()"></i>
+          <div class="drop-down-menu">
+            <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
+            <transition name="fade">
+              <div class="menu" v-show="showDropDownMenu">
+                <p class="border-beee">分享</p>
+                <p>收藏店铺</p>
+              </div>
+            </transition>
+          </div>
         </div>
 
         <div class="common-slide detail-slide">
@@ -41,7 +43,7 @@
           </div>
         </div>
 
-        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle">
+        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle" @click="getCoupon()">
           <div class="flex flex-auto align-middle">
             <img src="@/assets/img/discount.png" alt="优惠券" class="discount" />
             <span class="mg-l5 fs14">优惠券领取</span>
@@ -102,7 +104,7 @@
       </div>
     </div>
 
-    <vFooter @emitPopup="emitPopup" :Data="Data" ref="footer"></vFooter>
+    <vFooter :Data="Data" :pageNum="pageNum" ref="footer"></vFooter>
   </base-page>
 </template>
 
@@ -120,7 +122,7 @@ export default {
   data() {
     return {
       Data: '',
-      pageNum: 0,
+      pageNum: 1,
       loadMore: true,
       carousel: [],
       showDropDownMenu: false,
@@ -139,8 +141,15 @@ export default {
     }
   },
   methods: {
-    emitPopup(v) {
+    // 交互函数
+    // 优惠券领取
+    getCoupon() {
+      let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
+      if (this.$util.platform() === 'android') return window.getCoupon(str);
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpCoupon.postMessage(str);
+      return this.$createDialog({ content: '优惠券领取' }).show();
     },
+    // /交互函数 
     videoPlay(e) {
       e.target.paused ? e.target.play() : e.target.pause();
     },

@@ -2,15 +2,15 @@
   <div>
     <footer class="footer-wrap">
       <div class="flex">
-        <div class="col-2">
+        <div class="col-2" @click="toCart()">
           <div class="icon cart"></div>
           <h5 class="fs12 c999">购物车</h5>
         </div>
-        <div class="col-2" @click="$router.push('/store/detail?id='+Data.shop_id)">
+        <div class="col-2" @click="toShop()">
           <div class="icon store"></div>
           <h5 class="fs12 c999">店铺</h5>
         </div>
-        <div class="col-2">
+        <div class="col-2" @click="toChat()">
           <div class="icon seller"></div>
           <h5 class="fs12 c999">联系卖家</h5>
         </div>
@@ -46,8 +46,8 @@
         </div>
 
         <div class="flex handle">
-          <div class="flex-auto btn add-cart">加入购物车</div>
-          <div class="flex-auto btn pay" @click="handlePay()">立即购买</div>
+          <div class="flex-auto btn add-cart" @click="addCart()">加入购物车</div>
+          <div class="flex-auto btn pay" @click="toPay()">立即购买</div>
         </div>
       </cube-popup>
     </div>
@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  props: ['Data'],
+  props: ['Data', "pageNum"],
   data() {
     return {
       selectSpecs: '',
@@ -70,10 +70,53 @@ export default {
     }
   },
   methods: {
-    handlePay() {
-      console.log("立即购买");
-      // this.$refs.specsPopup.show()
+    // 交互函数
+    // 购物车
+    toCart() {
+      if (this.$util.platform() === 'android') return window.toCart();
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShoppingCart.postMessage();
+      return this.$router.push('/cart')
     },
+    // 店铺
+    toShop() {
+      let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
+      if (this.$util.platform() === 'android') return window.toShop(str);
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShop.postMessage(str);
+      return this.$router.push('/store/detail?id=' + (this.Data.shop_id || '').toString())
+    },
+    // 联系卖家
+    toChat() {
+      let str = JSON.stringify({
+        shop_id: (this.Data.shop_id || '').toString(),
+        product_id: (this.Data.id || '').toString(),
+      });
+      if (this.$util.platform() === 'android') return window.toChat(str);
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.contactSellers.postMessage(str);
+      return this.$createDialog({ content: '联系卖家' }).show();
+    },
+    // 加入购物车
+    addCart() {
+      let str = JSON.stringify({
+        product_id: (this.Data.id || '').toString(),
+        specs_id: (this.selectSpecs.id || '').toString(),
+        num: this.pageNum.toString()
+      })
+      if (this.$util.platform() === 'android') return window.addCart(str);
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.addShoppingCart.postMessage(str);
+      return this.$createDialog({ content: '加入购物车' }).show();
+    },
+    // 立即支付
+    toPay() {
+      let str = JSON.stringify({
+        product_id: (this.Data.id || '').toString(),
+        specs_id: (this.selectSpecs.id || '').toString(),
+        num: this.pageNum.toString()
+      })
+      if (this.$util.platform() === 'android') return window.toPay(str);
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.buyNow.postMessage(str);
+      return this.$createDialog({ content: '立即支付' }).show();
+    },
+    // /交互函数 
     showPopup() {
       this.$refs.specsPopup.show()
     },
