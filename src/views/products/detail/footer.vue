@@ -38,9 +38,9 @@
           <div class="flex align-middle mg-b10">
             <span class="c666 fs12">购买数量</span>
             <div class="flex align-middle flex-auto justify-end">
-              <span class="icon cut" @click="number = number>1?number-1:1"></span>
-              <span class="mg5">{{number}}</span>
-              <span class="icon add" @click="number = number+1"></span>
+              <span class="icon cut" @click="number = number>1?number-1:1">-</span>
+              <span class="mg10">{{number}}</span>
+              <span class="icon add" @click="number = number+1">+</span>
             </div>
           </div>
         </div>
@@ -211,15 +211,20 @@ export default {
     .icon {
       display: inline-block;
       width: 30px;
-      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+      border-radius: 5px;
+      text-align: center;
+      color: #666;
+      border: 1px solid #ccc;
     }
 
     .cut {
-      background: url('~@/assets/img/cart.png') no-repeat 0px 0px / auto 140px;
+      // background: url('~@/assets/img/cart.png') no-repeat 0px 0px / auto 140px;
     }
 
     .add {
-      background: url('~@/assets/img/cart.png') no-repeat 0px -30px / auto 140px;
+      // background: url('~@/assets/img/cart.png') no-repeat 0px -30px / auto 140px;
     }
   }
 
