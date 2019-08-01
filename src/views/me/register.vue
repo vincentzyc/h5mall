@@ -10,14 +10,7 @@
         <div class="flex align-middle input-wrap">
           <label class="flex-none input-title">验证码：</label>
           <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
-          <cube-button
-            :inline="true"
-            :primary="true"
-            :outline="true"
-            :disabled="disabled"
-            class="getcode flex-none mg-l10"
-            @click="getSmsCode()"
-          >{{codetxt}} {{time}}</cube-button>
+          <verifica-code :phone="formData.phone"/>
         </div>
         <div class="flex align-middle input-wrap">
           <label class="flex-none input-title">密码：</label>
@@ -35,9 +28,12 @@
 </template>
 
 <script>
-
+import VerificaCode from '@/components/verifica-code'
 export default {
   name: 'register',
+  components:{
+    "verifica-code":VerificaCode
+  },
   data() {
     return {
       formData: {
@@ -55,34 +51,6 @@ export default {
     }
   },
   methods: {
-    sendcCode() {
-      this.disabled = true;
-      this.codetxt = "重新发送";
-      this.time = "60";
-      this.$util.countDown(
-        this.time,
-        tick => {
-          this.time = tick;
-        },
-        () => {
-          this.time = "";
-          this.disabled = false;
-        }
-      );
-      this.$createToast({
-        txt: '验证码已发送',
-        type: 'txt'
-      }).show()
-    },
-    async getSmsCode() {
-      if (this.disabled) return;
-      let param = {
-        phone: this.formData.phone,
-        codeType: "2"
-      }
-      let res = await this.$api.Common.getCode(param)
-      this.sendcCode();
-    },
     checkInfo() {
       if (!this.checked) return "请同意服务协议";
       if (this.formData.phone === "") return "请输入手机号";
