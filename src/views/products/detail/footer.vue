@@ -74,7 +74,7 @@ export default {
     // 购物车
     toCart() {
       if (this.$util.platform() === 'android') return window.toCart();
-      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShoppingCart.postMessage();
+      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShoppingCart.postMessage(""); //必须要参数，否则交互无效
       return this.$router.push('/cart')
     },
     // 店铺
