@@ -210,8 +210,8 @@ export default {
 
     .icon {
       display: inline-block;
-      width: 30px;
-      line-height: 30px;
+      width: 26px;
+      line-height: 26px;
       font-size: 16px;
       border-radius: 5px;
       text-align: center;
