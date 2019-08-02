@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Crypto from "../crypto.js"
+import Crypto from "@/utils/crypto.js"
 import Common from './common.js';
 import Product from './product.js';
 import Store from './store.js';

@@ -6,7 +6,8 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/css/base.css";
 import "./assets/css/main.styl"
-import "./assets/js";
+import Api from './api';
+import Util from './utils';
 import BaseComponents from "./components/base"; //导入组件库
 
 Vue.use(VueLazyload, {
@@ -16,9 +17,12 @@ Vue.use(VueLazyload, {
 
 Vue.use(BaseComponents);
 
-Vue.config.productionTip = false;
+Vue.prototype.$api = Api;
+Vue.prototype.$util = Util;
+
 Vue.prototype.BASE_URL = process.env.BASE_URL;
 
+Vue.config.productionTip = false;
 
 new Vue({
   router,
