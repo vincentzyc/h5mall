@@ -8,6 +8,14 @@ export default {
   getType(value) {
     return Object.prototype.toString.call(value).slice(8, -1)
   },
+  /**
+   * 判断是否为空
+   * @param str 需要判断的值
+   */
+  isNull(str) {
+    if (!str || str === "" || str === null || str === undefined) return true;
+    return false;
+  },
 	/**
 	 * 设置cookie
 	 * @param key  key
