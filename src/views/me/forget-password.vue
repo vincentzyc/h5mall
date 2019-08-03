@@ -1,5 +1,5 @@
 <template>
-  <base-page class="reg-page">
+  <base-page class="login-form">
     <div>
       <common-header title="找回密码"></common-header>
       <div class="form-wrapper">
@@ -20,7 +20,7 @@
           <label class="flex-none input-title">确认密码：</label>
           <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
         </div>
-        <cube-button :primary="true" class="reg-btn" @click="submit()">确定</cube-button>
+        <cube-button :primary="true" class="block-btn" @click="submit()">确定</cube-button>
       </div>
     </div>
   </base-page>
@@ -81,47 +81,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-.reg-page {
-  background: #fff;
-}
-
-.form-wrapper {
-  margin: 20px 30px;
-}
-
-.input-wrap {
-  border-bottom: 1px solid #999;
-  margin-bottom: 15px;
-}
-
-.input-title {
-  min-width: 70px;
-}
-
-.reg-btn {
-  margin-top: 30px;
-  border-radius: 10px;
-}
-
-.input-item {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  outline: 0;
-}
-
-.agree /deep/ {
-  padding: 0;
-  margin: 0;
-
-  .cube-checkbox-wrap {
-    padding: 0;
-  }
-
-  .cube-checkbox-label {
-    font-size: 12px;
-  }
-}
-</style>

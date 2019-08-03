@@ -1,28 +1,26 @@
 <template>
-  <base-page class="reg-page">
-    <div>
-      <common-header title="注册"></common-header>
-      <div class="form-wrapper">
-        <div class="flex align-middle input-wrap">
-          <label class="flex-none input-title">手机号：</label>
-          <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
-        </div>
-        <div class="flex align-middle input-wrap">
-          <label class="flex-none input-title">验证码：</label>
-          <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
-          <verifica-code :phone="formData.phone"/>
-        </div>
-        <div class="flex align-middle input-wrap">
-          <label class="flex-none input-title">密码：</label>
-          <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
-        </div>
-        <div class="flex align-middle input-wrap">
-          <label class="flex-none input-title">确认密码：</label>
-          <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
-        </div>
-        <cube-checkbox v-model="checked" shape="square" class="agree">登录即代表您同意用户协议和隐私条款</cube-checkbox>
-        <cube-button :primary="true" class="reg-btn" @click="submit()">注册</cube-button>
+  <base-page class="login-form">
+    <common-header title="注册"></common-header>
+    <div class="form-wrapper">
+      <div class="flex align-middle input-wrap">
+        <label class="flex-none input-title">手机号：</label>
+        <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
       </div>
+      <div class="flex align-middle input-wrap">
+        <label class="flex-none input-title">验证码：</label>
+        <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
+        <verifica-code :phone="formData.phone" />
+      </div>
+      <div class="flex align-middle input-wrap">
+        <label class="flex-none input-title">密码：</label>
+        <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
+      </div>
+      <div class="flex align-middle input-wrap">
+        <label class="flex-none input-title">确认密码：</label>
+        <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
+      </div>
+      <cube-checkbox v-model="checked" shape="square" class="agree">登录即代表您同意用户协议和隐私条款</cube-checkbox>
+      <cube-button :primary="true" class="block-btn" @click="submit()">注册</cube-button>
     </div>
   </base-page>
 </template>
@@ -31,8 +29,8 @@
 import VerificaCode from '@/components/verifica-code'
 export default {
   name: 'register',
-  components:{
-    "verifica-code":VerificaCode
+  components: {
+    "verifica-code": VerificaCode
   },
   data() {
     return {
@@ -83,47 +81,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-.reg-page {
-  background: #fff;
-}
-
-.form-wrapper {
-  margin: 20px 30px;
-}
-
-.input-wrap {
-  border-bottom: 1px solid #999;
-  margin-bottom: 15px;
-}
-
-.input-title {
-  min-width: 70px;
-}
-
-.reg-btn {
-  margin-top: 30px;
-  border-radius: 10px;
-}
-
-.input-item {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  outline: 0;
-}
-
-.agree /deep/ {
-  padding: 0;
-  margin: 0;
-
-  .cube-checkbox-wrap {
-    padding: 0;
-  }
-
-  .cube-checkbox-label {
-    font-size: 12px;
-  }
-}
-</style>
