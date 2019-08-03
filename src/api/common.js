@@ -8,4 +8,7 @@ export default [{
 }, {
   name: "register",
   url: "/appUser/reg"  //用户注册接口
+}, {
+  name: "updatePwdByCode",
+  url: "/appUser/updatePwdByCode"   // 用户通过验证码修改登录密码接口
 }]

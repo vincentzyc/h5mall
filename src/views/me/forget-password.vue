@@ -1,60 +1,127 @@
 <template>
-  <base-page>
+  <base-page class="reg-page">
     <div>
-      <h2>找回密码</h2>
-      <div class="input-item-wrapper">
-        <base-input-item class="input-item" title="普通文本" placeholder="普通文本(最大长度5)" :maxlength="5"></base-input-item>
-        <base-input-item class="input-item" title="禁用表单" value="禁用表单" disabled></base-input-item>
-        <base-input-item class="input-item" title="只读表单" value="只读表单" readonly></base-input-item>
-        <base-input-item class="input-item" title="银行卡" type="bankCard" placeholder="bankCard xxxx xxxx xxxx xxxx"></base-input-item>
-        <base-input-item class="input-item" title="手机号" type="phone" v-model="phone" placeholder="phone xxx xxxx xxxx"></base-input-item>
-        <base-input-item
-          class="input-item"
-          title="金额"
-          type="money"
-          v-model="money"
-          @keydown="onInputKeydown"
-          @change="onInputChange"
-          placeholder="money xx, xxx.xxxx"
-        ></base-input-item>
-        <base-input-item class="input-item" title="数字" type="digit" v-model="digit" placeholder="digit 0123456789"></base-input-item>
-        <base-input-item class="input-item" title="密码" type="password" placeholder="password *********"></base-input-item>
-        <base-input-item class="input-item" title="邮箱" type="email" placeholder="其他标准 html input 类型"></base-input-item>
-        <cube-button :primary="true" @click="$router.back()">back</cube-button>
+      <common-header title="找回密码"></common-header>
+      <div class="form-wrapper">
+        <div class="flex align-middle input-wrap">
+          <label class="flex-none input-title">手机号：</label>
+          <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
+        </div>
+        <div class="flex align-middle input-wrap">
+          <label class="flex-none input-title">验证码：</label>
+          <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
+          <verifica-code :phone="formData.phone" />
+        </div>
+        <div class="flex align-middle input-wrap">
+          <label class="flex-none input-title">密码：</label>
+          <base-input-item class="input-item flex-auto" type="password" v-model="formData.new_password" placeholder="请输入密码"></base-input-item>
+        </div>
+        <div class="flex align-middle input-wrap">
+          <label class="flex-none input-title">确认密码：</label>
+          <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
+        </div>
+        <cube-button :primary="true" class="reg-btn" @click="submit()">确定</cube-button>
       </div>
     </div>
   </base-page>
 </template>
 
 <script>
-
+import VerificaCode from '@/components/verifica-code'
 export default {
-  name: 'App',
+  name: 'forgetpsw',
+  components: {
+    "verifica-code": VerificaCode
+  },
   data() {
     return {
-      inputValue: "",
-      phone: '18866669999',
-      money: '',
-      digit: ''
+      formData: {
+        phone: '',
+        checkCode: '',
+        new_password: '',
+        confirmPassword: '',
+        download_channel: '9',
+        phone_sys_type: '1'
+      },
+      disabled: false,
+      codetxt: "获取验证码",
+      time: "",
     }
   },
   methods: {
-    onInputKeydown(event) {
-      console.log(`[InputItem keydown] ${event.keyCode}`)
+    checkInfo() {
+      if (this.formData.phone === "") return "请输入手机号";
+      if (!this.$util.checkMobile(this.formData.phone)) return "手机号输入有误";
+      if (this.formData.checkCode === "") return "请输入验证码";
+      if (!/^[0-9]{6}$/.test(this.formData.checkCode)) return "验证码有误";
+      if (this.formData.new_password === "") return "请输入密码";
+      if (this.formData.confirmPassword === "") return "请确认密码";
+      if (this.formData.new_password !== this.formData.confirmPassword) return "两次密码不一致";
+      return true;
     },
-    onInputChange(name, value) {
-      console.log(`[InputItem change] ${value}`)
+    async submit() {
+      let result = this.checkInfo();
+      if (result !== true) {
+        return this.$createToast({
+          txt: result,
+          type: 'txt',
+          time: 2000
+        }).show()
+      }
+      this.$loading.open();
+      console.log(this.formData);
+      let res = await this.$api.Common.updatePwdByCode(this.formData);
+      console.log(res);
+      this.$createDialog({
+        content: '密码设置成功，请重新登录',
+        onConfirm: () => this.$router.replace('/login')
+      }).show()
+      this.$loading.close();
     }
   }
 }
 </script>
-<style scoped>
-.input-item-wrapper {
-  margin-top: 15px;
+
+<style lang="stylus" scoped>
+.reg-page {
+  background: #fff;
 }
+
+.form-wrapper {
+  margin: 20px 30px;
+}
+
+.input-wrap {
+  border-bottom: 1px solid #999;
+  margin-bottom: 15px;
+}
+
+.input-title {
+  min-width: 70px;
+}
+
+.reg-btn {
+  margin-top: 30px;
+  border-radius: 10px;
+}
+
 .input-item {
-  margin: 10px;
+  width: 100%;
   padding: 10px;
-  border: 1px solid #333;
+  border: none;
+  outline: 0;
+}
+
+.agree /deep/ {
+  padding: 0;
+  margin: 0;
+
+  .cube-checkbox-wrap {
+    padding: 0;
+  }
+
+  .cube-checkbox-label {
+    font-size: 12px;
+  }
 }
 </style>
