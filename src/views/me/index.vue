@@ -5,9 +5,9 @@
       <div class="user-info">
         <div class="userimg">
           <img src="@/assets/img/logo.png" alt />
-          <span class="vip">v0</span>
+          <span class="vip">v{{user.grade?user.grade:0}}</span>
         </div>
-        <div class="text-center fs18 cfff mg15">vincnet</div>
+        <div class="text-center fs18 cfff mg15">{{user.name}}</div>
         <div class="flex opacitybg">
           <div class="flex-auto">优惠券(1)</div>
           <span>|</span>
@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      user: "",
       items: [
 
       ]
@@ -98,6 +99,11 @@ export default {
   methods: {
 
   },
+  created() {
+    let userInfo = this.$util.getLStorage('userInfo', true);
+    console.log(userInfo);
+    if (userInfo) this.user = userInfo.user
+  }
 };
 </script>
 
