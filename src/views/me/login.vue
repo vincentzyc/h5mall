@@ -28,6 +28,10 @@
             <label class="flex-none input-title min-width">密码：</label>
             <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
           </div>
+          <div class="clearfix ctheme">
+            <span class="pull-left" @click="$router.push('/me/register')">注册</span>
+            <span class="pull-right" @click="$router.push('/me/forgetpsw')">忘记密码</span>
+          </div>
         </cube-tab-panel>
       </cube-tab-panels>
       <cube-button :primary="true" class="block-btn" @click="submit()">确定</cube-button>
@@ -37,7 +41,6 @@
 
 <script>
 import VerificaCode from '@/components/verifica-code'
-import { userInfo } from 'os';
 export default {
   name: 'login',
   components: {
