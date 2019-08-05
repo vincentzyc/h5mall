@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <div class="page-t0">
+    <div class="page-t0 me-wrap">
       <!-- <cube-scroll ref="scroll"> -->
       <div class="user-info">
         <div class="userimg">
@@ -57,7 +57,7 @@
         </li>
       </ul>
       <ul class="info-list">
-        <li class="flex align-middle">
+        <li class="flex align-middle" @click="contact()">
           <div class="icon icon4"></div>
           <span class="flex-auto">联系客服</span>
           <i class="cubeic-arrow c666"></i>
@@ -91,18 +91,49 @@ export default {
   data() {
     return {
       user: "",
+      contactPhone: "18827737585",
       items: [
 
       ]
     }
   },
   methods: {
-
+    contact() {
+      this.$createDialog({
+        type: 'confirm',
+        confirmBtn: {
+          text: '拨打',
+          active: true,
+          href: 'tel:' + this.contactPhone
+        }
+      }, (createElement) => {
+        return [
+          createElement('div', {
+            'class': ['bgtheme', 'cfff', 'lh30', 'fs14', 'pd10'],
+            slot: 'title'
+          }, '欢迎联系客服'),
+          createElement('p', {
+            'class': ['text-center'],
+            slot: 'content'
+          }, [
+              createElement('p', {
+                'class': ['c000', 'lh30']
+              }, this.contactPhone),
+              createElement('p', {
+                'class': ['c999']
+              }, '（周一至周五）9:00-18:00)')
+            ])
+        ]
+      }).show()
+    }
   },
   created() {
     let userInfo = this.$util.getLStorage('userInfo', true);
-    console.log(userInfo);
-    if (userInfo) this.user = userInfo.user
+    if (userInfo) {
+      this.user = userInfo.user
+    } else {
+      this.$router.push('/me/login?redirect=/me')
+    }
   }
 };
 </script>

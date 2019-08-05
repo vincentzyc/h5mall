@@ -29,7 +29,7 @@
             <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
           </div>
           <div class="clearfix ctheme">
-            <span class="pull-left" @click="$router.push('/me/register')">注册</span>
+            <span class="pull-left" @click="$router.push(`/me/register?redirect=${redirect}`)">注册</span>
             <span class="pull-right" @click="$router.push('/me/forgetpsw')">忘记密码</span>
           </div>
         </cube-tab-panel>
@@ -50,6 +50,7 @@ export default {
     return {
       label: "快速登录",
       tabs: ['快速登录', '账号登录'],
+      redirect: '',
       formData: {
         phone: '',
         code: '',
@@ -82,13 +83,19 @@ export default {
       let res = this.label === '快速登录' ? await this.$api.Common.loginByCode(this.formData) :
         await this.$api.Common.login(this.formData);
       this.$util.setLStorage('userInfo', res, true);
-      let redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : '/home';
-      this.$createDialog({
-        content: '登录成功',
-        onConfirm: () => this.$router.replace(redirect)
-      }).show()
       this.$loading.close();
+      this.$createToast({
+        txt: '登录成功',
+        type: 'txt',
+        time: 1000
+      }).show();
+      setTimeout(() => {
+        this.$router.replace(this.redirect)
+      }, 500);
     }
+  },
+  created() {
+    this.redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : '/home';
   }
 }
 </script>

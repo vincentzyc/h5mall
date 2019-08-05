@@ -70,7 +70,7 @@
       </div>
       <div class="flex flex-center flex-auto">
         <div class="icon call"></div>
-        <h5 class="fs12 c999" @click="phone(Data.shop.telephone)">打电话</h5>
+        <h5 class="fs12 c999" @click="phone(Data.shop.telphone)">打电话</h5>
       </div>
     </footer>
 
@@ -118,14 +118,14 @@ export default {
     };
   },
   methods: {
-    phone(telephone) {
+    phone(telphone) {
       this.$createDialog({
         type: 'confirm',
-        content: telephone,
+        content: telphone,
         confirmBtn: {
           text: '拨打',
           active: true,
-          href: 'tel:' + telephone
+          href: 'tel:' + telphone
         }
       }).show()
     },
