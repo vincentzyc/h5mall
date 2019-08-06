@@ -16,4 +16,7 @@ export default [{
 }, {
   name: "login",
   url: "/appUser/login"  // 用户登录密码登录接口
+}, {
+  name: "getInfoByUserId",
+  url: "/appUser/getInfoByUserId"  //用户通过id查询个人基本信息
 }]

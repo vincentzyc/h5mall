@@ -5,12 +5,11 @@
         <span class="jb-loading-spin" v-if="type==='snake'">
           <div class="jb-snake"></div>
         </span>
-        <div class="jb-triple-bounce" v-else-if="type==='triple-bounce'">
+        <div class="jb-triple-bounce" v-else>
           <div class="jb-triple-bounce-bounce1"></div>
           <div class="jb-triple-bounce-bounce2"></div>
           <div class="jb-triple-bounce-bounce3"></div>
         </div>
-        <v-sandglass v-else/>
         <span class="jb-loading-text" v-show="text">{{ text }}</span>
       </div>
       <div class="jb-loading-mask" @touchmove.stop.prevent></div>
@@ -20,19 +19,14 @@
 
 <script>
 /**
- * 参照mint-ui修改
  * 使用方法
  *  this.$loading.open({
         text: '加载中...', // 文本内容  String  默认空
-        type: 'triple-bounce'  //加载图标的类型 (snake/triple-bounce/sandglass) String  默认 "snake"
+        type: 'triple-bounce'  //加载图标的类型 (snake/triple-bounce) String  默认 "snake"
     });
  *  this.$loading.close();
  */
-import sandglass from "./sandglass";
 export default {
-  components: {
-    "v-sandglass": sandglass
-  },
   data() {
     return {
       visible: false

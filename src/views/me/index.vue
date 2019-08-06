@@ -4,14 +4,14 @@
       <!-- <cube-scroll ref="scroll"> -->
       <div class="user-info">
         <div class="userimg">
-          <img src="@/assets/img/logo.png" alt />
-          <span class="vip">v{{user.grade?user.grade:0}}</span>
+          <img :src="user.head_img||require('@/assets/img/logo.png')" alt />
+          <span class="vip">v{{user.grade||0}}</span>
         </div>
         <div class="text-center fs18 cfff mg15">{{user.name}}</div>
         <div class="flex opacitybg">
-          <div class="flex-auto">优惠券(1)</div>
+          <div class="flex-auto">优惠券({{user.gift_card_num||0}})</div>
           <span>|</span>
-          <div class="flex-auto">积分(20)</div>
+          <div class="flex-auto">积分({{user.score||0}})</div>
         </div>
       </div>
       <div class="bgfff mg-b15">
@@ -22,19 +22,27 @@
         </div>
         <ul class="flex order-state">
           <li>
-            <div class="state state1"></div>
+            <div class="state state1">
+              <span>1</span>
+            </div>
             <div>待付款</div>
           </li>
           <li>
-            <div class="state state2"></div>
+            <div class="state state2">
+              <span>2</span>
+            </div>
             <div>待发货</div>
           </li>
           <li>
-            <div class="state state3"></div>
+            <div class="state state3">
+              <span>3</span>
+            </div>
             <div>待收货</div>
           </li>
           <li>
-            <div class="state state4"></div>
+            <div class="state state4">
+              <span></span>
+            </div>
             <div>待评价</div>
           </li>
         </ul>
@@ -43,7 +51,7 @@
         <li class="flex align-middle">
           <div class="icon icon1"></div>
           <span class="flex-auto">钱包：</span>
-          <strong class="ctheme">￥1111</strong>
+          <strong class="ctheme">￥{{user.user_money||0}}</strong>
         </li>
         <li class="flex align-middle" @click="$router.push('/me/likestore')">
           <div class="icon icon2"></div>
@@ -72,14 +80,22 @@
           <span class="flex-auto">设置</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex align-middle">
+        <li class="flex align-middle" @click="$refs.followPopup.show()">
           <div class="icon icon7"></div>
-          <span class="flex-auto">关注公共号</span>
+          <span class="flex-auto">关注公众号</span>
           <i class="cubeic-arrow c666"></i>
         </li>
       </ul>
       <!-- </cube-scroll> -->
     </div>
+    <cube-popup position="center" center :mask-closable="true" ref="followPopup">
+      <div class="follow-popup">
+        <p>关注公众号</p>
+        <p>123123123</p>
+        <p>123123123</p>
+        <p>123123123</p>
+      </div>
+    </cube-popup>
   </base-page>
 </template>
 
@@ -125,20 +141,36 @@ export default {
             ])
         ]
       }).show()
+    },
+    async getUserInfo() {
+      let userInfo = this.$util.getLStorage('userInfo', true);
+      if (userInfo) {
+        this.user = userInfo.user;
+        let param = {
+          token: userInfo.token,
+          user_id: userInfo.user.id
+        }
+        let res = await this.$api.Common.getInfoByUserId(param);
+        this.user = {
+          gift_card_num: res.gift_card_num,
+          user_money: res.user_money,
+          ...res.userPd
+        }
+        console.log(this.user);
+      } else {
+        this.$router.push('/me/login?redirect=/me')
+      }
     }
   },
   created() {
-    let userInfo = this.$util.getLStorage('userInfo', true);
-    if (userInfo) {
-      this.user = userInfo.user
-    } else {
-      this.$router.push('/me/login?redirect=/me')
-    }
+    this.getUserInfo()
   }
 };
 </script>
 
 <style lang="stylus" scoped>
+@import '~@/assets/css/color.styl';
+
 .user-info {
   width: 100%;
   padding-top: 20px;
@@ -199,6 +231,19 @@ export default {
     width: 36px;
     height: 36px;
     margin: 0 auto 10px auto;
+    position: relative;
+
+    span {
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 12px;
+      background: $color-theme;
+      min-width: 16px;
+      line-height: 16px;
+    }
   }
 
   .state1 {
@@ -260,6 +305,13 @@ export default {
   .icon7 {
     background: url('~@/assets/img/me.png') no-repeat 0 -1px / auto 100%;
   }
+}
+
+.follow-popup {
+  position: relative;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
 }
 </style>
 

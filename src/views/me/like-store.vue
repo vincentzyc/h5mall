@@ -1,23 +1,13 @@
 <template>
   <base-page>
     <common-header title="我关注的店铺"></common-header>
-    <div class="mg-t10 bgfff">
+    <div class="mg-t10 bgfff" v-if="items.length>0">
       <ul>
-        <li class="flex list-item">
-          <img src="@/assets/img/logo.png" alt="店铺logo" />
+        <li v-for="item in items" :key="item.id" class="flex list-item">
+          <img :src="item.img||requrie('@/assets/img/logo.png')" alt="店铺logo" />
           <div class="main flex-auto">
-            <h3>周氏野货</h3>
-            <p class="textover1">主营品类主营品类主营品类</p>
-          </div>
-          <div class="flex flex-center flex-none">
-            <div class="dislike">取消关注</div>
-          </div>
-        </li>
-        <li class="flex list-item">
-          <img src="@/assets/img/logo.png" alt="店铺logo" />
-          <div class="main flex-auto">
-            <h3>周氏野货</h3>
-            <p class="textover1">主营品类主营品类主营品类</p>
+            <h3>{{item.name}}</h3>
+            <p class="textover1">{{item.type_name}}</p>
           </div>
           <div class="flex flex-center flex-none">
             <div class="dislike">取消关注</div>
@@ -25,8 +15,36 @@
         </li>
       </ul>
     </div>
+    <div v-else class="mg20 pd20 text-center">您还没有关注的店铺哦~</div>
   </base-page>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: []
+    }
+  },
+  methods: {
+    async collectionList() {
+      let userInfo = this.$util.getLStorage('userInfo', true);
+      if (!userInfo) this.$router.push('/me/login?redirect=/me/likestore');
+      let param = {
+        token: userInfo.token,
+        user_id: userInfo.user.id
+      }
+      let res = await this.$api.Store.collectionList(param);
+      console.log(res);
+      this.items = res.shops || []
+    }
+  },
+  created() {
+    this.collectionList()
+  }
+}
+</script>
+
 
 <style lang="stylus" scoped>
 @import '~@/assets/css/color.styl';
