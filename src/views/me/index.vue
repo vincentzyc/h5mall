@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import { getUser } from "@/service/user"
 export default {
   name: "me",
   components: {
@@ -143,23 +144,19 @@ export default {
       }).show()
     },
     async getUserInfo() {
-      let userInfo = this.$util.getLStorage('userInfo', true);
-      if (userInfo) {
-        this.user = userInfo.user;
-        let param = {
-          token: userInfo.token,
-          user_id: userInfo.user.id
-        }
-        let res = await this.$api.Common.getInfoByUserId(param);
-        this.user = {
-          gift_card_num: res.gift_card_num,
-          user_money: res.user_money,
-          ...res.userPd
-        }
-        console.log(this.user);
-      } else {
-        this.$router.push('/me/login?redirect=/me')
+      let userInfo = await getUser();
+      this.user = userInfo.user;
+      let param = {
+        token: userInfo.token,
+        user_id: userInfo.user.id
       }
+      let res = await this.$api.Common.getInfoByUserId(param);
+      this.user = {
+        gift_card_num: res.gift_card_num,
+        user_money: res.user_money,
+        ...res.userPd
+      }
+      console.log(this.user);
     }
   },
   created() {

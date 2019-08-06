@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { getUser } from "@/service/user"
 export default {
   data() {
     return {
@@ -28,14 +29,12 @@ export default {
   },
   methods: {
     async collectionList() {
-      let userInfo = this.$util.getLStorage('userInfo', true);
-      if (!userInfo) this.$router.push('/me/login?redirect=/me/likestore');
+      let userInfo = await getUser();
       let param = {
         token: userInfo.token,
         user_id: userInfo.user.id
       }
       let res = await this.$api.Store.collectionList(param);
-      console.log(res);
       this.items = res.shops || []
     }
   },
