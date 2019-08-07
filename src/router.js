@@ -55,6 +55,11 @@ export default new VueRouter({
       component: () => import("./views/me/like-store")
     },
     {
+      path: "/me/setting",
+      name: "setting",
+      component: () => import("./views/me/setting")
+    },
+    {
       path: "/products/search",
       name: "productsSearch",
       component: () => import("./views/products/search")

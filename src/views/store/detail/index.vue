@@ -60,7 +60,7 @@
     </div>
 
     <footer class="flex footer-wrap align-middle">
-      <div class="flex flex-center flex-auto" @click="isLike=!isLike">
+      <div class="flex flex-center flex-auto" @click="isLike?dislike(Data.shop.id):likeStore(Data.shop.id)">
         <div class="icon like" :class="{active:isLike}"></div>
         <h5 class="fs12 c999">关注</h5>
       </div>
@@ -88,6 +88,7 @@
 
 <script type="text/ecmascript-6">
 import ProductList from "@/components/product-list-s.vue";
+import { getUser, addShopCollection, cancelShopCollection } from "@/service/user"
 export default {
   components: {
     ProductList
@@ -132,6 +133,20 @@ export default {
     changeTab(tab) {
       this.options.pullUpLoad = tab === '商家信息' ? false : this.pullUpLoad;
     },
+    dislike(id) {
+      this.$createDialog({
+        type: 'confirm',
+        content: '确定取消关注该店铺？',
+        onConfirm: async () => {
+          let res = await cancelShopCollection(id);
+          if (res) this.isLike = false
+        }
+      }).show()
+    },
+    async likeStore(id) {
+      let res = await addShopCollection(id);
+      if (res) this.isLike = true
+    },
     async onPullingUp() {
       if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
       let res = await this.getDetail();
@@ -139,8 +154,11 @@ export default {
       this.$refs.scroll.forceUpdate(res.hasData);
     },
     async getDetail() {
+      let userInfo = await getUser();
       this.pageNum++;
       let param = {
+        token: userInfo ? userInfo.token : "",
+        user_id: userInfo ? userInfo.user.id : "",
         pageNum: this.pageNum,
         shop_id: this.$route.query.id
       }
@@ -148,6 +166,7 @@ export default {
       let res = await this.$api.Store.shopDetail(param);
       console.log(res);
       let { productList, ...Data } = res;
+      this.idLike = Data.collection;
       this.Data = Data;
       this.productList.push(...productList);
       return {

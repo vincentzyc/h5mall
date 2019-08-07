@@ -75,7 +75,7 @@
           <span class="flex-auto">成为农户</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex align-middle">
+        <li class="flex align-middle" @click="$router.push('/me/setting')">
           <div class="icon icon6"></div>
           <span class="flex-auto">设置</span>
           <i class="cubeic-arrow c666"></i>
@@ -144,7 +144,7 @@ export default {
       }).show()
     },
     async getUserInfo() {
-      let userInfo = await getUser();
+      let userInfo = await getUser('/me');
       this.user = userInfo.user;
       let param = {
         token: userInfo.token,

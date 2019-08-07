@@ -9,18 +9,18 @@
             <h3>{{item.name}}</h3>
             <p class="textover1">{{item.type_name}}</p>
           </div>
-          <div class="flex flex-center flex-none">
+          <div class="flex flex-center flex-none" @click="dislike(item.id)">
             <div class="dislike">取消关注</div>
           </div>
         </li>
       </ul>
     </div>
-    <div v-else class="mg20 pd20 text-center">您还没有关注的店铺哦~</div>
+    <div v-else class="mg20 pd20 text-center" @click="test()">您还没有关注的店铺哦~</div>
   </base-page>
 </template>
 
 <script>
-import { getUser } from "@/service/user"
+import { getUser, cancelShopCollection } from "@/service/user"
 export default {
   data() {
     return {
@@ -28,8 +28,18 @@ export default {
     }
   },
   methods: {
+    dislike(id) {
+      this.$createDialog({
+        type: 'confirm',
+        content: '确定取消关注该店铺？',
+        onConfirm: async () => {
+          let res = await cancelShopCollection(id);
+          if (res) this.collectionList()
+        }
+      }).show()
+    },
     async collectionList() {
-      let userInfo = await getUser();
+      let userInfo = await getUser("/me/likestore");
       let param = {
         token: userInfo.token,
         user_id: userInfo.user.id
