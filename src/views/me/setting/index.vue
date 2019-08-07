@@ -45,7 +45,7 @@ export default {
         type: "confirm",
         content: '确定退出登录？',
         onConfirm: async () => {
-          await this.$api.Common.logout({ user_id: this.userInfo.user.id });
+          await this.$api.Common.logout({ user_id: this.userInfo.id });
           clearUser();
           this.$createToast({
             time: 1000,

@@ -1,20 +1,25 @@
 <template>
   <base-page>
+    <div v-if="$util.platform()==='h5'" class="detail_top">
+      <i class="cubeic-back detail-back" @click="$router.back()"></i>
+      <div class="drop-down-menu">
+        <img
+          src="@/assets/img/menu.png"
+          alt="操作菜单"
+          @click="showDropDownMenu=!showDropDownMenu"
+          width="100%"
+          height="100%"
+        />
+        <transition name="fade">
+          <div class="menu" v-show="showDropDownMenu">
+            <!-- <p class="border-beee">分享</p> -->
+            <p @click="likeStore(Data.shop_id)">收藏店铺</p>
+          </div>
+        </transition>
+      </div>
+    </div>
     <div id="detail_wrap" class="container fs14">
       <div v-if="Data">
-        <div v-if="$util.platform()==='h5'">
-          <i class="cubeic-back detail-back" @click="$router.back()"></i>
-          <div class="drop-down-menu">
-            <img src="@/assets/img/menu.png" alt="操作菜单" @click="showDropDownMenu=!showDropDownMenu" width="100%" height="100%" />
-            <transition name="fade">
-              <div class="menu" v-show="showDropDownMenu">
-                <p class="border-beee">分享</p>
-                <p>收藏店铺</p>
-              </div>
-            </transition>
-          </div>
-        </div>
-
         <div class="common-slide detail-slide">
           <cube-slide ref="slide" :data="carousel" :auto-play="false">
             <cube-slide-item v-for="(item, index) in carousel" :key="index">
@@ -51,7 +56,11 @@
           <i class="cubeic-arrow"></i>
         </div>
 
-        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle fs12" @click="$refs.footer.showPopup()" v-if="Data.specs.length>0">
+        <div
+          class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle fs12"
+          @click="$refs.footer.showPopup()"
+          v-if="Data.specs.length>0"
+        >
           <span class="flex-none mg-r15">已选</span>
           <div class="flex-auto">{{$refs.footer.selectSpecs.specsName||''}}</div>
           <i class="cubeic-arrow"></i>
@@ -113,6 +122,7 @@
 import vComment from "./comment.vue";
 import vRecommend from "@/components/recommend.vue";
 import vFooter from "./footer.vue";
+import { addShopCollection } from "@/service/user"
 
 export default {
   name: "productDetail",
@@ -152,6 +162,9 @@ export default {
     // /交互函数 
     videoPlay(e) {
       e.target.paused ? e.target.play() : e.target.pause();
+    },
+    likeStore(id) {
+      addShopCollection(id, this.$route.fullPath);
     },
     getCarousel() {
       let imgs = [], video = [];
@@ -232,6 +245,14 @@ export default {
   left: 0;
   right: 0;
   overflow: auto;
+}
+
+.detail_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
 }
 
 .discount {

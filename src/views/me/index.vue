@@ -145,10 +145,10 @@ export default {
     },
     async getUserInfo() {
       let userInfo = await getUser('/me');
-      this.user = userInfo.user;
+      this.user = userInfo;
       let param = {
         token: userInfo.token,
-        user_id: userInfo.user.id
+        user_id: userInfo.id
       }
       let res = await this.$api.Common.getInfoByUserId(param);
       this.user = {
@@ -156,7 +156,6 @@ export default {
         user_money: res.user_money,
         ...res.userPd
       }
-      console.log(this.user);
     }
   },
   created() {

@@ -19,32 +19,32 @@ export async function clearUser() {
   vm.USERINFO = null;
 }
 
-export async function addShopCollection(shop_id) {
-  let userInfo = await getUser();
+export async function addShopCollection(shop_id,redirect) {
+  let userInfo = await getUser(redirect);
   let param = {
     shop_id: shop_id,
     token: userInfo.token,
-    user_id: userInfo.user.id
+    user_id: userInfo.id
   }
   await vm.$api.Store.addShopCollection(param);
   vm.$createToast({
-    txt: '关注成功',
+    txt: '收藏成功',
     type: 'txt',
     time: 2000
   }).show();
   return true;
 }
 
-export async function cancelShopCollection(shop_id) {
-  let userInfo = await getUser();
+export async function cancelShopCollection(shop_id,redirect) {
+  let userInfo = await getUser(redirect);
   let param = {
     shop_id: shop_id,
     token: userInfo.token,
-    user_id: userInfo.user.id
+    user_id: userInfo.id
   }
   await vm.$api.Store.cancelShopCollection(param);
   vm.$createToast({
-    txt: '已取消关注',
+    txt: '已取消',
     type: 'txt',
     time: 2000
   }).show()

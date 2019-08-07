@@ -42,7 +42,7 @@ export default {
       let userInfo = await getUser("/me/likestore");
       let param = {
         token: userInfo.token,
-        user_id: userInfo.user.id
+        user_id: userInfo.id
       }
       let res = await this.$api.Store.collectionList(param);
       this.items = res.shops || []

@@ -15,7 +15,13 @@
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">验证码：</label>
-            <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.code" placeholder="请输入验证码"></base-input-item>
+            <base-input-item
+              class="input-item flex-auto"
+              type="digit"
+              :maxlength="6"
+              v-model="formData.code"
+              placeholder="请输入验证码"
+            ></base-input-item>
             <verifica-code :phone="formData.phone" />
           </div>
         </cube-tab-panel>
@@ -26,7 +32,12 @@
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">密码：</label>
-            <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
+            <base-input-item
+              class="input-item flex-auto"
+              type="password"
+              v-model="formData.password"
+              placeholder="请输入密码"
+            ></base-input-item>
           </div>
           <div class="clearfix ctheme">
             <span class="pull-left" @click="$router.push(`/me/register?redirect=${redirect}`)">注册</span>
@@ -82,7 +93,7 @@ export default {
       this.$loading.open();
       let res = this.label === '快速登录' ? await this.$api.Common.loginByCode(this.formData) :
         await this.$api.Common.login(this.formData);
-      this.$util.setLStorage('userInfo', res, true);
+      this.$util.setLStorage('userInfo', { token: res.token, ...res.user }, true);
       this.$loading.close();
       this.$createToast({
         txt: '登录成功',

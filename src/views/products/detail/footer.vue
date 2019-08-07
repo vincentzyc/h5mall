@@ -101,6 +101,7 @@ export default {
         specs_id: (this.selectSpecs.id || '').toString(),
         num: this.pageNum.toString()
       })
+      this.hidePopup();
       if (this.$util.platform() === 'android') return window.addCart(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.addShoppingCart.postMessage(str);
       return this.$createDialog({ content: '加入购物车' }).show();
@@ -112,6 +113,7 @@ export default {
         specs_id: (this.selectSpecs.id || '').toString(),
         num: this.pageNum.toString()
       })
+      this.hidePopup();
       if (this.$util.platform() === 'android') return window.toPay(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.buyNow.postMessage(str);
       return this.$createDialog({ content: '立即支付' }).show();
