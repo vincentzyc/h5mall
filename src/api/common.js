@@ -19,4 +19,7 @@ export default [{
 }, {
   name: "getInfoByUserId",
   url: "/appUser/getInfoByUserId"  //用户通过id查询个人基本信息
+},{
+  name:"logout",
+  url:"/appUser/logout" //用户退出登录接口
 }]

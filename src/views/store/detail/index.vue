@@ -157,7 +157,6 @@ export default {
       let userInfo = await getUser();
       this.pageNum++;
       let param = {
-        token: userInfo ? userInfo.token : "",
         user_id: userInfo ? userInfo.user.id : "",
         pageNum: this.pageNum,
         shop_id: this.$route.query.id

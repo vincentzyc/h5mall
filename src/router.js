@@ -60,6 +60,21 @@ export default new VueRouter({
       component: () => import("./views/me/setting")
     },
     {
+      path: "/me/setting/suggest",
+      name: "suggest",
+      component: () => import("./views/me/setting/suggest")
+    },
+    {
+      path: "/me/setting/about",
+      name: "about",
+      component: () => import("./views/me/setting/about")
+    },
+    {
+      path: "/me/setting/changepsw",
+      name: "changepsw",
+      component: () => import("./views/me/setting/change-password")
+    },
+    {
       path: "/products/search",
       name: "productsSearch",
       component: () => import("./views/products/search")

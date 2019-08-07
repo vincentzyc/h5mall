@@ -14,6 +14,11 @@ export function getUser(redirect) {
   })
 }
 
+export async function clearUser() {
+  window.localStorage.removeItem('userInfo');
+  vm.USERINFO = null;
+}
+
 export async function addShopCollection(shop_id) {
   let userInfo = await getUser();
   let param = {
