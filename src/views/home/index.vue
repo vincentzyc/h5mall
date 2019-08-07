@@ -12,13 +12,13 @@
         </cube-slide>
         <v-tabs />
         <FineStore />
-        <cube-slide ref="slide" :data="middleItems" class="common-slide store-slide">
+        <!-- <cube-slide ref="slide" :data="middleItems" class="common-slide store-slide">
           <cube-slide-item v-for="(item, index) in middleItems" :key="index">
             <a :href="'/#/store/detail?id='+item.farmer_id">
               <img :src="item.img" />
             </a>
           </cube-slide-item>
-        </cube-slide>
+        </cube-slide> -->
         <vRecommend ref="recommend" />
       </div>
     </cube-scroll>
@@ -55,7 +55,7 @@ export default {
         }
       },
       topItems: [],
-      middleItems: []
+      // middleItems: []
     }
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
   async created() {
     let res = await this.$api.Product.carouselList();
     this.topItems = res.top;
-    this.middleItems = res.middle;
+    // this.middleItems = res.middle;
     this.$refs.slide.refresh();
   }
 };

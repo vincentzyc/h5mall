@@ -47,6 +47,7 @@
 
 <script>
 import VerificaCode from '@/components/verifica-code'
+import { getUser,clearUser } from "@/service/user"
 export default {
   name: 'forgetpsw',
   components: {
@@ -88,10 +89,10 @@ export default {
         ...this.formData
       }
       let res = await this.$api.Common.updatePwd(param);
-      console.log(res);
+      clearUser();
       this.$createDialog({
         content: '密码修改成功，请重新登录',
-        onConfirm: () => this.$router.replace('/login')
+        onConfirm: () => this.$router.replace('/me/login')
       }).show()
       this.$loading.close();
     }

@@ -3,7 +3,12 @@
     <common-header title="登录"></common-header>
     <div class="border-beee">
       <cube-tab-bar v-model="label" show-slider style="width: 66%;margin: 0 auto;">
-        <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30 width100"></cube-tab>
+        <cube-tab
+          v-for="(item, index) in tabs"
+          :label="item"
+          :key="item+index"
+          class="lh30 width100"
+        ></cube-tab>
       </cube-tab-bar>
     </div>
     <div class="form-wrapper">
@@ -11,7 +16,12 @@
         <cube-tab-panel class="img-panel" label="快速登录" v-show="label==='快速登录'">
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">手机号：</label>
-            <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
+            <base-input-item
+              class="input-item flex-auto"
+              type="phone"
+              v-model="formData.phone"
+              placeholder="请输入手机号"
+            ></base-input-item>
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">验证码：</label>
@@ -28,7 +38,12 @@
         <cube-tab-panel class="text-panel" label="账号登录" v-show="label==='账号登录'">
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">手机号：</label>
-            <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
+            <base-input-item
+              class="input-item flex-auto"
+              type="phone"
+              v-model="formData.phone"
+              placeholder="请输入手机号"
+            ></base-input-item>
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title min-width">密码：</label>
@@ -95,14 +110,14 @@ export default {
         await this.$api.Common.login(this.formData);
       this.$util.setLStorage('userInfo', { token: res.token, ...res.user }, true);
       this.$loading.close();
+      setTimeout(() => {
+        this.$router.replace(this.redirect)
+      }, 300);
       this.$createToast({
         txt: '登录成功',
         type: 'txt',
-        time: 1000
+        time: 800
       }).show();
-      setTimeout(() => {
-        this.$router.replace(this.redirect)
-      }, 500);
     }
   },
   created() {

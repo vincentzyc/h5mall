@@ -74,7 +74,7 @@ export default {
       console.log(res);
       this.$createDialog({
         content: '密码设置成功，请重新登录',
-        onConfirm: () => this.$router.replace('/login')
+        onConfirm: () => this.$router.replace('/me/login')
       }).show()
       this.$loading.close();
     }

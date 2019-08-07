@@ -48,7 +48,7 @@ export default {
           await this.$api.Common.logout({ user_id: this.userInfo.id });
           clearUser();
           this.$createToast({
-            time: 1000,
+            time: 500,
             type: 'txt',
             txt: '您已退出登录',
             onTimeout: () => this.$router.replace('/home')
