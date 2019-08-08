@@ -259,7 +259,7 @@ export default {
   },
   /**
     * 跳转iframe页面
-    * @param {String} url 路径
+    * @param {String} url 页面地址
     * @param {String} title 标题 
     */
   goIframe(url, title) {

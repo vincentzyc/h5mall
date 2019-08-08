@@ -19,7 +19,7 @@ import {
   // Radio,
   // RadioGroup,
   // Input,
-  // Textarea,
+  Textarea,
   // Select,
   // Switch,
   Rate,
@@ -59,7 +59,7 @@ Vue.use(CheckboxGroup);
 // Vue.use(Radio)
 // Vue.use(RadioGroup)
 // Vue.use(Input)
-// Vue.use(Textarea)
+Vue.use(Textarea)
 // Vue.use(Select)
 // Vue.use(Switch)
 Vue.use(Rate)

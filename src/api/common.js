@@ -25,4 +25,7 @@ export default [{
 }, {
   name: "logout",
   url: "/appUser/logout" //用户退出登录接口
+},{
+  name:"feedback",
+  url:"/appFeedback/feedback" //提交反馈
 }]

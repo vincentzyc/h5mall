@@ -1,8 +1,21 @@
 <template>
   <base-page>
     <common-header title="关于"></common-header>
-    <div>
-      关于关于关于关于关于
+    <div class="bg">
+      <h3 class="lh30 mg-b10 fs16">公司简介</h3>
+      <p class="lh20">关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于关于</p>
     </div>
   </base-page>
 </template>
+
+<style lang="stylus" scoped>
+.bg {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background: url('~@/assets/img/about.jpg') no-repeat 0 0 / 100% 100%;
+}
+</style>

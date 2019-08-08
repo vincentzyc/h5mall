@@ -45,7 +45,7 @@
         <span>登录即代表您同意</span>
         <span class="cblue"
           @click="$util.goIframe('http://ricky-s.qicp.io/res/html/znAgreement.html','用户服务协议')"
-        >用户协议和隐私条款</span>
+        >掌农用户协议和隐私条款</span>
       </div>
 
       <cube-button :primary="true" class="block-btn" @click="submit()">注册</cube-button>
