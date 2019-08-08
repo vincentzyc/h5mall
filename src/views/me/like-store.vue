@@ -39,7 +39,7 @@ export default {
       }).show()
     },
     async collectionList() {
-      let userInfo = await getUser("/me/likestore");
+      let userInfo = await getUser(this.$route.fullPath);
       let param = {
         token: userInfo.token,
         user_id: userInfo.id

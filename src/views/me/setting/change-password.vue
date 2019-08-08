@@ -98,7 +98,7 @@ export default {
     }
   },
   async created() {
-    this.userInfo = await getUser('/me/setting/changepsw')
+    this.userInfo = await getUser(this.$route.fullPath)
   }
 }
 </script>

@@ -5,11 +5,9 @@
     </common-header>
     <div class="mg15">
       <cube-textarea
-        v-model="value"
-        :autoExpand="true"
+        v-model.trim="value"
         placeholder="请留下您的宝贵建议"
         :maxlength="500"
-        :autofocus="true"
         style="min-height: 200px"
       ></cube-textarea>
       <p class="mg-t15 fs12 c666">联系电话：18812345678</p>
@@ -27,6 +25,13 @@ export default {
   },
   methods: {
     async submit() {
+      if (this.value.length === 0) {
+        return this.$createToast({
+          txt: '请输入建议',
+          type: 'txt',
+          time: 2000
+        }).show()
+      }
       let param = {
         user_id: this.userInfo.id,
         context: this.value,
@@ -45,7 +50,7 @@ export default {
     }
   },
   async created() {
-    this.userInfo = await getUser('/me/setting/changepsw')
+    this.userInfo = await getUser(this.$route.fullPath)
   }
 }
 </script>

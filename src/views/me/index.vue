@@ -144,7 +144,7 @@ export default {
       }).show()
     },
     async getUserInfo() {
-      let userInfo = await getUser('/me');
+      let userInfo = await getUser(this.$route.fullPath);
       this.user = userInfo;
       let param = {
         token: userInfo.token,

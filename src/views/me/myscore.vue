@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     async getScore(redirect) {
-      let userInfo = await getUser('/me/myscore');
+      let userInfo = await getUser(this.$route.fullPath);
       let param = {
         token: userInfo.token,
         user_id: userInfo.id

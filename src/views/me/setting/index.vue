@@ -58,7 +58,7 @@ export default {
     }
   },
   async created() {
-    this.userInfo = await getUser('/me/setting')
+    this.userInfo = await getUser(this.$route.fullPath)
   }
 }
 </script>
