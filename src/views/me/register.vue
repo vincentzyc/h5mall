@@ -4,22 +4,50 @@
     <div class="form-wrapper">
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">手机号：</label>
-        <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
+        <base-input-item
+          class="input-item flex-auto"
+          type="phone"
+          v-model="formData.phone"
+          placeholder="请输入手机号"
+        ></base-input-item>
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">验证码：</label>
-        <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
+        <base-input-item
+          class="input-item flex-auto"
+          type="digit"
+          :maxlength="6"
+          v-model="formData.checkCode"
+          placeholder="请输入验证码"
+        ></base-input-item>
         <verifica-code :phone="formData.phone" />
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">密码：</label>
-        <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
+        <base-input-item
+          class="input-item flex-auto"
+          type="password"
+          v-model="formData.password"
+          placeholder="请输入密码"
+        ></base-input-item>
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">确认密码：</label>
-        <base-input-item class="input-item flex-auto" type="password" v-model="formData.confirmPassword" placeholder="请确认密码"></base-input-item>
+        <base-input-item
+          class="input-item flex-auto"
+          type="password"
+          v-model="formData.confirmPassword"
+          placeholder="请确认密码"
+        ></base-input-item>
       </div>
-      <cube-checkbox v-model="checked" shape="square" class="agree">登录即代表您同意用户协议和隐私条款</cube-checkbox>
+      <div class="flex fs12">
+        <cube-checkbox v-model="checked" shape="square" class="agree"></cube-checkbox>
+        <span>登录即代表您同意</span>
+        <span class="cblue"
+          @click="$util.goIframe('http://ricky-s.qicp.io/res/html/znAgreement.html','用户服务协议')"
+        >用户协议和隐私条款</span>
+      </div>
+
       <cube-button :primary="true" class="block-btn" @click="submit()">注册</cube-button>
     </div>
   </base-page>
@@ -49,6 +77,9 @@ export default {
     }
   },
   methods: {
+    test() {
+      console.log(11111111);
+    },
     checkInfo() {
       if (!this.checked) return "请同意服务协议";
       if (this.formData.phone === "") return "请输入手机号";

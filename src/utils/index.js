@@ -1,4 +1,5 @@
 import Crypto from "./crypto.js"
+import router from "@/router"
 
 export default {
   /**
@@ -255,5 +256,13 @@ export default {
       brstr += v + "</br>"
     })
     return brstr;
+  },
+  /**
+    * 跳转iframe页面
+    * @param {String} url 路径
+    * @param {String} title 标题 
+    */
+  goIframe(url, title) {
+    router.push(`/iframe/${encodeURIComponent(url)}?title=${title}`)
   }
 }

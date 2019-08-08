@@ -95,9 +95,9 @@ export default new VueRouter({
       component: () => import("./views/search")
     },
     {
-      path: "/page/button",
-      name: "button",
-      component: () => import("./views/button")
+      path: "/iframe/:url",
+      name: "iframe",
+      component: () => import("./views/iframe")
     }
   ]
 });
