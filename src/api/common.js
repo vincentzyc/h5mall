@@ -25,7 +25,10 @@ export default [{
 }, {
   name: "logout",
   url: "/appUser/logout" //用户退出登录接口
-},{
-  name:"feedback",
-  url:"/appFeedback/feedback" //提交反馈
+}, {
+  name: "feedback",
+  url: "/appFeedback/feedback" //提交反馈
+}, {
+  name: "myScore",  //我的积分
+  url: "/appScore/myScore"
 }]

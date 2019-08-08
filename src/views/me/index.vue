@@ -11,7 +11,7 @@
         <div class="flex opacitybg">
           <div class="flex-auto">优惠券({{user.gift_card_num||0}})</div>
           <span>|</span>
-          <div class="flex-auto">积分({{user.score||0}})</div>
+          <div class="flex-auto" @click="$router.push('/me/myscore')">积分({{user.score||0}})</div>
         </div>
       </div>
       <div class="bgfff mg-b15">
