@@ -1,7 +1,6 @@
 <template>
-  <base-page>
-    <div class="page-t0 me-wrap">
-      <!-- <cube-scroll ref="scroll"> -->
+  <base-page top0>
+    <cube-scroll ref="scroll">
       <div class="user-info">
         <div class="userimg">
           <img :src="user.head_img||require('@/assets/img/logo.png')" alt />
@@ -86,8 +85,8 @@
           <i class="cubeic-arrow c666"></i>
         </li>
       </ul>
-      <!-- </cube-scroll> -->
-    </div>
+    </cube-scroll>
+
     <cube-popup position="center" center :mask-closable="true" ref="followPopup">
       <div class="follow-popup">
         <p>关注公众号</p>
@@ -156,6 +155,7 @@ export default {
         user_money: res.user_money,
         ...res.userPd
       }
+      this.$refs.scroll.refresh();
     }
   },
   created() {

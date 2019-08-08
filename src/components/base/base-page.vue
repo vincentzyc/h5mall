@@ -1,6 +1,6 @@
 <template>
   <div class="base-page">
-    <main class="wrapper">
+    <main class="wrapper" :class="[top0?'top0':'top44']">
       <slot />
     </main>
   </div>
@@ -8,7 +8,14 @@
 
 <script type="text/ecmascript-6">
 export default {
-  name: "base-page"
+  name: "base-page",
+  props: {
+    top0: {
+      type: Boolean,
+      default: false
+    }
+  }
+
 };
 </script>
 
@@ -26,9 +33,16 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    padding-top: 44px;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+
+    &.top0 {
+      padding-top: 0;
+    }
+
+    &.top44 {
+      padding-top: 44px;
+    }
   }
 }
 </style>

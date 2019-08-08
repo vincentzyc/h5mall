@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <common-header title="购物车">
+    <common-header title="购物车" hideBack>
       <span slot="right" v-if="stores.length>0" @click="showDelete=!showDelete">{{showDelete?'完成':'编辑'}}</span>
     </common-header>
     <div class="content-wrap" v-if="stores.length>0">
