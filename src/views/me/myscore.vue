@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    async getScore(redirect) {
+    async getScore() {
       let userInfo = await getUser(this.$route.fullPath);
       let param = {
         token: userInfo.token,

@@ -1,87 +1,98 @@
 <template>
   <base-page>
     <common-header title="优惠券"></common-header>
+    <div class="bgfff">
+      <cube-tab-bar v-model="label" show-slider class="tab-bar">
+        <cube-tab label="未使用" class="lh30 width100"></cube-tab>
+        <cube-tab label="已过期" class="lh30 width100"></cube-tab>
+        <cube-tab label="已使用" class="lh30 width100"></cube-tab>
+      </cube-tab-bar>
+    </div>
     <div>
-      <ul class="not_used_coupon">
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle bg1">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金（让利酬宾）</h2>
-              <h5>满2000元可用-老梁包子铺</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
+      <div v-show="label==='未使用'">
+        <ul class="not_used_coupon" v-if="unusedList.length>0">
+          <li class="coupon_box" v-for="item in unusedList" :key="item.card_id">
+            <div class="coupon_centent flex align-middle bg1">
+              <div class="coupon_centent_left flex-auto">
+                <h2>{{item.note}}</h2>
+                <h5>{{item.shop_name}}</h5>
+                <h6>{{formatTime(item.start_time,item.end_time)}}</h6>
+              </div>
+              <div class="coupon_centent_right">￥{{item.discount||0}}</div>
             </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle bg2">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金</h2>
-              <h5>满2000元可用，全平台可用</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
+          </li>
+        </ul>
+        <div class="mg20" v-else>
+          <p class="pd20 c666 text-center">暂无可用优惠券</p>
+        </div>
+      </div>
+      <div v-show="label==='已过期'">
+        <ul class="expired_coupon" v-if="overdueList.length>0">
+          <li class="coupon_box" v-for="item in overdueList" :key="item.card_id">
+            <div class="coupon_centent flex align-middle">
+              <div class="coupon_centent_left flex-auto">
+                <h2>{{item.note}}</h2>
+                <h5>{{item.shop_name}}</h5>
+                <h6>{{formatTime(item.start_time,item.end_time)}}</h6>
+              </div>
+              <div class="coupon_centent_right">￥{{item.discount||0}}</div>
             </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-      </ul>
-      <!--已过期-->
-      <ul class="expired_coupon">
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金（让利酬宾）</h2>
-              <h5>满2000元可用-老梁包子铺</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
+          </li>
+        </ul>
+        <div class="mg20" v-else>
+          <p class="pd20 c666 text-center">暂无过期优惠券</p>
+        </div>
+      </div>
+      <div v-show="label==='已使用'">
+        <ul class="used_coupon" v-if="usedList.length>0">
+          <li class="coupon_box" v-for="item in usedList" :key="item.card_id">
+            <div class="coupon_centent flex align-middle">
+              <div class="coupon_centent_left flex-auto">
+                <h2>{{item.note}}</h2>
+                <h5>{{item.shop_name}}</h5>
+                <h6>{{formatTime(item.start_time,item.end_time)}}</h6>
+              </div>
+              <div class="coupon_centent_right">￥{{item.discount||0}}</div>
             </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金</h2>
-              <h5>满2000元可用，全平台可用</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
-            </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-      </ul>
-
-      <ul class="used_coupon">
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金（让利酬宾）</h2>
-              <h5>满2000元可用-老梁包子铺</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
-            </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-
-        <li class="coupon_box">
-          <div class="coupon_centent flex align-middle">
-            <div class="coupon_centent_left flex-auto">
-              <h2>抵现金</h2>
-              <h5>满2000元可用，全平台可用</h5>
-              <h6>有效日期:2017.07.31--2017.12.31</h6>
-            </div>
-
-            <div class="coupon_centent_right">￥10</div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+        <div class="mg20" v-else>
+          <p class="pd20 c666 text-center">您还没有使用过优惠券哦~</p>
+        </div>
+      </div>
     </div>
   </base-page>
 </template>
+<script>
+import { getUser, unusedCard, overdueCard, usedCard, getRegistGiftCard } from "@/service/user"
+export default {
+  data() {
+    return {
+      label: '未使用',
+      unusedList: [],
+      overdueList: [],
+      usedList: []
+    }
+  },
+  methods: {
+    formatTime(start, end) {
+      if (start && end) {
+        let startTime = this.$util.getFormatDate('yyyy-mm-dd', start);
+        let endTime = this.$util.getFormatDate('yyyy-mm-dd', end);
+        return '有效日期:' + startTime + '至' + endTime;
+      }
+      return ''
+    }
+  },
+  async created() {
+    // getRegistGiftCard(this.$route.fullPath)
+    this.unusedList = await unusedCard(this.$route.fullPath);
+    this.overdueList = await overdueCard(this.$route.fullPath);
+    this.usedList = await usedCard(this.$route.fullPath);
+  }
+}
+</script>
+
 <style lang="stylus" scoped>
 @import '~@/assets/css/color.styl';
 
