@@ -55,6 +55,11 @@ export default new VueRouter({
       component: () => import("./views/me/like-store")
     },
     {
+      path: "/me/coupon",
+      name: "coupon",
+      component: () => import("./views/me/coupon")
+    },
+    {
       path: "/me/myscore",
       name: "myscore",
       component: () => import("./views/me/myscore")

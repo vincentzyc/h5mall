@@ -8,7 +8,7 @@
         </div>
         <div class="text-center fs18 cfff mg15">{{user.name}}</div>
         <div class="flex opacitybg">
-          <div class="flex-auto">优惠券({{user.gift_card_num||0}})</div>
+          <div class="flex-auto" @click="$router.push('/me/coupon')">优惠券({{user.gift_card_num||0}})</div>
           <span>|</span>
           <div class="flex-auto" @click="$router.push('/me/myscore')">积分({{user.score||0}})</div>
         </div>
