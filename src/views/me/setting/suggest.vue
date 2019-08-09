@@ -36,7 +36,7 @@ export default {
         user_id: this.userInfo.id,
         context: this.value,
         token: this.userInfo.token,
-        type: 1
+        type: '1'
       }
       this.$loading.open();
       let res = await this.$api.Common.feedback(param);
