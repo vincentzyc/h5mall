@@ -75,7 +75,7 @@
     </footer>
 
     <!-- 店铺介绍 -->
-    <page-popup ref="pagePopup" position="right" class="pd-t44">
+    <page-popup ref="pagePopup" position="right" class="pd-t44" type="introduce">
       <div class="pd10" v-if="Data">
         <common-header title="店铺介绍" hideBack>
           <i slot="left" class="cubeic-back" @click="$refs.pagePopup.close()"></i>
@@ -157,7 +157,7 @@ export default {
       let userInfo = await getUser();
       this.pageNum++;
       let param = {
-        user_id: userInfo ? userInfo.id : "",
+        // user_id: userInfo ? userInfo.id : "",
         pageNum: this.pageNum,
         shop_id: this.$route.query.id
       }

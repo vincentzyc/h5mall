@@ -77,9 +77,6 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log(11111111);
-    },
     checkInfo() {
       if (!this.checked) return "请同意服务协议";
       if (this.formData.phone === "") return "请输入手机号";

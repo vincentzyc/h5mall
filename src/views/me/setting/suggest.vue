@@ -44,7 +44,7 @@ export default {
       this.$loading.close();
       this.$createDialog({
         title: '提交成功',
-        content: '感谢您的宝贵建议',
+        content: '感谢您的反馈，掌农将及时回复',
         onConfirm: () => this.value = ''
       }).show()
     }

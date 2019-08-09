@@ -1,0 +1,114 @@
+<template>
+  <div>
+    <cube-button @click="goPicker()">horizontal-picker</cube-button>
+    <cube-button @click="goInputItem()">input-item demo</cube-button>
+    <cube-button @click="sandglass()">sandglass-loading</cube-button>
+    <cube-button type="submit" @click="snake()">snake-loading</cube-button>
+    <cube-button :active="true" @click="tripleBounce()">triple-bounce-loading</cube-button>
+    <cube-button icon="cubeic-right" @click="goAbouot()">goAbouot</cube-button>
+    <cube-button :light="true" @click="showBlandList()">showBlandList</cube-button>
+    <cube-button :inline="true" @click="showCarType()">showCarType</cube-button>
+    <cube-button :outline="true" @click="showBuyTime()">showBuyTime</cube-button>
+    <cube-button :primary="true" @click="axiosPost()">axiosPost</cube-button>
+    <cube-button :disabled="true">Disabled Button</cube-button>
+  </div>
+</template>
+
+<script>
+import jsonData from "@/assets/json/form.json";
+export default {
+  name: "HelloWorld",
+  data() {
+    return {
+      blandList: jsonData.blandList,
+      carType: jsonData.carType,
+      buyTime: jsonData.buyTime
+    };
+  },
+  methods: {
+    sandglass() {
+      this.$loading.open({
+        text: "加载中...",
+        type: "sandglass"
+      });
+      setTimeout(() => {
+        this.$loading.close();
+      }, 3000);
+    },
+    snake() {
+      this.$loading.open();
+      setTimeout(() => {
+        this.$loading.close();
+      }, 2000);
+    },
+    tripleBounce() {
+      this.$loading.open({
+        text: "正在提交...",
+        type: "triple-bounce"
+      });
+      setTimeout(() => {
+        this.$loading.close();
+      }, 3000);
+    },
+    goPicker(){
+      this.$router.push("/horizontalpicker");
+    },
+    goAbouot() {
+      this.$router.push("/about");
+    },
+    goInputItem() {
+      this.$router.push("/inputitem");
+    },
+    showBlandList() {
+      if (!this.blandPicker) {
+        this.blandPicker = this.$createPicker({
+          title: "请选择品牌",
+          data: [this.blandList],
+          onSelect: selectedVal => {
+            console.log(selectedVal);
+          }
+          // onCancel: this.cancelHandle
+        });
+      }
+      this.blandPicker.show();
+    },
+    showCarType() {
+      if (!this.carPicker) {
+        this.carPicker = this.$createPicker({
+          title: "请选择车型",
+          data: [this.carType],
+          onSelect: selectedVal => {
+            console.log(selectedVal);
+          }
+          // onCancel: this.cancelHandle
+        });
+      }
+      this.carPicker.show();
+    },
+    showBuyTime() {
+      if (!this.buyTimePicker) {
+        this.buyTimePicker = this.$createPicker({
+          title: "请选择购车时间",
+          data: [this.buyTime],
+          onSelect: selectedVal => {
+            console.log(selectedVal);
+          }
+          // onCancel: this.cancelHandle
+        });
+      }
+      this.buyTimePicker.show();
+    },
+    async axiosPost() {
+      let res = await this.$api.ApiModule1.loginCheck({ UserName: "123", PassWord: "456" });
+      console.log(res);
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+.cube-btn {
+  margin: 20px 0 0;
+}
+</style>

@@ -13,6 +13,18 @@ export default {
     position: {
       type: String,
       default: 'right'
+    },
+    type: {
+      type: String,
+      default: 'popup'
+    }
+  },
+  watch: {
+    "$route": {
+      handler(n) {
+        this.pageVisible = n.query.type === this.type
+      },
+      immediate: true
     }
   },
   data() {
@@ -23,10 +35,10 @@ export default {
   },
   methods: {
     open() {
-      this.pageVisible = true
+      this.$router.push(`${this.$route.fullPath}${Object.keys(this.$route.query).length > 0 ? '&' : '?'}type=${this.type}`)
     },
     close() {
-      this.pageVisible = false
+      this.$router.back();
     }
   },
   beforeMount() {
