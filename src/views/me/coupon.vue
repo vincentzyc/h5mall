@@ -64,7 +64,7 @@
   </base-page>
 </template>
 <script>
-import { getUser, unusedCard, overdueCard, usedCard, getRegistGiftCard } from "@/service/user"
+import { getUser, unusedCard, overdueCard, usedCard } from "@/service/user"
 export default {
   data() {
     return {
@@ -85,7 +85,6 @@ export default {
     }
   },
   async created() {
-    // getRegistGiftCard(this.$route.fullPath)
     this.unusedList = await unusedCard(this.$route.fullPath);
     this.overdueList = await overdueCard(this.$route.fullPath);
     this.usedList = await usedCard(this.$route.fullPath);
