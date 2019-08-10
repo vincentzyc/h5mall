@@ -63,6 +63,27 @@ export async function cancelShopCollection(shop_id, redirect) {
   }).show()
   return true;
 }
+
+/**
+ * 领取优惠券
+ * @param {Number} id 优惠券id
+ * @param {String} redirect 未登录情况下，登录后跳转的url
+ */
+export async function getCard(id, redirect) {
+  let userInfo = await getUser(redirect);
+  let param = {
+    token: userInfo.token,
+    user_id: userInfo.id,
+    card_id: id
+  }
+  await vm.$api.Store.getCard(param);
+  vm.$createToast({
+    txt: '领取成功',
+    type: 'txt',
+    time: 2000
+  }).show()
+  return true;
+}
 /**
  * 已过期的优惠券
  * @param {String} redirect 未登录情况下，登录后跳转的url

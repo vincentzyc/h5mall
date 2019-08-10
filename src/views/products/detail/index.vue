@@ -24,7 +24,12 @@
           <cube-slide ref="slide" :data="carousel" :auto-play="false">
             <cube-slide-item v-for="(item, index) in carousel" :key="index">
               <img :src="item.url" v-if="item.type==='img'" />
-              <video controls v-if="item.type==='video'" class="video-wrap" @click="videoPlay($event)">
+              <video
+                controls
+                v-if="item.type==='video'"
+                class="video-wrap"
+                @click="videoPlay($event)"
+              >
                 <source :src="item.url" type="video/mp4" />
               </video>
             </cube-slide-item>
@@ -48,7 +53,10 @@
           </div>
         </div>
 
-        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle" @click="getCoupon()">
+        <div
+          class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle"
+          @click="getCoupon()"
+        >
           <div class="flex flex-auto align-middle">
             <img src="@/assets/img/discount.png" alt="优惠券" class="discount" />
             <span class="mg-l5 fs14">优惠券领取</span>
@@ -85,12 +93,23 @@
         </div>
 
         <div class="detail-info bgfff mg-t15">
-          <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee">
+          <cube-tab-bar
+            v-model="selectedLabel"
+            show-slider
+            class="border-beee"
+            @change="changeHandler"
+          >
             <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30"></cube-tab>
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
-              <img v-for="item in Data.img.split(',')" :key="item" v-lazy="item" alt class="tab-panel-img" />
+              <img
+                v-for="item in Data.img.split(',')"
+                :key="item"
+                v-lazy="item"
+                alt
+                class="tab-panel-img"
+              />
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
               <!-- <p v-html="$util.textBr(Data.introduction,'@BR@')"></p> -->
@@ -112,6 +131,24 @@
         </div>
       </div>
     </div>
+    <div class="coupon-popup">
+      <cube-popup position="bottom" :mask-closable="true" ref="couponPopup">
+        <ul>
+          <li class="coupon_box" v-for="item in storeCoupon" :key="item.card_id">
+            <div class="coupon_centent flex align-middle bg1">
+              <div class="pd-l15 flex-auto">
+                <h2 class="cbold fs18 ctheme">{{item.note}}</h2>
+                <!-- <h5 class="fs12 ctheme pd-t10">{{item.card_type}}</h5> -->
+                <h6 class="fs10 c999 pd-t10 lh16">{{formatTime(item.start_time,item.end_time)}}</h6>
+              </div>
+              <div class="coupon_centent_right">￥{{item.discount||0}}</div>
+              <div class="coupon_centent_right_btn ctheme" @click="getCard(item.id)">领取</div>
+            </div>
+          </li>
+        </ul>
+        <div class="coupon_btn bgtheme" @click="$refs.couponPopup.hide()">完成</div>
+      </cube-popup>
+    </div>
 
     <vFooter :Data="Data" :pageNum="pageNum" ref="footer"></vFooter>
   </base-page>
@@ -122,7 +159,7 @@
 import vComment from "./comment.vue";
 import vRecommend from "@/components/recommend.vue";
 import vFooter from "./footer.vue";
-import { addShopCollection } from "@/service/user"
+import { addShopCollection, getCard } from "@/service/user"
 
 export default {
   name: "productDetail",
@@ -134,12 +171,14 @@ export default {
       Data: '',
       pageNum: 1,
       loadMore: true,
+      loadComment: true,
       carousel: [],
       showDropDownMenu: false,
       selectedLabel: '图片',
       tabs: ['图片', '文字', '评价', '推荐'],
       commentList: [],
-      recommendList: []
+      recommendList: [],
+      storeCoupon: []
     }
   },
   watch: {
@@ -151,15 +190,30 @@ export default {
     }
   },
   methods: {
+    changeHandler(label) {
+      if (label === '评价') return this.getCommentList();
+      if (label === '推荐') return this.getRecommend();
+    },
     // 交互函数
     // 优惠券领取
     getCoupon() {
       let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
       if (this.$util.platform() === 'android') return window.getCoupon(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpCoupon.postMessage(str);
-      return this.$createDialog({ content: '优惠券领取' }).show();
+      return this.getShopCard()
     },
-    // /交互函数 
+    // /交互函数
+    formatTime(start, end) {
+      if (start && end) {
+        let startTime = this.$util.getFormatDate('yyyy-mm-dd', start);
+        let endTime = this.$util.getFormatDate('yyyy-mm-dd', end);
+        return '有效日期:' + startTime + '至' + endTime;
+      }
+      return ''
+    },
+    getCard(id) {
+      getCard(id)
+    },
     videoPlay(e) {
       e.target.paused ? e.target.play() : e.target.pause();
     },
@@ -210,10 +264,23 @@ export default {
         if (scrollTop + clientHeight >= scrollHeight) this.getRecommend()
       };
     },
+    async getShopCard() {
+      if (!this.Data) return this.storeCoupon = [];
+      this.$loading.open();
+      let res = await this.$api.Store.shopCard({ shop_id: this.Data.shop_id });
+      console.log(res);
+      this.storeCoupon = res.list;
+      this.$loading.close();
+      this.$refs.couponPopup.show();
+    },
     async getCommentList() {
       if (!this.Data) return this.commentList = [];
+      if (!this.loadComment) return;
+      this.$loading.open();
       let res = await this.$api.Product.getCommentList({ product_id: this.Data.id });
-      this.commentList = res.list
+      this.commentList = res.list;
+      this.loadComment = false;
+      this.$loading.close();
     },
     async init() {
       this.$loading.open();
@@ -221,8 +288,6 @@ export default {
       console.log(res);
       this.Data = res.product_info;
       this.getCarousel();
-      this.getCommentList();
-      this.getRecommend();
       this.$loading.close();
     }
   },
@@ -361,6 +426,53 @@ th, td {
         border-right: 10px solid transparent;
       }
     }
+  }
+}
+
+.coupon-popup & /deep/ {
+  .cube-popup-content {
+    width: 100%;
+    max-height: 80%;
+    border-radius: 16px 16px 0 0;
+    overflow: auto;
+    background: #fff;
+    padding: 10px;
+  }
+
+  .coupon_box {
+    width: 100%;
+    padding: 0 5px;
+    margin-top: 15px;
+  }
+
+  .coupon_centent {
+    height: 110px;
+  }
+
+  .bg1 {
+    background: url('~@/assets/img/getyhq.png') no-repeat 0 0 / 100% 100%;
+  }
+
+  .coupon_centent_right {
+    font-size: 30px;
+    color: #fff;
+    padding: 35px;
+  }
+
+  .coupon_centent_right_btn {
+    width: 35px;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  .coupon_btn {
+    width: 100px;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    margin: 10px auto;
   }
 }
 </style>
