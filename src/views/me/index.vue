@@ -6,7 +6,7 @@
           <img :src="user.head_img||require('@/assets/img/logo.png')" alt />
           <span class="vip">v{{user.grade||0}}</span>
         </div>
-        <div class="text-center fs18 cfff mg15">{{user.name}}</div>
+        <div class="text-center fs18 cfff mg15">{{user.name||'呢称'}}</div>
         <div class="flex opacitybg">
           <div class="flex-auto" @click="$router.push('/me/coupon')">优惠券({{user.gift_card_num||0}})</div>
           <span>|</span>
