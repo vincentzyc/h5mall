@@ -2,7 +2,7 @@
   <base-page top0>
     <cube-scroll ref="scroll">
       <div class="user-info">
-        <div class="userimg">
+        <div class="userimg" @click="$router.push('/me/updateinfo')">
           <img :src="user.head_img||require('@/assets/img/logo.png')" alt />
           <span class="vip">v{{user.grade||0}}</span>
         </div>
@@ -92,7 +92,10 @@
         <div class="frame">
           <div class="frame_title">关注公众号</div>
           <div class="frame_mode_first">方式一：微信扫描或识别关注卡</div>
-          <div class="frame_mode_first_btn" @click="$refs.pagePopup.open()">获取关注卡</div>
+          <div
+            class="frame_mode_first_btn"
+            @click="$refs.pagePopup.open();$refs.followPopup.hide()"
+          >获取关注卡</div>
           <div class="frame_mode_first_border"></div>
 
           <div class="frame_mode_first" style="margin-top: 20px">方式 二：复制链接到微信搜索</div>
@@ -103,9 +106,7 @@
     </cube-popup>
     <!-- 识别关注卡 -->
     <page-popup ref="pagePopup" position="right" class="pd-t44" type="getgzh">
-      <common-header title="关注卡" hideBack>
-        <i slot="left" class="cubeic-back" @click="$refs.pagePopup.close()"></i>
-      </common-header>
+      <common-header title="关注卡" />
       <div class="gzh-bg">
         <img src="@/assets/img/gzh.jpg" alt width="100%" />
         <p class="text-center mg-t10">长按图片识别二维码即可关注掌农公众号</p>
@@ -115,7 +116,7 @@
 </template>
 
 <script>
-import { getUser } from "@/service/user"
+import { getUser,updateUser } from "@/service/user"
 import Clipboard from "@/utils/clipboard"
 
 export default {
@@ -187,6 +188,7 @@ export default {
         user_money: res.user_money,
         ...res.userPd
       }
+      updateUser({ ...userInfo, ...this.user });
       this.$refs.scroll.refresh();
     }
   },

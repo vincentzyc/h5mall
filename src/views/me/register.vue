@@ -1,5 +1,5 @@
 <template>
-  <base-page class="login-form">
+  <base-page class="common-form">
     <common-header title="注册"></common-header>
     <div class="form-wrapper">
       <div class="flex align-middle input-wrap">
@@ -70,10 +70,7 @@ export default {
         download_channel: '9',
         phone_sys_type: '1'
       },
-      checked: false,
-      disabled: false,
-      codetxt: "获取验证码",
-      time: "",
+      checked: false
     }
   },
   methods: {

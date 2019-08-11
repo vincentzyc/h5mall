@@ -20,8 +20,14 @@ export default [{
   name: "login",
   url: "/appUser/login"  // 用户登录密码登录接口
 }, {
+  name: "updatePhoneByCode",
+  url: "/appUser/updatePhoneByCode"  //用户通过验证码修改手机号
+}, {
   name: "getInfoByUserId",
   url: "/appUser/getInfoByUserId"  //用户通过id查询个人基本信息
+}, {
+  name: "updateInfoByUserId", 
+  url: "/appUser/updateInfoByUserId"  //用户更新个人基本信息
 }, {
   name: "logout",
   url: "/appUser/logout" //用户退出登录接口

@@ -1,5 +1,5 @@
 <template>
-  <base-page class="login-form">
+  <base-page class="common-form">
     <common-header title="登录"></common-header>
     <div class="border-beee">
       <cube-tab-bar v-model="label" show-slider style="width: 66%;margin: 0 auto;">

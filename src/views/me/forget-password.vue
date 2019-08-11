@@ -1,5 +1,5 @@
 <template>
-  <base-page class="login-form">
+  <base-page class="common-form">
     <div>
       <common-header title="找回密码"></common-header>
       <div class="form-wrapper">

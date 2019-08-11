@@ -65,6 +65,12 @@ export default new VueRouter({
       component: () => import("./views/me/myscore")
     },
     {
+      path: "/me/updateinfo",
+      name: "updateinfo",
+      component: () => import("./views/me/update-info")
+    },
+   
+    {
       path: "/me/becomefarmer",
       name: "becomeFarmer",
       component: () => import("./views/me/become-farmer")

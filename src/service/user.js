@@ -17,6 +17,13 @@ export function getUser(redirect) {
   })
 }
 /**
+ * 更新用户信息
+ */
+export async function updateUser(data) {
+  vm.$util.setLStorage('userInfo', data, true);
+  vm.USERINFO = data;
+}
+/**
  * 清除用户信息
  */
 export async function clearUser() {
