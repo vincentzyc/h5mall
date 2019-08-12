@@ -6,7 +6,6 @@
     <ul class="info-list mg-t15 bgfff">
       <li class="flex align-middle pd15 border-beee">
         <span class="flex-auto">头像</span>
-        <!-- <img :src="userInfo.head_img||require('@/assets/img/logo.png')" class="square50" alt /> -->
         <cube-upload
           ref="upload"
           v-model="files"
@@ -16,7 +15,7 @@
         >
           <div class="headimg mg-r10">
             <cube-upload-btn :multiple="false">
-              <img :src="userInfo.head_img||require('@/assets/img/logo.png')" class="square50" alt />
+              <img :src="userInfo.head_img||require('@/assets/img/logo.png')" class="square50" alt="头像" />
             </cube-upload-btn>
           </div>
         </cube-upload>
