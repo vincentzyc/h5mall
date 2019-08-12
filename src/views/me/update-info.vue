@@ -15,7 +15,7 @@
           class="input-item flex-auto text-right mg-l20 c666"
           type="text"
           placeholder="请输入昵称"
-          v-model="userInfo.name"
+          v-model.trim="userInfo.name"
         ></base-input-item>
       </li>
       <li class="flex align-middle pd15 border-beee">
@@ -76,7 +76,7 @@ import VerificaCode from '@/components/verifica-code'
 import { getUser } from "@/service/user"
 
 export default {
-  name: 'register',
+  name: 'updateInfo',
   components: {
     "verifica-code": VerificaCode
   },
@@ -119,6 +119,13 @@ export default {
       this.userInfo.birthday = selectedText.join('-')
     },
     async save() {
+      if (this.userInfo.name === '') {
+        return this.$createToast({
+          txt: '姓名不能为空',
+          type: 'txt',
+          time: 2000
+        }).show()
+      }
       let param = {
         user_id: this.userInfo.id,
         token: this.userInfo.token,
@@ -126,7 +133,6 @@ export default {
         head_img: this.userInfo.head_img || '',
         birthday: this.userInfo.birthday
       }
-      console.log(param);
       this.$loading.open();
       let res = await this.$api.Common.updateInfoByUserId(param);
       this.$loading.close();
