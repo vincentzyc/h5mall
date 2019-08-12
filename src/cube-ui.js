@@ -24,7 +24,7 @@ import {
   // Switch,
   Rate,
   // Validator,
-  // Upload,
+  Upload,
   // Form,
   // // popup
   Popup,
@@ -64,7 +64,7 @@ Vue.use(Textarea)
 // Vue.use(Switch)
 Vue.use(Rate)
 // Vue.use(Validator)
-// Vue.use(Upload)
+Vue.use(Upload)
 // Vue.use(Form)
 Vue.use(Popup)
 Vue.use(Toast)

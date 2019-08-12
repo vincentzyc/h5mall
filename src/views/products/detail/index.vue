@@ -150,7 +150,7 @@
       </cube-popup>
     </div>
 
-    <vFooter :Data="Data" :pageNum="pageNum" ref="footer"></vFooter>
+    <vFooter :Data="Data" ref="footer"></vFooter>
   </base-page>
 </template>
 

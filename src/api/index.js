@@ -21,7 +21,10 @@ const createInterface = arr => {
 const Api = {
   Common: createInterface(Common),
   Product: createInterface(Product),
-  Store:createInterface(Store),
+  Store: createInterface(Store),
+  uploadUrl() {
+    return "/appfileupload/img"
+  },
   env() {
     if (process.env.NODE_ENV === "development" || window.location.href.includes('192.168')) return "development";
     if (window.location.href.includes('test-mgr')) return 'test';

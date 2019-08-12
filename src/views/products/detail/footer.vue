@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  props: ['Data', "pageNum"],
+  props: ['Data'],
   data() {
     return {
       selectSpecs: '',
@@ -99,7 +99,7 @@ export default {
       let str = JSON.stringify({
         product_id: (this.Data.id || '').toString(),
         specs_id: (this.selectSpecs.id || '').toString(),
-        num: this.pageNum.toString()
+        num: this.number.toString()
       })
       this.hidePopup();
       if (this.$util.platform() === 'android') return window.addCart(str);
@@ -111,7 +111,7 @@ export default {
       let str = JSON.stringify({
         product_id: (this.Data.id || '').toString(),
         specs_id: (this.selectSpecs.id || '').toString(),
-        num: this.pageNum.toString()
+        num: this.number.toString()
       })
       this.hidePopup();
       if (this.$util.platform() === 'android') return window.toPay(str);
