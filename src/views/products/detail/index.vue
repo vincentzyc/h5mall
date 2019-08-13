@@ -198,7 +198,7 @@ export default {
     // 优惠券领取
     getCoupon() {
       let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
-      if (this.$util.platform() === 'android') return window.getCoupon(str);
+      if (this.$util.platform() === 'android') return window.android.getCoupon(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpCoupon.postMessage(str);
       return this.getShopCard()
     },

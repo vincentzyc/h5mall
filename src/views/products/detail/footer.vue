@@ -73,14 +73,14 @@ export default {
     // 交互函数
     // 购物车
     toCart() {
-      if (this.$util.platform() === 'android') return window.toCart();
+      if (this.$util.platform() === 'android') return window.android.toCart();
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShoppingCart.postMessage(""); //必须要参数，否则交互无效
       return this.$router.push('/cart')
     },
     // 店铺
     toShop() {
       let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
-      if (this.$util.platform() === 'android') return window.toShop(str);
+      if (this.$util.platform() === 'android') return window.android.toShop(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShop.postMessage(str);
       return this.$router.push('/store/detail?id=' + (this.Data.shop_id || '').toString())
     },
@@ -90,7 +90,7 @@ export default {
         shop_id: (this.Data.shop_id || '').toString(),
         product_id: (this.Data.id || '').toString(),
       });
-      if (this.$util.platform() === 'android') return window.toChat(str);
+      if (this.$util.platform() === 'android') return window.android.toChat(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.contactSellers.postMessage(str);
       return this.$createDialog({ content: '联系卖家' }).show();
     },
@@ -102,7 +102,7 @@ export default {
         num: this.number.toString()
       })
       this.hidePopup();
-      if (this.$util.platform() === 'android') return window.addCart(str);
+      if (this.$util.platform() === 'android') return window.android.addCart(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.addShoppingCart.postMessage(str);
       return this.$createDialog({ content: '加入购物车' }).show();
     },
@@ -114,7 +114,7 @@ export default {
         num: this.number.toString()
       })
       this.hidePopup();
-      if (this.$util.platform() === 'android') return window.toPay(str);
+      if (this.$util.platform() === 'android') return window.android.toPay(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.buyNow.postMessage(str);
       return this.$createDialog({ content: '立即支付' }).show();
     },
