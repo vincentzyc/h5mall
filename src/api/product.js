@@ -19,10 +19,25 @@ export default [{
 }, {
   name: "productDetail",
   url: "/appProduct/productDetail"  //商品详情
-},{
-  name:"getRecommend",
-  url:"/appProduct/recommend"  //推荐（商品详情页）
-},{
-  name:"getCommentList",
-  url:"/appProduct/productAppraiseList"  //商品详情的评价列表
+}, {
+  name: "getRecommend",
+  url: "/appProduct/recommend"  //推荐（商品详情页）
+}, {
+  name: "getCommentList",
+  url: "/appProduct/productAppraiseList"  //商品详情的评价列表
+}, {
+  name: "myCart",
+  url: "/znShoppingCart/myCart"  //我的购物车
+}, {
+  name: "addShoppingCart",
+  url: "/znShoppingCart/addShoppingCart"  //加入购物车
+}, {
+  name: "orderShoppingCart",
+  url: "/znShoppingCart/orderShoppingCart"  //结算购物车中的商品
+}, {
+  name: "updateCartNum",
+  url: "/znShoppingCart/updateCartNum"  //修改购物车的商品数量
+}, {
+  name: "delShoppingCart",
+  url: "/znShoppingCart/delShoppingCart"  //删除购物车
 }]

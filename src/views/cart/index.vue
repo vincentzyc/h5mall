@@ -1,30 +1,41 @@
 <template>
   <base-page>
     <common-header title="购物车" hideBack>
-      <span slot="right" v-if="stores.length>0" @click="showDelete=!showDelete">{{showDelete?'完成':'编辑'}}</span>
+      <span
+        slot="right"
+        v-if="stores.length>0"
+        @click="showDelete=!showDelete"
+      >{{showDelete?'完成':'编辑'}}</span>
     </common-header>
     <div class="content-wrap" v-if="stores.length>0">
       <div class="content">
         <cube-scroll ref="scroll">
           <div class="scroll-wrapper">
             <!-- 店铺 -->
-            <div class="mg-t10" v-for="(store,index) in stores" :key="store.storeId">
+            <div class="mg-t10" v-for="(store,index) in stores" :key="store.id">
               <div class="flex align-middle pd10 c666 bgfff">
-                <cube-checkbox v-model="store.allCheck" class="store-check" @input="storeCheck(index)"></cube-checkbox>
+                <cube-checkbox
+                  v-model="store.allCheck"
+                  class="store-check"
+                  @input="storeCheck(index)"
+                ></cube-checkbox>
                 <span class="store"></span>
-                <div class="flex align-middle mg-l10" @click="$router.push('/store/detail?id='+store.storeId)">
-                  <span class="mg-r10">{{store.storeName}}</span>
+                <div
+                  class="flex align-middle mg-l10"
+                  @click="$router.push('/store/detail?id='+store.id)"
+                >
+                  <span class="mg-r10">{{store.name}}</span>
                   <i class="fs16 cubeic-arrow"></i>
                 </div>
               </div>
               <!-- 店铺 商品 -->
-              <div class="product-item" v-for="item in store.products" :key="item.id">
+              <div class="product-item" v-for="item in store.productInfo" :key="item.id">
                 <div class="pd10">
                   <cube-checkbox v-model="item.check" @input="itemCheck(index)">
                     <div class="flex product-info">
-                      <img :src="require(`@/assets/img/${item.img}`)" alt="店铺logo" />
+                      <img :src="item.carousel_img" alt="店铺logo" />
                       <div class="pd-l10">
-                        <h4 class="textover2 mg-t5">{{item.title}}</h4>
+                        <h4 class="textover2 mg-t5">{{item.name}}</h4>
                         <p class="ctheme fs16 mg-t5">￥{{item.price}}</p>
                       </div>
                     </div>
@@ -34,9 +45,12 @@
                   <div class="flex align-middle mg-l20">
                     <span class="mg-l10 c666 fs12">购买数量</span>
                     <div class="flex align-middle flex-auto justify-end">
-                      <span class="icon cut" @click="item.number = item.number>1?item.number-1:1"></span>
-                      <span class="mg5">{{item.number}}</span>
-                      <span class="icon add" @click="item.number = item.number+1"></span>
+                      <span
+                        class="icon cut"
+                        @click="item.cart_num = item.cart_num>1?item.cart_num-1:1"
+                      ></span>
+                      <span class="mg5">{{item.cart_num}}</span>
+                      <span class="icon add" @click="item.cart_num = item.cart_num+1"></span>
                     </div>
                   </div>
                 </div>
@@ -81,6 +95,7 @@
 
 <script>
 import vRecommend from "@/components/recommend.vue";
+import { getUser } from "@/service/user"
 export default {
   name: "cart",
   components: {
@@ -88,112 +103,69 @@ export default {
   },
   data() {
     return {
-      check: false,
-      checkitem: false,
+      userInfo: '',
+      pageNum: 0,
+      loadMore: true,
       showDelete: false,
       allSelect: false,
-      stores: [{
-        storeId: 1,
-        storeName: '京东自营',
-        allCheck: false,
-        products: [{
-          check: false,
-          number: 1,
-          title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
-          img: 'store1.png',
-          price: 99,
-          id: 1
-        }, {
-          check: false,
-          number: 1,
-          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-          img: 'store2.png',
-          price: 199,
-          id: 2
-        }],
-      }, {
-        storeId: 2,
-        storeName: '周氏云商城',
-        allCheck: false,
-        products: [{
-          check: false,
-          number: 1,
-          title: '杜兰特成为完全自由球员加盟篮网',
-          img: 'store3.png',
-          price: 899,
-          id: 3
-        }],
-      }, {
-        storeId: 3,
-        storeName: '天猫超市',
-        allCheck: false,
-        products: [{
-          check: false,
-          number: 1,
-          title: '杜兰特成为完全自由球员加盟篮网1',
-          img: 'store3.png',
-          price: 123,
-          id: 33
-        }, {
-          check: false,
-          number: 1,
-          title: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼2',
-          img: 'store1.png',
-          price: 65,
-          id: 31
-        }, {
-          check: false,
-          number: 1,
-          title: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯3',
-          img: 'store2.png',
-          price: 158,
-          id: 32
-        }],
-      }],
-      recommendList: [{
-        title: '常规赛MVP',
-        introduce: '字母哥力压哈登当选常规赛MVP泪洒颁奖礼',
-        img: 'store1.png',
-        tags: ['限时特价', '新品上市', '包邮'],
-        id: 1
-      }, {
-        title: '京东自营',
-        introduce: '杜兰特不执行球员选项 将成为完全自由球员',
-        img: 'store2.png',
-        tags: ['限时特价', '质保赔付', '新品上市', '包邮'],
-        id: 2
-      }, {
-        title: '周氏云商城',
-        introduce: 'NBA正式讨论减少常规赛场次 考虑增设季中冠军杯',
-        img: 'store3.png',
-        tags: ['限时特价', '新品上市', '不包邮'],
-        id: 3
-      }]
+      stores: [],
+      recommendList: []
     }
   },
   computed: {
     totalPrice() {
       let totalPrice = 0, sum = 0;
       this.stores.forEach(v => {
-        sum = v.products.reduce((all, c) => c.check ? all + c.number * c.price : all, 0)
+        sum = v.productInfo.reduce((all, c) => c.check ? all + c.cart_num * c.price : all, 0)
         totalPrice += sum;
       })
       return totalPrice
     }
   },
   methods: {
+    addCheckKey(list) {
+      return list.map(v => {
+        return {
+          ...v,
+          allCheck: false,
+          productInfo: v.productInfo.map(pv => {
+            return {
+              ...pv,
+              check: false
+            }
+          })
+        }
+      })
+    },
+    async getRecommend() {
+      if (!this.loadMore) return;
+      this.pageNum++;
+      console.log(this.pageNum);
+      let res = await this.$api.Product.sysRecommend({ pageNum: this.pageNum });
+      this.loadMore = (res.recommendList || []).length === 10;
+      this.recommendList.push(...res.list);
+    },
+    async myCart() {
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token,
+      }
+      let res = await this.$api.Product.myCart(param);
+      if (res.cartList.length === 0) return this.getRecommend();
+      this.stores = this.addCheckKey(res.cartList);
+    },
     itemCheck(index) {
-      this.stores[index].allCheck = this.stores[index].products.every(v => v.check === true);
+      this.stores[index].allCheck = this.stores[index].productInfo.every(v => v.check === true);
       this.allSelect = this.stores.every(v => v.allCheck === true);
     },
     storeCheck(index) {
-      this.stores[index].products.forEach(v => v.check = this.stores[index].allCheck);
+      this.stores[index].productInfo.forEach(v => v.check = this.stores[index].allCheck);
       this.allSelect = this.stores.every(v => v.allCheck === true);
     },
     handleAllSelect(isSelect) {
       this.stores.forEach(s => {
         s.allCheck = isSelect;
-        s.products.forEach(v => v.check = isSelect)
+        s.productInfo.forEach(v => v.check = isSelect)
       })
     },
     delect() {
@@ -201,11 +173,14 @@ export default {
         type: 'confirm',
         content: '是否确定删除选中商品',
         onConfirm: () => {
-          if (this.allSelect) return this.stores = [];
+          if (this.allSelect) {
+            this.getRecommend();
+            return this.stores = [];
+          }
           let newArr = this.stores.filter((s, si, sarr) => {
             if (!s.allCheck) {
-              let newPro = s.products.filter(v => v.check === false)
-              sarr[si].products = newPro;
+              let newPro = s.productInfo.filter(v => v.check === false)
+              sarr[si].productInfo = newPro;
               return sarr
             }
           })
@@ -215,6 +190,10 @@ export default {
       }).show()
     },
     pay() { }
+  },
+  async created() {
+    this.userInfo = await getUser(this.$route.fullPath);
+    this.myCart();
   }
 };
 </script>

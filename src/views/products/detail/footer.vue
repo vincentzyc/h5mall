@@ -33,7 +33,12 @@
         <div class="specs-info">
           <p class="lh30 fs12">选择规格</p>
           <ul class="specs-content">
-            <li :class="{active:selectSpecs.id===item.id}" v-for="item in Data.specs" :key="item.id" @click="selectSpecs=item">{{item.specsName}}</li>
+            <li
+              :class="{active:selectSpecs.id===item.id}"
+              v-for="item in Data.specs"
+              :key="item.id"
+              @click="selectSpecs=item"
+            >{{item.specsName}}</li>
           </ul>
           <div class="flex align-middle mg-b10">
             <span class="c666 fs12">购买数量</span>
@@ -55,6 +60,7 @@
 </template>
 
 <script>
+import { getUser } from "@/service/user"
 export default {
   props: ['Data'],
   data() {
@@ -104,7 +110,24 @@ export default {
       this.hidePopup();
       if (this.$util.platform() === 'android') return window.android.addCart(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.addShoppingCart.postMessage(str);
-      return this.$createDialog({ content: '加入购物车' }).show();
+      // return this.$createDialog({ content: '加入购物车' }).show();
+      return this.addShoppingCart()
+    },
+    async addShoppingCart() {
+      this.userInfo = await getUser(this.$route.fullPath);
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        product_id: (this.Data.id || '').toString(),
+        specsId: this.selectSpecs.id,
+        num: this.number
+      }
+      let res = await this.$api.Product.addShoppingCart(param);
+      this.$createToast({
+        txt: "添加成功",
+        type: "txt",
+        time: 2000
+      }).show()
     },
     // 立即支付
     toPay() {
