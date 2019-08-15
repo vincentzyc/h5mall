@@ -27,6 +27,7 @@
               <video
                 controls
                 v-if="item.type==='video'"
+                :poster="item.video_cover"
                 class="video-wrap"
                 @click="videoPlay($event)"
               >
@@ -41,7 +42,7 @@
             <h3 class="fs16 bold lh30 textover">{{Data.name}}</h3>
             <p class="fs12 c999">产地：{{Data.production_place}}</p>
             <div class="flex align-middle mg-t5">
-              <span class="price ctheme fs16 mg-r10">￥{{Data.price}}</span>
+              <span class="price ctheme fs16 mg-r10">￥{{Data.specs[0].specsPrice}}</span>
               <span class="border-tag" v-for="item in Data.tagList" :key="item">{{item}}</span>
             </div>
           </div>
@@ -232,10 +233,11 @@ export default {
         });
       }
       if (this.Data.video) {
-        video = this.Data.video.split(",").map(v => {
+        video = this.Data.video.split(",").map((v, i) => {
           return {
             type: 'video',
-            url: v
+            url: v,
+            video_cover: this.Data.video_cover.split(",")[i]
           }
         });
       }
@@ -269,9 +271,17 @@ export default {
       this.$loading.open();
       let res = await this.$api.Store.shopCard({ shop_id: this.Data.shop_id });
       console.log(res);
-      this.storeCoupon = res.list;
+      if (res.list.length > 0) {
+        this.storeCoupon = res.list;
+        this.$refs.couponPopup.show();
+      } else {
+        this.$createToast({
+          txt: '暂无优惠券',
+          type: 'txt',
+          time: 2000
+        }).show()
+      }
       this.$loading.close();
-      this.$refs.couponPopup.show();
     },
     async getCommentList() {
       if (!this.Data) return this.commentList = [];

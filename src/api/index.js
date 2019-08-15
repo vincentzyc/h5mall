@@ -1,8 +1,10 @@
 import Vue from "vue";
+import router from "@/router"
 import Crypto from "@/utils/crypto.js"
 import Common from './common.js';
 import Product from './product.js';
 import Store from './store.js';
+import { clearUser } from '@/service/user.js'
 
 const vm = new Vue()
 
@@ -58,9 +60,17 @@ const Api = {
         let { code, msg, ...result } = backData;
         if (backType === 'allData') return resolve(backData);
         if (code === '1') return resolve(result || '');
+        if (code === '-1') {
+          return vm.$createDialog({
+            content: msg || '登录信息已过期，请重新登录',
+            onConfirm: () => {
+              clearUser();
+              router.replace('/me/login?redirect=' + window.location.hash.replace('#',''))
+            }
+          }).show();
+        }
         if (backType === 'getError') resolve({ error: true });
         vm.$loading.close();
-        vm.$createDialog({ content: msg || '服务器异常' }).show();
       }).catch(error => {
         console.log(error);
         if (backType === 'getError') resolve({ error: true });

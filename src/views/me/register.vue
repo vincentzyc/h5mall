@@ -96,11 +96,11 @@ export default {
       }
       this.$loading.open();
       let res = await this.$api.Common.register(this.formData);
-      let redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : '/home';
+      // let redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : '/home';
       this.$loading.close();
       this.$createDialog({
         content: '注册成功',
-        onConfirm: () => this.$router.replace(redirect)
+        onConfirm: () => this.$router.replace('/me/login')
       }).show()
     }
   }
