@@ -107,10 +107,14 @@ export default {
         specs_id: (this.selectSpecs.id || '').toString(),
         num: this.number.toString()
       })
-      this.hidePopup();
-      if (this.$util.platform() === 'android') return window.android.addCart(str);
-      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.addShoppingCart.postMessage(str);
-      // return this.$createDialog({ content: '加入购物车' }).show();
+      if (this.$util.platform() === 'android') {
+        window.android.addCart(str);
+        return this.hidePopup();
+      }
+      if (this.$util.platform() === 'ios') {
+        window.webkit.messageHandlers.addShoppingCart.postMessage(str);
+        return this.hidePopup();
+      }
       return this.addShoppingCart()
     },
     async addShoppingCart() {
@@ -122,12 +126,16 @@ export default {
         specsId: this.selectSpecs.id,
         num: this.number
       }
+      this.$loading.open();
+      console.log(param);
       let res = await this.$api.Product.addShoppingCart(param);
       this.$createToast({
         txt: "添加成功",
         type: "txt",
         time: 2000
       }).show()
+      this.$loading.close();
+      this.hidePopup();
     },
     // 立即支付
     toPay() {
@@ -137,8 +145,14 @@ export default {
         num: this.number.toString()
       })
       this.hidePopup();
-      if (this.$util.platform() === 'android') return window.android.toPay(str);
-      if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.buyNow.postMessage(str);
+      if (this.$util.platform() === 'android') {
+        window.android.toPay(str);
+        return this.hidePopup();
+      }
+      if (this.$util.platform() === 'ios') {
+        window.webkit.messageHandlers.buyNow.postMessage(str);
+        return this.hidePopup();
+      }
       return this.$createDialog({ content: '立即支付' }).show();
     },
     // /交互函数 

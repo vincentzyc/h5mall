@@ -33,7 +33,7 @@
                 <div class="pd10">
                   <cube-checkbox v-model="item.check" @input="itemCheck(index)">
                     <div class="flex product-info">
-                      <img :src="item.carousel_img" alt="店铺logo" />
+                      <img :src="item.carousel_img.split(',')[0]" alt="店铺logo" />
                       <div class="pd-l10">
                         <h4 class="textover2 mg-t5">{{item.name}}</h4>
                         <p class="ctheme fs16 mg-t5">￥{{item.price}}</p>
@@ -104,8 +104,7 @@ export default {
   data() {
     return {
       userInfo: '',
-      pageNum: 0,
-      loadMore: true,
+      pageNum: 1,
       showDelete: false,
       allSelect: false,
       stores: [],
@@ -138,11 +137,7 @@ export default {
       })
     },
     async getRecommend() {
-      if (!this.loadMore) return;
-      this.pageNum++;
-      console.log(this.pageNum);
       let res = await this.$api.Product.sysRecommend({ pageNum: this.pageNum });
-      this.loadMore = (res.recommendList || []).length === 10;
       this.recommendList.push(...res.list);
     },
     async myCart() {
@@ -153,6 +148,7 @@ export default {
       let res = await this.$api.Product.myCart(param);
       if (res.cartList.length === 0) return this.getRecommend();
       this.stores = this.addCheckKey(res.cartList);
+      console.log(this.stores);
     },
     itemCheck(index) {
       this.stores[index].allCheck = this.stores[index].productInfo.every(v => v.check === true);
@@ -168,23 +164,42 @@ export default {
         s.productInfo.forEach(v => v.check = isSelect)
       })
     },
+    async delectProduct() {
+      let delectList = [], newCart = [];
+      newCart = this.stores.filter((s, si, sarr) => {
+        let newPro = s.productInfo.filter(v => {
+          if (v.check) {
+            delectList.push({
+              product_id: v.id,
+              specsId: v.specs.id
+            })
+            return false;
+          }
+          return true;
+        })
+        sarr[si].productInfo = newPro;
+        if (!s.allCheck) return sarr
+      })
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token,
+        product_list: delectList
+      }
+      console.log(param);
+      let res = await this.$api.Product.delShoppingCart(param);
+      this.$createToast({
+        txt: '删除成功',
+        type: 'txt'
+      }).show();
+      this.stores = newCart
+    },
     delect() {
       this.$createDialog({
         type: 'confirm',
         content: '是否确定删除选中商品',
         onConfirm: () => {
-          if (this.allSelect) {
-            this.getRecommend();
-            return this.stores = [];
-          }
-          let newArr = this.stores.filter((s, si, sarr) => {
-            if (!s.allCheck) {
-              let newPro = s.productInfo.filter(v => v.check === false)
-              sarr[si].productInfo = newPro;
-              return sarr
-            }
-          })
-          this.stores = newArr
+          this.delectProduct();
+          if (this.allSelect) this.getRecommend();
         },
         onCancel: () => { }
       }).show()
