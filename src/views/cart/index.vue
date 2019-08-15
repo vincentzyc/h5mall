@@ -189,7 +189,8 @@ export default {
       let res = await this.$api.Product.delShoppingCart(param);
       this.$createToast({
         txt: '删除成功',
-        type: 'txt'
+        type: 'txt',
+        time: 2000
       }).show();
       this.stores = newCart
     },
