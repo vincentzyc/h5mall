@@ -57,7 +57,7 @@
           <span class="flex-auto">我关注的商家</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex align-middle">
+        <li class="flex align-middle" @click="$router.push('/me/address')">
           <div class="icon icon3"></div>
           <span class="flex-auto">收货地址</span>
           <i class="cubeic-arrow c666"></i>

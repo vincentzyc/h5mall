@@ -69,7 +69,16 @@ export default new VueRouter({
       name: "updateinfo",
       component: () => import("./views/me/update-info")
     },
-   
+    {
+      path: "/me/address",
+      name: "userAddress",
+      component: () => import("./views/me/address")
+    },
+    {
+      path: "/me/address/view",
+      name: "viewAddress",
+      component: () => import("./views/me/address/view-address")
+    },
     {
       path: "/me/becomefarmer",
       name: "becomeFarmer",

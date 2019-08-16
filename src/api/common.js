@@ -26,7 +26,7 @@ export default [{
   name: "getInfoByUserId",
   url: "/appUser/getInfoByUserId"  //用户通过id查询个人基本信息
 }, {
-  name: "updateInfoByUserId", 
+  name: "updateInfoByUserId",
   url: "/appUser/updateInfoByUserId"  //用户更新个人基本信息
 }, {
   name: "logout",
@@ -35,6 +35,21 @@ export default [{
   name: "feedback",
   url: "/appFeedback/feedback" //提交反馈
 }, {
-  name: "myScore",  //我的积分
-  url: "/appScore/myScore"
+  name: "myScore",
+  url: "/appScore/myScore"   //我的积分
+}, {
+  name: "addressAdd",
+  url: "/appShop/addressAdd" //新增地址
+}, {
+  name: "addressDelete",
+  url: "/appShop/addressDelete" //删除地址
+}, {
+  name: "addressUpdate",
+  url: "/appShop/addressUpdate" //编辑地址
+}, {
+  name: "addressDefault",
+  url: "/appShop/addressDefault" //收货地址设为默认
+}, {
+  name: "addressList",
+  url: "/appShop/addressList" //用户收货地址列表
 }]
