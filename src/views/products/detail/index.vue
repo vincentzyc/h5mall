@@ -213,7 +213,7 @@ export default {
       return ''
     },
     getCard(id) {
-      getCard(id)
+      getCard(id, this.$route.fullPath)
     },
     videoPlay(e) {
       e.target.paused ? e.target.play() : e.target.pause();
