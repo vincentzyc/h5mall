@@ -4,12 +4,7 @@
     <div class="form-wrapper">
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">手机号：</label>
-        <base-input-item
-          class="input-item flex-auto"
-          type="phone"
-          v-model="formData.phone"
-          placeholder="请输入手机号"
-        ></base-input-item>
+        <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">验证码：</label>
@@ -24,12 +19,7 @@
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">密码：</label>
-        <base-input-item
-          class="input-item flex-auto"
-          type="password"
-          v-model="formData.password"
-          placeholder="请输入密码"
-        ></base-input-item>
+        <base-input-item class="input-item flex-auto" type="password" v-model="formData.password" placeholder="请输入密码"></base-input-item>
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">确认密码：</label>
@@ -43,7 +33,8 @@
       <div class="flex fs12">
         <cube-checkbox v-model="checked" shape="square" class="agree"></cube-checkbox>
         <span>登录即代表您同意</span>
-        <span class="cblue"
+        <span
+          class="cblue"
           @click="$util.goIframe('http://ricky-s.qicp.io/res/html/znAgreement.html','用户服务协议')"
         >掌农用户协议和隐私条款</span>
       </div>
