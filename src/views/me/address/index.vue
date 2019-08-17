@@ -1,31 +1,33 @@
 <template>
   <base-page>
     <common-header title="常用地址">
-      <span slot="right" @click="$router.push('/me/address/view')">新增</span>
+      <span slot="right" @click="$router.push('/me/address/view')">添加</span>
     </common-header>
-    <div class="common-form mg-t15">
-      <div class="flex align-middle pd-l15 pd5 border-beee">
-        <label class="flex-none input-title">姓名：</label>
-        <base-input-item class="input-item flex-auto" type="text" v-model="formData.name" placeholder="请输入姓名"></base-input-item>
-      </div>
-      <div class="flex align-middle pd-l15 pd5 border-beee">
-        <label class="flex-none input-title">联系方式：</label>
-        <base-input-item class="input-item flex-auto" type="phone" v-model="formData.phone" placeholder="请输入手机号"></base-input-item>
-      </div>
-      <div class="pd15">
-        <label>地址：</label>
-        <cube-textarea
-          v-model.trim="formData.address"
-          placeholder="请输入地址"
-          :maxlength="200"
-          class="mg-t10"
-          style="min-height: 100px"
-        ></cube-textarea>
-      </div>
-      <cube-checkbox v-model="checked" shape="square" style="margin-top:-0.2rem">
-        默认地址
-        <span class="corange fs12">(选择后订单提交前无需在手动输入)</span>
-      </cube-checkbox>
+    <ul v-if="items.length>0">
+      <li class="bgfff mg-t10" v-for="item in items" :key="item.id">
+        <div class="flex pd15 lh24">
+          <h3 class="fs16">{{item.name}}</h3>
+          <span class="cccc mg-l10 mg-r10">|</span>
+          <p class="c666">{{item.phone}}</p>
+        </div>
+        <p class="pd15 c333 pd-t10">{{item.address}}</p>
+        <div class="flex border-teee pd15">
+          <div class="flex-auto cblue">
+            <span v-if="item.state===1">默认地址</span>
+          </div>
+          <div class="corange mg-r20">
+            <i class="cubeic-edit"></i>
+            <span>编辑</span>
+          </div>
+          <div class="c666" @click="addressDelete(item.id)">
+            <i class="cubeic-delete"></i>
+            <span>删除</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="pd20 text-center">
+      <p class="pd20">您还没有添加地址哦~</p>
     </div>
   </base-page>
 </template>
@@ -37,49 +39,45 @@ export default {
   data() {
     return {
       userInfo: '',
-      formData: {
-        phone: '',
-        address: '',
-        name: ''
-      },
-      checked: true
+      items: []
     }
   },
   methods: {
-    checkInfo() {
-      if (this.formData.name === "") return "请输入姓名";
-      if (!/^[\u4e00-\u9fa5]{2,20}$/.test(this.formData.name)) return "姓名输入有误";
-      if (this.formData.phone === "") return "请输入手机号";
-      if (!this.$util.checkMobile(this.formData.phone)) return "手机号输入有误";
-      if (this.formData.address === "") return "请输入地址";
-      return true;
-    },
-    async submit() {
-      let result = this.checkInfo();
-      if (result !== true) {
-        return this.$createToast({
-          txt: result,
-          type: 'txt',
-          time: 2000
-        }).show()
-      }
+    async addressList() {
       let param = {
         user_id: this.userInfo.id,
-        token: this.userInfo.token,
-        state: this.checked ? 1 : 0,
-        ...this.formData
+        token: this.userInfo.token
       }
-      this.$loading.open('添加中...');
-      let res = await this.$api.Common.addressAdd(param);
+      this.$loading.open();
+      let res = await this.$api.Common.addressList(param);
+      this.items = res.list || [];
       this.$loading.close();
+    },
+    addressDelete(id) {
       this.$createDialog({
-        content: '添加成功',
-        onConfirm: () => this.$router.back()
+        type: 'confirm',
+        content: '是否确定删除该地址',
+        onConfirm: async () => {
+          let param = {
+            user_id: this.userInfo.id,
+            token: this.userInfo.token,
+            id: id
+          }
+          await this.$api.Common.addressDelete(param);
+          this.$createToast({
+            txt: '删除成功',
+            type: 'txt',
+            time: 2000
+          }).show();
+          this.items = this.items.filter(v => v.id !== id)
+        },
+        onCancel: () => { }
       }).show()
     }
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
+    this.addressList();
   }
 }
 </script>
