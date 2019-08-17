@@ -22,6 +22,8 @@ Vue.prototype.$util = Util;
 
 Vue.prototype.BASE_URL = process.env.BASE_URL;
 
+window.EVENTBUS = new Vue();
+
 Vue.config.productionTip = false;
 
 new Vue({

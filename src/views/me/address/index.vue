@@ -15,7 +15,7 @@
           <div class="flex-auto cblue">
             <span v-if="item.state===1">默认地址</span>
           </div>
-          <div class="corange mg-r20">
+          <div class="corange mg-r20" @click="editAddress(item)">
             <i class="cubeic-edit"></i>
             <span>编辑</span>
           </div>
@@ -26,7 +26,7 @@
         </div>
       </li>
     </ul>
-    <div class="pd20 text-center">
+    <div class="pd20 text-center" v-else>
       <p class="pd20">您还没有添加地址哦~</p>
     </div>
   </base-page>
@@ -52,6 +52,10 @@ export default {
       let res = await this.$api.Common.addressList(param);
       this.items = res.list || [];
       this.$loading.close();
+    },
+    editAddress(item) {
+      window.EVENTBUS.editAddress = item;
+      this.$router.push('/me/address/view')
     },
     addressDelete(id) {
       this.$createDialog({

@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <common-header title="添加地址">
+    <common-header :title="title">
       <span slot="right" @click="submit()">保存</span>
     </common-header>
     <div class="common-form mg-t15">
@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       userInfo: '',
+      title: "添加地址",
       formData: {
         phone: '',
         address: '',
@@ -69,17 +70,30 @@ export default {
         state: this.checked ? 1 : 0,
         ...this.formData
       }
-      this.$loading.open('添加中...');
-      let res = await this.$api.Common.addressAdd(param);
+      this.$loading.open('正在保存...');
+      let res = window.EVENTBUS.editAddress ? await this.$api.Common.addressUpdate(param) : await this.$api.Common.addressAdd(param);
       this.$loading.close();
       this.$createDialog({
-        content: '添加成功',
+        content: '保存成功',
         onConfirm: () => this.$router.back()
       }).show()
     }
   },
+  destroyed() {
+    window.EVENTBUS.editAddress = null;
+  },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
+    if (window.EVENTBUS.editAddress) {
+      this.formData = {
+        phone: window.EVENTBUS.editAddress.phone,
+        address: window.EVENTBUS.editAddress.address,
+        name: window.EVENTBUS.editAddress.name,
+        id: window.EVENTBUS.editAddress.id,
+      }
+      this.checked = window.EVENTBUS.editAddress.state === 1;
+      this.title = "编辑地址"
+    }
   }
 }
 </script>
