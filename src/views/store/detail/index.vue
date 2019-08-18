@@ -70,7 +70,7 @@
       </div>
       <div class="flex flex-center flex-auto">
         <div class="icon call"></div>
-        <h5 class="fs12 c999" @click="phone(Data.shop.telphone)">打电话</h5>
+        <h5 class="fs12 c999" @click="phone(Data.shop.telephone)">打电话</h5>
       </div>
     </footer>
 
@@ -119,14 +119,14 @@ export default {
     };
   },
   methods: {
-    phone(telphone) {
+    phone(telephone) {
       this.$createDialog({
         type: 'confirm',
-        content: telphone,
+        content: telephone,
         confirmBtn: {
           text: '拨打',
           active: true,
-          href: 'tel:' + telphone
+          href: 'tel:' + telephone
         }
       }).show()
     },
@@ -157,7 +157,7 @@ export default {
       let userInfo = await getUser();
       this.pageNum++;
       let param = {
-        // user_id: userInfo ? userInfo.id : "",
+        user_id: userInfo ? userInfo.id.toString() : "",
         pageNum: this.pageNum,
         shop_id: this.$route.query.id
       }
@@ -165,7 +165,7 @@ export default {
       let res = await this.$api.Store.shopDetail(param);
       console.log(res);
       let { productList, ...Data } = res;
-      this.idLike = Data.collection;
+      this.isLike = Data.collection;
       this.Data = Data;
       this.productList.push(...productList);
       return {

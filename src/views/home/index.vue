@@ -11,7 +11,7 @@
           </cube-slide-item>
         </cube-slide>
         <v-tabs />
-        <FineStore />
+        <!-- <FineStore /> -->
         <!-- <cube-slide ref="slide" :data="middleItems" class="common-slide store-slide">
           <cube-slide-item v-for="(item, index) in middleItems" :key="index">
             <a :href="'/#/store/detail?id='+item.farmer_id">
@@ -32,7 +32,7 @@
 // @ is an alias to /src
 import vHeader from "./header.vue";
 import vTabs from "./tabs.vue";
-import FineStore from "./fine-store.vue";
+// import FineStore from "./fine-store.vue";
 import vRecommend from "./recommend.vue";
 
 export default {
@@ -40,7 +40,7 @@ export default {
   components: {
     vHeader,
     vTabs,
-    FineStore,
+    // FineStore,
     vRecommend
   },
   data() {
