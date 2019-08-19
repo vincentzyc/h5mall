@@ -117,6 +117,26 @@ export default {
       }
       return this.addShoppingCart()
     },
+    // 立即支付
+    toPay() {
+      let str = JSON.stringify({
+        product_id: (this.Data.id || '').toString(),
+        specs_id: (this.selectSpecs.id || '').toString(),
+        num: this.number.toString()
+      })
+      this.hidePopup();
+      if (this.$util.platform() === 'android') {
+        window.android.toPay(str);
+        return this.hidePopup();
+      }
+      if (this.$util.platform() === 'ios') {
+        window.webkit.messageHandlers.buyNow.postMessage(str);
+        return this.hidePopup();
+      }
+      this.initOrder()
+      // return this.$createDialog({ content: '立即支付' }).show();
+    },
+    // /交互函数 
     async addShoppingCart() {
       this.userInfo = await getUser(this.$route.fullPath);
       let param = {
@@ -137,25 +157,24 @@ export default {
       this.$loading.close();
       this.hidePopup();
     },
-    // 立即支付
-    toPay() {
-      let str = JSON.stringify({
+    async initOrder() {
+      this.userInfo = await getUser(this.$route.fullPath);
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
         product_id: (this.Data.id || '').toString(),
-        specs_id: (this.selectSpecs.id || '').toString(),
-        num: this.number.toString()
-      })
-      this.hidePopup();
-      if (this.$util.platform() === 'android') {
-        window.android.toPay(str);
-        return this.hidePopup();
+        specsId: this.selectSpecs.id,
+        num: this.number
       }
-      if (this.$util.platform() === 'ios') {
-        window.webkit.messageHandlers.buyNow.postMessage(str);
-        return this.hidePopup();
-      }
-      return this.$createDialog({ content: '立即支付' }).show();
+      console.log(param);
+      this.$router.push('/order/add')
+      // let res = await this.$api.Product.addShoppingCart(param);
+      // this.$createToast({
+      //   txt: "添加成功",
+      //   type: "txt",
+      //   time: 2000
+      // }).show()
     },
-    // /交互函数 
     showPopup() {
       this.$refs.specsPopup.show()
     },
