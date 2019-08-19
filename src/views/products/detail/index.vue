@@ -54,10 +54,7 @@
           </div>
         </div>
 
-        <div
-          class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle"
-          @click="getCoupon()"
-        >
+        <div class="flex pd-l10 pd-r10 pd-t15 pd-b15 bgfff mg-t15 align-middle" @click="getCoupon()">
           <div class="flex flex-auto align-middle">
             <img src="@/assets/img/discount.png" alt="优惠券" class="discount" />
             <span class="mg-l5 fs14">优惠券领取</span>
@@ -94,23 +91,12 @@
         </div>
 
         <div class="detail-info bgfff mg-t15">
-          <cube-tab-bar
-            v-model="selectedLabel"
-            show-slider
-            class="border-beee"
-            @change="changeHandler"
-          >
+          <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee" @change="changeHandler">
             <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30"></cube-tab>
           </cube-tab-bar>
           <cube-tab-panels class="mg-b10">
             <cube-tab-panel class="img-panel" label="图片" v-show="selectedLabel==='图片'">
-              <img
-                v-for="item in Data.img.split(',')"
-                :key="item"
-                v-lazy="item"
-                alt
-                class="tab-panel-img"
-              />
+              <img v-for="item in Data.img.split(',')" :key="item" v-lazy="item" alt class="tab-panel-img" />
             </cube-tab-panel>
             <cube-tab-panel class="text-panel" label="文字" v-show="selectedLabel==='文字'">
               <!-- <p v-html="$util.textBr(Data.introduction,'@BR@')"></p> -->
@@ -163,7 +149,7 @@ import vFooter from "./footer.vue";
 import { addShopCollection, getCard } from "@/service/user"
 
 export default {
-  name: "productDetail",
+  name: "keepProductDetail",
   components: {
     vComment, vRecommend, vFooter
   },
@@ -183,8 +169,8 @@ export default {
     }
   },
   watch: {
-    '$route'(to) {
-      if (to.name === 'productsDetail') {
+    '$route'(to, form) {
+      if (to.name === 'productsDetail' && form.name === 'productsDetail') {
         Object.assign(this.$data, this.$options.data());
         this.init();
       }

@@ -36,7 +36,7 @@ import vTabs from "./tabs.vue";
 import vRecommend from "./recommend.vue";
 
 export default {
-  name: "home",
+  name: "keepHome",
   components: {
     vHeader,
     vTabs,
