@@ -20,9 +20,7 @@ Vue.use(BaseComponents);
 Vue.prototype.$api = Api;
 Vue.prototype.$util = Util;
 
-Vue.prototype.BASE_URL = process.env.BASE_URL;
-
-window.EVENTBUS = new Vue();
+Vue.prototype.EVENTBUS = {}; //公共对象，用于组件通信（项目复杂或者多人开发使用vuex）
 
 Vue.config.productionTip = false;
 
