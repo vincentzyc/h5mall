@@ -54,7 +54,7 @@ export default {
       this.$loading.close();
     },
     editAddress(item) {
-      window.EVENTBUS.editAddress = item;
+      this.EVENTBUS.editAddress = item;
       this.$router.push('/me/address/view')
     },
     addressDelete(id) {

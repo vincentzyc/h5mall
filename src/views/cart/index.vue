@@ -1,11 +1,7 @@
 <template>
   <base-page>
     <common-header title="购物车" hideBack>
-      <span
-        slot="right"
-        v-if="stores.length>0"
-        @click="showDelete=!showDelete"
-      >{{showDelete?'完成':'编辑'}}</span>
+      <span slot="right" v-if="stores.length>0" @click="showDelete=!showDelete">{{showDelete?'完成':'编辑'}}</span>
     </common-header>
     <div class="content-wrap" v-if="stores.length>0">
       <div class="content">
@@ -14,16 +10,9 @@
             <!-- 店铺 -->
             <div class="mg-t10" v-for="(store,index) in stores" :key="store.id">
               <div class="flex align-middle pd10 c666 bgfff">
-                <cube-checkbox
-                  v-model="store.allCheck"
-                  class="store-check"
-                  @input="storeCheck(index)"
-                ></cube-checkbox>
+                <cube-checkbox v-model="store.allCheck" class="store-check" @input="storeCheck(index)"></cube-checkbox>
                 <span class="store"></span>
-                <div
-                  class="flex align-middle mg-l10"
-                  @click="$router.push('/store/detail?id='+store.id)"
-                >
+                <div class="flex align-middle mg-l10" @click="$router.push('/store/detail?id='+store.id)">
                   <span class="mg-r10">{{store.name}}</span>
                   <i class="fs16 cubeic-arrow"></i>
                 </div>
@@ -45,12 +34,9 @@
                   <div class="flex align-middle mg-l20">
                     <span class="mg-l10 c666 fs12">购买数量</span>
                     <div class="flex align-middle flex-auto justify-end">
-                      <span
-                        class="icon cut"
-                        @click="item.cart_num = item.cart_num>1?item.cart_num-1:1"
-                      ></span>
+                      <span class="icon cut" @click="item.cart_num = item.cart_num>1?Number(item.cart_num)-1:1"></span>
                       <span class="mg5">{{item.cart_num}}</span>
-                      <span class="icon add" @click="item.cart_num = item.cart_num+1"></span>
+                      <span class="icon add" @click="item.cart_num = Number(item.cart_num)+1"></span>
                     </div>
                   </div>
                 </div>
