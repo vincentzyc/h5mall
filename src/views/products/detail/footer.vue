@@ -163,10 +163,10 @@ export default {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
         product_id: (this.Data.id || '').toString(),
-        specsId: this.selectSpecs.id,
+        specs_id: this.selectSpecs.id.toString(),
         num: this.number
       }
-      console.log(param);
+      this.EVENTBUS.orderParam = param;
       this.$router.push('/order/add')
       // let res = await this.$api.Product.addShoppingCart(param);
       // this.$createToast({

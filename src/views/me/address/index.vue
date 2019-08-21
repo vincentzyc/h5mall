@@ -5,7 +5,7 @@
     </common-header>
     <ul v-if="items.length>0">
       <li class="bgfff mg-t10" v-for="item in items" :key="item.id">
-        <div class="flex pd15 lh24">
+        <div class="flex pd15 lh24" @click="selectAdress(item)">
           <h3 class="fs16">{{item.name}}</h3>
           <span class="cccc mg-l10 mg-r10">|</span>
           <p class="c666">{{item.phone}}</p>
@@ -43,6 +43,12 @@ export default {
     }
   },
   methods: {
+    selectAdress(item) {
+      if (this.$route.query.type === 'select') {
+        this.EVENTBUS.selectAdress = item;
+        this.$router.back()
+      }
+    },
     async addressList() {
       let param = {
         user_id: this.userInfo.id,
