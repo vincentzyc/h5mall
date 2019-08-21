@@ -4,6 +4,7 @@ import Crypto from "@/utils/crypto.js"
 import Common from './common.js';
 import Product from './product.js';
 import Store from './store.js';
+import Order from './order.js';
 import { clearUser } from '@/service/user.js'
 
 const vm = new Vue()
@@ -24,6 +25,7 @@ const Api = {
   Common: createInterface(Common),
   Product: createInterface(Product),
   Store: createInterface(Store),
+  Order: createInterface(Order),
   uploadUrl() {
     return "/appfileupload/img"
   },
@@ -57,6 +59,7 @@ const Api = {
         } else {
           backData = res.data;
         }
+        // console.log(backData);
         let { code, msg, ...result } = backData;
         if (backType === 'allData') return resolve(backData);
         if (code === '1') return resolve(result || '');
@@ -65,11 +68,16 @@ const Api = {
             content: msg || '登录信息已过期，请重新登录',
             onConfirm: () => {
               clearUser();
-              router.replace('/me/login?redirect=' + window.location.hash.replace('#',''))
+              router.replace('/me/login?redirect=' + window.location.hash.replace('#', ''))
             }
           }).show();
         }
-        if (backType === 'getError') resolve({ error: true });
+        if (backType === 'getError') return resolve({ error: true });
+        vm.$createToast({
+          txt: msg || "服务器异常，请稍后再试",
+          type: "txt",
+          time: 2000
+        }).show()
         vm.$loading.close();
       }).catch(error => {
         console.log(error);
