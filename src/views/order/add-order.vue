@@ -99,6 +99,23 @@
       <div class="pd10">
         <common-header title="选择优惠券" />
         <p class="lh24">选择优惠券选择优惠券</p>
+        <div>
+          <ul class="not_used_coupon" v-if="couponList.length>0">
+            <li class="coupon_box" v-for="item in couponList" :key="item.card_id">
+              <div class="coupon_centent flex align-middle bg1">
+                <div class="coupon_centent_left flex-auto">
+                  <h2>{{item.note}}</h2>
+                  <h5>{{item.shop_name}}</h5>
+                  <h6>{{formatTime(item.start_time,item.end_time)}}</h6>
+                </div>
+                <div class="coupon_centent_right">￥{{item.discount||0}}</div>
+              </div>
+            </li>
+          </ul>
+          <div class="mg20" v-else>
+            <p class="pd20 c666 text-center">暂无可用优惠券</p>
+          </div>
+        </div>
       </div>
     </page-popup>
   </base-page>
@@ -115,7 +132,8 @@ export default {
       address: "",
       message: "",
       selected: 'zfb',
-      coupon: {}
+      coupon: {},
+      couponList:[]
     }
   },
   computed: {
@@ -155,7 +173,7 @@ export default {
       console.log(param);
       let res = await this.$api.Order.orderCard(param);
       console.log(res);
-      this.items = res.list || [];
+      this.couponList = res.list || [];
       this.$loading.close();
       this.$refs.pagePopup.open()
     },
