@@ -32,11 +32,11 @@
         <div class="product-item" v-for="item in store.productInfo" :key="item.id">
           <div class="pd10">
             <div class="flex product-info">
-              <img :src="item.carousel_img.split(',')[0]" alt="店铺logo" />
+              <img :src="item.specs.specsImg.split(',')[0]" alt="店铺logo" />
               <div class="flex-auto pd-l10">
                 <h4 class="textover2 lh20 title">{{item.name}}</h4>
                 <div class="flex mg-t10">
-                  <span class="flex-auto ctheme fs16">￥{{item.price}}</span>
+                  <span class="flex-auto ctheme fs16">￥{{item.specs.specsPrice}}</span>
                   <span class="mg5">x{{item.cart_num}}</span>
                 </div>
               </div>
@@ -56,10 +56,10 @@
           style="min-height: 100px"
         ></cube-textarea>
       </div>
-      <div class="flex bgfff pd15">
+      <div class="flex bgfff pd15" @click="getOrderCard()">
         <div class="flex flex-auto">优惠券领取</div>
         <div class="c999">
-          <span>-￥0.00</span>
+          <span>-￥{{coupon.discount||0.00}}</span>
           <i class="cubeic-arrow"></i>
         </div>
       </div>
@@ -91,9 +91,16 @@
             <span class="fs16">{{totalPrice}}</span>
           </div>
         </div>
-        <div class="col-3 cfff bgtheme">支付</div>
+        <div class="col-3 cfff bgtheme" @click="pay()">支付</div>
       </div>
     </footer>
+    <!-- 选择优惠券 -->
+    <page-popup ref="pagePopup" position="right" class="pd-t44" type="coupon">
+      <div class="pd10">
+        <common-header title="选择优惠券" />
+        <p class="lh24">选择优惠券选择优惠券</p>
+      </div>
+    </page-popup>
   </base-page>
 </template>
 
@@ -107,17 +114,18 @@ export default {
       items: [],
       address: "",
       message: "",
-      selected: 'zfb'
+      selected: 'zfb',
+      coupon: {}
     }
   },
   computed: {
     totalPrice() {
       let totalPrice = 0, sum = 0;
       this.items.forEach(v => {
-        sum = v.productInfo.reduce((all, c) => all + c.cart_num * c.price, 0)
+        sum = v.productInfo.reduce((all, c) => all + c.cart_num * c.specs.specsPrice, 0)
         totalPrice += sum;
       })
-      return totalPrice
+      return totalPrice - (this.coupon.discount || 0)
     }
   },
   methods: {
@@ -130,11 +138,30 @@ export default {
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
     async getProducts(param) {
-      console.log(param);
       let res = await this.$api.Order.directSettlement(param);
-      console.log(res);
       this.items = res.settlementList || [];
     },
+    async getOrderCard() {
+      this.$loading.open();
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        product_info: {
+          shop_id: this.items[0].id.toString(),
+          product_id: this.items[0].productInfo[0].id.toString(),
+          num: this.items[0].productInfo[0].cart_num
+        }
+      }
+      console.log(param);
+      let res = await this.$api.Order.orderCard(param);
+      console.log(res);
+      this.items = res.list || [];
+      this.$loading.close();
+      this.$refs.pagePopup.open()
+    },
+    pay() {
+
+    }
     // addressDelete(id) {
     //   this.$createDialog({
     //     type: 'confirm',
