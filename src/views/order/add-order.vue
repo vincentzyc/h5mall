@@ -98,10 +98,10 @@
     <page-popup ref="pagePopup" position="right" class="pd-t44" type="coupon">
       <div class="pd10">
         <common-header title="选择优惠券" />
-        <p class="lh24">选择优惠券选择优惠券</p>
         <div>
           <ul class="not_used_coupon" v-if="couponList.length>0">
-            <li class="coupon_box" v-for="item in couponList" :key="item.card_id">
+            <cube-checkbox v-model="checked" shape="square" @input="noUseCoupon">不使用优惠券</cube-checkbox>
+            <li class="coupon_box" v-for="item in couponList" :key="item.card_id" @click="selectCoupon(item)">
               <div class="coupon_centent flex align-middle bg1">
                 <div class="coupon_centent_left flex-auto">
                   <h2>{{item.note}}</h2>
@@ -133,7 +133,8 @@ export default {
       message: "",
       selected: 'zfb',
       coupon: {},
-      couponList:[]
+      couponList: [],
+      checked: false
     }
   },
   computed: {
@@ -143,10 +144,29 @@ export default {
         sum = v.productInfo.reduce((all, c) => all + c.cart_num * c.specs.specsPrice, 0)
         totalPrice += sum;
       })
-      return totalPrice - (this.coupon.discount || 0)
+      return totalPrice - (this.coupon.discount || 0) > 0 ? totalPrice : 0
     }
   },
   methods: {
+    selectCoupon(item) {
+      this.coupon = item;
+      this.$router.back()
+    },
+    noUseCoupon(check) {
+      if (check) {
+        setTimeout(() => {
+          this.$router.back()
+        }, 500);
+      }
+    },
+    formatTime(start, end) {
+      if (start && end) {
+        let startTime = this.$util.getFormatDate('yyyy-mm-dd', start);
+        let endTime = this.$util.getFormatDate('yyyy-mm-dd', end);
+        return '有效日期:' + startTime + '至' + endTime;
+      }
+      return ''
+    },
     async getAddress() {
       let param = {
         user_id: this.userInfo.id,
@@ -164,11 +184,11 @@ export default {
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
-        product_info: {
+        product_info: [{
           shop_id: this.items[0].id.toString(),
           product_id: this.items[0].productInfo[0].id.toString(),
           num: this.items[0].productInfo[0].cart_num
-        }
+        }]
       }
       console.log(param);
       let res = await this.$api.Order.orderCard(param);
@@ -208,12 +228,22 @@ export default {
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    this.EVENTBUS.orderParam ? this.getAddress() : this.$router.back()
+    if (this.EVENTBUS.orderParam) {
+      this.getAddress()
+    } else {
+      if (this.$route.fullPath === '/order/add') {
+        this.$router.back()
+      } else {
+        this.$router.go(-2)
+      }
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+@import '~@/assets/css/color.styl';
+
 .add-address {
   height: 88px;
   padding: 10px;
@@ -271,5 +301,51 @@ export default {
   width: 3px;
   color: #33dbff;
   margin-right: 6px;
+}
+
+.coupon_box {
+  width: 100%;
+  padding: 0 5px;
+  margin-bottom: 15px;
+}
+
+.coupon_centent {
+  height: 110px;
+}
+
+.not_used_coupon .bg1 {
+  background: url('~@/assets/img/yhq.png') no-repeat 0 0 / 100% 100%;
+}
+
+.not_used_coupon .bg2 {
+  background: url('~@/assets/img/yhq.png') no-repeat 0 0 / 100% 100%;
+}
+
+.coupon_centent_left {
+  padding-left: 15px;
+}
+
+.coupon_centent_left h2 {
+  font-size: 18px;
+  color: $color-theme;
+  font-weight: bold;
+}
+
+.coupon_centent_left h5 {
+  font-size: 12px;
+  color: $color-theme;
+  padding-top: 10px;
+}
+
+.coupon_centent_left h6 {
+  font-size: 10px;
+  color: #999999;
+  padding-top: 10px;
+}
+
+.coupon_centent_right {
+  font-size: 30px;
+  color: #fff;
+  padding-right: 33px;
 }
 </style>
