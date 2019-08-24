@@ -132,7 +132,7 @@ export default {
       address: "",
       message: "",
       selected: 'zfb',
-      coupon: {},
+      coupon: '',
       couponList: [],
       checked: false
     }
@@ -155,8 +155,9 @@ export default {
     noUseCoupon(check) {
       if (check) {
         setTimeout(() => {
+          this.coupon = "";
           this.$router.back()
-        }, 500);
+        }, 300);
       }
     },
     formatTime(start, end) {
