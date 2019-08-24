@@ -5,6 +5,7 @@ import Common from './common.js';
 import Product from './product.js';
 import Store from './store.js';
 import Order from './order.js';
+import Pay from './pay.js';
 import { clearUser } from '@/service/user.js'
 
 const vm = new Vue()
@@ -26,6 +27,7 @@ const Api = {
   Product: createInterface(Product),
   Store: createInterface(Store),
   Order: createInterface(Order),
+  Pay: createInterface(Pay),
   uploadUrl() {
     return "/appfileupload/img"
   },

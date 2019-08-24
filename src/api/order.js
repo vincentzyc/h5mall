@@ -4,4 +4,7 @@ export default [{
 },{
   name:"orderCard",
   url:"/znOrder/orderCard"  //订单中可使用优惠券
+},{
+  name:"orderSubmit",
+  url:"/znOrder/orderSubmit"  //订单提交(即点击“支付”)
 }]
