@@ -49,7 +49,7 @@
       <div class="leave-msg">
         <label>买家留言：</label>
         <cube-textarea
-          v-model.trim="message"
+          v-model.trim="remark"
           placeholder="请输入备注"
           :maxlength="200"
           class="mg-t10"
@@ -130,7 +130,7 @@ export default {
       userInfo: '',
       items: [],
       address: "",
-      message: "",
+      remark: "",
       selected: 'zfb',
       coupon: '',
       couponList: [],
@@ -191,14 +191,39 @@ export default {
           num: this.items[0].productInfo[0].cart_num
         }]
       }
-      console.log(param);
       let res = await this.$api.Order.orderCard(param);
-      console.log(res);
       this.couponList = res.list || [];
       this.$loading.close();
       this.$refs.pagePopup.open()
     },
-    pay() {
+    async pay() {
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        address: this.address.address,
+        phone: this.address.phone,
+        name: this.address.name,
+        card_id: this.coupon.card_id,
+        submitType: "2",
+        product_info: [{
+          specsId: this.items[0].productInfo[0].specs.id,
+          product_id: this.items[0].productInfo[0].id,
+          num: this.items[0].productInfo[0].cart_num,
+          remark: this.remark
+        }]
+      }
+      this.$loading.open();
+      console.log(param);
+      let res = await this.$api.Order.orderSubmit(param);
+      console.log(res);
+      let payParam = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        order_id: res.order_id
+      }
+      let payres = await this.$api.Pay.wxpay(payParam);
+      console.log(payres);
+      this.$loading.close();
 
     }
     // addressDelete(id) {
