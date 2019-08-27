@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="bgfff mg-b15">
-        <div class="flex pd15 border-beee">
+        <div class="flex pd15 border-beee" @click="$router.push('/order/list')">
           <span class="flex-auto">我的订单</span>
           <span class="c999 mg-r10 fs12">查看全部</span>
           <i class="cubeic-arrow c666"></i>
@@ -92,10 +92,7 @@
         <div class="frame">
           <div class="frame_title">关注公众号</div>
           <div class="frame_mode_first">方式一：微信扫描或识别关注卡</div>
-          <div
-            class="frame_mode_first_btn"
-            @click="$refs.pagePopup.open();$refs.followPopup.hide()"
-          >获取关注卡</div>
+          <div class="frame_mode_first_btn" @click="$refs.pagePopup.open();$refs.followPopup.hide()">获取关注卡</div>
           <div class="frame_mode_first_border"></div>
 
           <div class="frame_mode_first" style="margin-top: 20px">方式 二：复制链接到微信搜索</div>
@@ -116,7 +113,7 @@
 </template>
 
 <script>
-import { getUser,updateUser } from "@/service/user"
+import { getUser, updateUser } from "@/service/user"
 import Clipboard from "@/utils/clipboard"
 
 export default {

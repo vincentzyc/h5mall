@@ -130,6 +130,11 @@ export default new VueRouter({
       component: () => import("./views/order/add-order")
     },
     {
+      path: "/order/list",
+      name: "orderList",
+      component: () => import("./views/order/list")
+    },
+    {
       path: "/iframe/:url",
       name: "iframe",
       component: () => import("./views/iframe")
