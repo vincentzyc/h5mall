@@ -11,8 +11,11 @@ const SHA256 = CryptoJS.SHA256;
 const LOCALIV = UTF8.parse("qwertyuiop123456");
 const LOCALKEY = "asdfghjkl1234567";
 
-const channelNo = "00000001";
+const channelNo = "20190828092911986537491001";
+// const channelNo = "00000001";
 const DEFAULT_AESKEY = "zhangnong!@#                    ";
+// const PUBLICK_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzDN5MfZu1naBuSt7+l3cpa7IIspsX+Xebq16JDZPaCa+Nihr5TacNJ2BeM2zGVBwPGe8lwqGLFnaHijsHGIilDSRryS0di96srntChZiMS4D0NTSy3UTK+H6c8GZ/9KQy5wR7EtR3lcs4WOz9ggsqKWYQsgB593MngfvwoyE1TLGUjdUtbmLHCQJlLNIhaPkuz1DIyJFFoTbEQK/L5vsq/NkB+IPnP429zrqWI/F4GM6W6u20KDtt5wc7igVD0vy36lqnmehIWj4eWklRUvOo5WwBV0DIJ9GWCFkKHXspUp1PByZedHs/KgDjEbTcQp0abWj/DlA/SptQp/JuC73sQIDAQAB";
+const PUBLICK_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsTI3Rw7SLuq1qwtxdXIzzLzI60gEMyJIl4ffU1+I0asGEmcOkieRZwLRrd/7mGrU2MGSHpckiQ7FbcBu3dNlvCSnFCmnz/kORi0Vx8yiNuntH3Lcm7lsEWDMQaybmR/ZPzLFIEO+mBVskLxtijEJZJGPhIo9vsoXBlZiaO9BCbfgkfExHJI3jHrGWqMNWffCdP+vv060KemnvM4tMwmAht0iL0X1YmIA2MENtq/kMMgcmzoymZaWdEZeApQFjKcvQURmQANmSVfy4nj14x6RrOrfyovA7Oo/L1fqHKJ1SkNmX1X678iuBeCRonhOKVbTSDtfW7g6bMgsI7nw00zAyQIDAQAB";
 
 export default {
   /**
@@ -51,8 +54,7 @@ export default {
    */
   rsaEncrypt(data) {
     if (typeof data !== 'string') data = data.toString();
-    let publickKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzDN5MfZu1naBuSt7+l3cpa7IIspsX+Xebq16JDZPaCa+Nihr5TacNJ2BeM2zGVBwPGe8lwqGLFnaHijsHGIilDSRryS0di96srntChZiMS4D0NTSy3UTK+H6c8GZ/9KQy5wR7EtR3lcs4WOz9ggsqKWYQsgB593MngfvwoyE1TLGUjdUtbmLHCQJlLNIhaPkuz1DIyJFFoTbEQK/L5vsq/NkB+IPnP429zrqWI/F4GM6W6u20KDtt5wc7igVD0vy36lqnmehIWj4eWklRUvOo5WwBV0DIJ9GWCFkKHXspUp1PByZedHs/KgDjEbTcQp0abWj/DlA/SptQp/JuC73sQIDAQAB';
-    let pub = KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----" + publickKey + "-----END PUBLIC KEY-----");
+    let pub = KEYUTIL.getKey("-----BEGIN PUBLIC KEY-----" + PUBLICK_KEY + "-----END PUBLIC KEY-----");
     let enc = KJUR.crypto.Cipher.encrypt(data, pub);
     let rsaStr = hextob64u(enc);
     return rsaStr
