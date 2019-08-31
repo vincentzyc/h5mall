@@ -89,6 +89,7 @@
 
 <script type="text/ecmascript-6">
 import { FOLLOWERS_DATA, RECOMMEND_DATA, HOT_DATA } from './tab-bar'
+import { getUser } from "@/service/user"
 export default {
   data() {
     return {
@@ -157,6 +158,18 @@ export default {
     },
     resolveQuestionFollowers(item) {
       return `${item.answers} 赞同 · ${item.followers} 评论`
+    },
+    async getAllOrder() {
+      this.userInfo = await getUser(this.$route.fullPath);
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token,
+        pageNum: 1,
+        order_status: '',
+        // order_status	string	否	''全部  0 待付款 1已付款（待发货）2已发货(待收货) 3已收货（待评价） 4用户已评价 5商家已评价
+      }
+      let res = await this.$api.Order.allOrder(param);
+      console.log(res);
     }
   },
   computed: {
@@ -165,6 +178,9 @@ export default {
       index = this.findIndex(this.tabLabels, item => item.label === this.selectedLabel);
       return index
     }
+  },
+  created() {
+    this.getAllOrder()
   }
 }
 </script>
