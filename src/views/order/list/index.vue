@@ -14,7 +14,7 @@
           @scroll="scroll"
           @change="changePage"
         >
-          <!-- 关注 -->
+          <!-- 全部 -->
           <cube-slide-item>
             <cube-scroll :data="followersData" :options="scrollOptions">
               <ul class="list-wrapper">
@@ -29,7 +29,7 @@
               </ul>
             </cube-scroll>
           </cube-slide-item>
-          <!-- 推荐 -->
+          <!-- 待付款 -->
           <cube-slide-item>
             <cube-scroll :data="recommendData" :options="scrollOptions">
               <ul class="list-wrapper">
@@ -41,6 +41,7 @@
               </ul>
             </cube-scroll>
           </cube-slide-item>
+          <!-- 待发货 -->
           <cube-slide-item>
             <cube-scroll :data="hotData" :options="scrollOptions">
               <ul class="list-wrapper">
@@ -51,6 +52,31 @@
                     {{item.label}}
                   </div>
                   <div class="hot-content is-bold is-black">{{item.question}}</div>
+                </li>
+              </ul>
+            </cube-scroll>
+          </cube-slide-item>
+          <!-- 待收货 -->
+          <cube-slide-item>
+            <cube-scroll :data="followersData" :options="scrollOptions">
+              <li v-for="(item, index) in followersData" class="list-item" :key="index">
+                <div class="top">
+                  <img :src="item.avatar" class="avatar" />
+                  <span class="time">{{resolveTitle(item)}}</span>
+                </div>
+                <div class="middle is-bold line-height">{{item.question}}</div>
+                <div>{{resolveQuestionFollowers(item)}}</div>
+              </li>
+            </cube-scroll>
+          </cube-slide-item>
+          <!-- 待评价 -->
+          <cube-slide-item>
+            <cube-scroll :data="recommendData" :options="scrollOptions">
+              <ul class="list-wrapper">
+                <li v-for="(item, index) in recommendData" class="list-item" :key="index">
+                  <div class="top is-black is-bold line-height">{{item.question}}</div>
+                  <div class="middle is-grey line-height">{{item.content}}</div>
+                  <div>{{resolveQuestionFollowers(item)}}</div>
                 </li>
               </ul>
             </cube-scroll>
@@ -66,14 +92,18 @@ import { FOLLOWERS_DATA, RECOMMEND_DATA, HOT_DATA } from './tab-bar'
 export default {
   data() {
     return {
-      selectedLabel: '推荐',
+      selectedLabel: '全部',
       disabled: false,
       tabLabels: [{
-        label: '关注'
+        label: '全部'
       }, {
-        label: '推荐'
+        label: '待付款'
       }, {
-        label: '热榜'
+        label: '待发货'
+      }, {
+        label: '待收货'
+      }, {
+        label: '待评价'
       }],
       loop: false,
       autoPlay: false,
@@ -132,7 +162,7 @@ export default {
   computed: {
     initialIndex() {
       let index = 0
-      index = this.findIndex(this.tabLabels, item => item.label === this.selectedLabel)
+      index = this.findIndex(this.tabLabels, item => item.label === this.selectedLabel);
       return index
     }
   }
@@ -140,7 +170,6 @@ export default {
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 /* 覆盖样式 */
-
 .tab-composite-view {
   .cube-tab-bar {
     background-color: white;
