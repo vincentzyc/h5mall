@@ -1,84 +1,54 @@
 <template>
   <base-page>
     <common-header title="订单" />
-    <div class="content tab-composite-view">
-      <cube-tab-bar v-model="selectedLabel" show-slider :use-transition="disabled" ref="tabNav" :data="tabLabels"></cube-tab-bar>
+    <div class="content">
+      <cube-tab-bar
+        class="tab-bar"
+        v-model="selectedLabel"
+        show-slider
+        :use-transition="false"
+        ref="tabNav"
+        :data="tabLabels"
+      ></cube-tab-bar>
       <div class="tab-slide-container">
         <cube-slide
           ref="slide"
-          :loop="loop"
-          :initial-index="initialIndex"
-          :auto-play="autoPlay"
-          :show-dots="showDots"
+          :loop="false"
+          :initial-index="defaultIndex"
+          :auto-play="false"
+          :show-dots="false"
           :options="slideOptions"
           @scroll="scroll"
           @change="changePage"
         >
           <!-- 全部 -->
           <cube-slide-item>
-            <cube-scroll :data="followersData" :options="scrollOptions">
-              <ul class="list-wrapper">
-                <li v-for="(item, index) in followersData" class="list-item" :key="index">
-                  <div class="top">
-                    <img :src="item.avatar" class="avatar" />
-                    <span class="time">{{resolveTitle(item)}}</span>
-                  </div>
-                  <div class="middle is-bold line-height">{{item.question}}</div>
-                  <div>{{resolveQuestionFollowers(item)}}</div>
-                </li>
-              </ul>
+            <cube-scroll :options="scrollOptions">
+              <vProduct :items="getOrders()" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待付款 -->
           <cube-slide-item>
-            <cube-scroll :data="recommendData" :options="scrollOptions">
-              <ul class="list-wrapper">
-                <li v-for="(item, index) in recommendData" class="list-item" :key="index">
-                  <div class="top is-black is-bold line-height">{{item.question}}</div>
-                  <div class="middle is-grey line-height">{{item.content}}</div>
-                  <div>{{resolveQuestionFollowers(item)}}</div>
-                </li>
-              </ul>
+            <cube-scroll :options="scrollOptions">
+              <vProduct :items="getOrders(0)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待发货 -->
           <cube-slide-item>
-            <cube-scroll :data="hotData" :options="scrollOptions">
-              <ul class="list-wrapper">
-                <li v-for="(item, index) in hotData" class="list-item" :key="index">
-                  <div class="hot-title">
-                    <span class="hot-sequence">{{item.sequence}}</span>
-                    <span></span>
-                    {{item.label}}
-                  </div>
-                  <div class="hot-content is-bold is-black">{{item.question}}</div>
-                </li>
-              </ul>
+            <cube-scroll :options="scrollOptions">
+              <vProduct :items="getOrders(1)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待收货 -->
           <cube-slide-item>
-            <cube-scroll :data="followersData" :options="scrollOptions">
-              <li v-for="(item, index) in followersData" class="list-item" :key="index">
-                <div class="top">
-                  <img :src="item.avatar" class="avatar" />
-                  <span class="time">{{resolveTitle(item)}}</span>
-                </div>
-                <div class="middle is-bold line-height">{{item.question}}</div>
-                <div>{{resolveQuestionFollowers(item)}}</div>
-              </li>
+            <cube-scroll :options="scrollOptions">
+              <vProduct :items="getOrders(2)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待评价 -->
           <cube-slide-item>
-            <cube-scroll :data="recommendData" :options="scrollOptions">
-              <ul class="list-wrapper">
-                <li v-for="(item, index) in recommendData" class="list-item" :key="index">
-                  <div class="top is-black is-bold line-height">{{item.question}}</div>
-                  <div class="middle is-grey line-height">{{item.content}}</div>
-                  <div>{{resolveQuestionFollowers(item)}}</div>
-                </li>
-              </ul>
+            <cube-scroll :options="scrollOptions">
+              <vProduct :items="getOrders(3)" />
             </cube-scroll>
           </cube-slide-item>
         </cube-slide>
@@ -88,13 +58,16 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { FOLLOWERS_DATA, RECOMMEND_DATA, HOT_DATA } from './tab-bar'
+import vProduct from './products'
 import { getUser } from "@/service/user"
 export default {
+  components: {
+    vProduct
+  },
   data() {
     return {
       selectedLabel: '全部',
-      disabled: false,
+      defaultIndex: 0,
       tabLabels: [{
         label: '全部'
       }, {
@@ -106,9 +79,6 @@ export default {
       }, {
         label: '待评价'
       }],
-      loop: false,
-      autoPlay: false,
-      showDots: false,
       slideOptions: {
         listenScroll: true,
         probeType: 3,
@@ -119,28 +89,13 @@ export default {
         /* lock x-direction when scrolling horizontally and  vertically at the same time */
         directionLockThreshold: 0
       },
-      followersData: FOLLOWERS_DATA,
-      recommendData: RECOMMEND_DATA,
-      hotData: HOT_DATA
+      allOrders: []
     }
   },
   methods: {
-    findIndex(ary, fn) {
-      if (ary.findIndex) {
-        return ary.findIndex(fn)
-      }
-      /* istanbul ignore next */
-      let index = -1
-      /* istanbul ignore next */
-      ary.some(function (item, i, ary) {
-        const ret = fn.call(this, item, i, ary)
-        if (ret) {
-          index = i
-          return ret
-        }
-      })
-      /* istanbul ignore next */
-      return index
+    getOrders(s) {
+      if (s === undefined || s === '') return this.allOrders;
+      return this.allOrders.filter(v => v.order_status === s)
     },
     changePage(current) {
       this.selectedLabel = this.tabLabels[current].label
@@ -153,12 +108,6 @@ export default {
       const deltaX = x / slideScrollerWidth * tabItemWidth
       this.$refs.tabNav.setSliderTransform(deltaX)
     },
-    resolveTitle(item) {
-      return `${item.name}关注了问题 · ${item.postTime} 小时前`
-    },
-    resolveQuestionFollowers(item) {
-      return `${item.answers} 赞同 · ${item.followers} 评论`
-    },
     async getAllOrder() {
       this.userInfo = await getUser(this.$route.fullPath);
       let param = {
@@ -170,110 +119,53 @@ export default {
       }
       let res = await this.$api.Order.allOrder(param);
       console.log(res);
-    }
-  },
-  computed: {
+      this.allOrders = res.orderList || []
+    },
     initialIndex() {
-      let index = 0
-      index = this.findIndex(this.tabLabels, item => item.label === this.selectedLabel);
-      return index
+      let i = Number(this.$route.query.type || 0)
+      this.selectedLabel = this.tabLabels[i].label;
+      this.defaultIndex = i;
     }
   },
   created() {
-    this.getAllOrder()
+    this.getAllOrder();
+    this.initialIndex()
   }
 }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 /* 覆盖样式 */
-.tab-composite-view {
-  .cube-tab-bar {
-    background-color: white;
-  }
-
-  .cube-tab, .cube-tab_active {
-    color: black;
-  }
-
-  .cube-tab-bar-slider {
-    background-color: black;
-  }
+.tab-bar {
+  padding: 10px 0;
+  background-color: #fff;
 
   .tab-slide-container {
     position: fixed;
-    top: 74px;
+    top: 89px;
     left: 0;
     right: 0;
     bottom: 0;
   }
+}
 
-  .list-wrapper {
-    overflow: hidden;
-
-    li {
-      padding: 15px 10px;
-      margin-top: 10px;
-      text-align: left;
-      background-color: white;
-      font-size: 14px;
-      color: #999;
-      white-space: normal;
-
-      .line-height {
-        line-height: 1.5;
+.content /deep/ {
+  .products {
+    .product-info {
+      img {
+        width: 80px;
+        height: 80px;
       }
 
-      .is-black {
-        color: black;
+      .title {
+        min-height: 40px;
       }
+    }
 
-      .is-grey {
-        color: #999;
-      }
-
-      .is-bold {
-        font-weight: bold;
-      }
-
-      .top {
-        display: flex;
-
-        .avatar {
-          width: 15px;
-          height: 15px;
-          margin-right: 2px;
-          border-radius: 100%;
-        }
-
-        .time {
-          flex: 1;
-        }
-      }
-
-      .middle {
-        display: flex;
-        margin: 10px 0;
-        color: black;
-      }
-
-      .hot-title {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-
-        .hot-sequence {
-          display: inline-block;
-          margin-right: 2px;
-          padding: 3px 6px;
-          border-radius: 2px;
-          background-color: darkgoldenrod;
-          color: white;
-        }
-      }
-
-      .hot-content {
-        margin-top: 15px;
-      }
+    .store {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: url('~@/assets/img/detail-footer.png') no-repeat -21px 0px / auto 100%;
     }
   }
 }
