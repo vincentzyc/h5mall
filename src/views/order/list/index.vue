@@ -14,7 +14,7 @@
         <cube-slide
           ref="slide"
           :loop="false"
-          :initial-index="defaultIndex"
+          :initial-index="initialIndex"
           :auto-play="false"
           :show-dots="false"
           :options="slideOptions"
@@ -67,7 +67,6 @@ export default {
   data() {
     return {
       selectedLabel: '全部',
-      defaultIndex: 0,
       tabLabels: [{
         label: '全部'
       }, {
@@ -99,7 +98,7 @@ export default {
     },
     changePage(current) {
       this.selectedLabel = this.tabLabels[current].label
-      console.log(current)
+      // console.log(current)
     },
     scroll(pos) {
       const x = Math.abs(pos.x)
@@ -121,15 +120,19 @@ export default {
       console.log(res);
       this.allOrders = res.orderList || []
     },
+    initialTab() {
+      let i = Number(this.$route.query.type || 0);
+      this.selectedLabel = this.tabLabels[i].label
+    }
+  },
+  computed: {
     initialIndex() {
-      let i = Number(this.$route.query.type || 0)
-      this.selectedLabel = this.tabLabels[i].label;
-      this.defaultIndex = i;
+      return this.tabLabels.findIndex(item => item.label === this.selectedLabel);
     }
   },
   created() {
     this.getAllOrder();
-    this.initialIndex()
+    this.initialTab()
   }
 }
 </script>
@@ -138,14 +141,14 @@ export default {
 .tab-bar {
   padding: 10px 0;
   background-color: #fff;
+}
 
-  .tab-slide-container {
-    position: fixed;
-    top: 89px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+.tab-slide-container {
+  position: fixed;
+  top: 92px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .content /deep/ {
