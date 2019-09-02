@@ -23,31 +23,31 @@
         >
           <!-- 全部 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions">
+            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
               <vProduct :items="getOrders()" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待付款 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions">
+            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
               <vProduct :items="getOrders(0)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待发货 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions">
+            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
               <vProduct :items="getOrders(1)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待收货 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions">
+            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
               <vProduct :items="getOrders(2)" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待评价 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions">
+            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
               <vProduct :items="getOrders(3)" />
             </cube-scroll>
           </cube-slide-item>
@@ -88,10 +88,16 @@ export default {
         /* lock x-direction when scrolling horizontally and  vertically at the same time */
         directionLockThreshold: 0
       },
-      allOrders: []
+      allOrders: [],
+      pageNum: [0, 0, 0, 0, 0]
     }
   },
   methods: {
+    async onPullingUp() {
+      // if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
+      // this.param.pageNum++;
+      // this.upLoadMore = await this.search();
+    },
     getOrders(s) {
       if (s === undefined || s === '') return this.allOrders;
       return this.allOrders.filter(v => v.order_status === s)
