@@ -42,7 +42,8 @@
             <h3 class="fs16 bold lh30 textover">{{Data.name}}</h3>
             <p class="fs12 c999">产地：{{Data.production_place}}</p>
             <div class="flex align-middle mg-t5">
-              <span class="price ctheme fs16 mg-r10">￥{{Data.specs[0].specsPrice}}</span>
+              <span class="price ctheme fs16 mg-r10">￥{{$refs.footer.selectSpecs.specsPrice}}</span>
+              <!-- <span class="price ctheme fs16 mg-r10">￥{{Data.specs[0].specsPrice}}</span> -->
               <span class="border-tag" v-for="item in Data.tagList" :key="item">{{item}}</span>
             </div>
           </div>
