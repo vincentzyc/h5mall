@@ -165,7 +165,8 @@ export default {
   },
   methods: {
     async onPullingUp() {
-      this.getOrder(this.initialIndex)
+      if (this.slideItem[this.initialIndex].num === false) return this.$refs['scroll' + this.initialIndex].forceUpdate();
+      this.getOrder(this.initialIndex);
     },
     changePage(current) {
       if (this.slideItem[current].items.length === 0 && this.slideItem[current].num === 0) this.getOrder(current)
@@ -197,7 +198,7 @@ export default {
       console.log(res);
       this.slideItem[index].items.push(...res.orderList);
       if (this.slideItem[index].num === 1 && res.orderList.length === 0) this.slideItem[index].noOrder = true;
-      if (res.orderList.length < 3) {
+      if (res.orderList.length < 10) {
         this.slideItem[index].num = false;
       } else {
         this.slideItem[index].options.pullUpLoad = this.pullUpLoad;
