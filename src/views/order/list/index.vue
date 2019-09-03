@@ -23,32 +23,57 @@
         >
           <!-- 全部 -->
           <cube-slide-item>
-            <cube-scroll ref="scroll0" :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="slideItem[0].items" />
+            <cube-scroll
+              :data="slideItem[0].items"
+              ref="scroll0"
+              :options="slideItem[0].options"
+              @pulling-up="onPullingUp"
+            >
+              <vProduct :noOrder="slideItem[0].noOrder" :items="slideItem[0].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待付款 -->
           <cube-slide-item>
-            <cube-scroll ref="scroll1" :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="slideItem[1].items" />
+            <cube-scroll
+              :data="slideItem[1].items"
+              ref="scroll1"
+              :options="slideItem[1].options"
+              @pulling-up="onPullingUp"
+            >
+              <vProduct :noOrder="slideItem[1].noOrder" :items="slideItem[1].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待发货 -->
           <cube-slide-item>
-            <cube-scroll ref="scroll2" :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="slideItem[2].items" />
+            <cube-scroll
+              :data="slideItem[2].items"
+              ref="scroll2"
+              :options="slideItem[2].options"
+              @pulling-up="onPullingUp"
+            >
+              <vProduct :noOrder="slideItem[2].noOrder" :items="slideItem[2].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待收货 -->
           <cube-slide-item>
-            <cube-scroll ref="scroll3" :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="slideItem[3].items" />
+            <cube-scroll
+              :data="slideItem[3].items"
+              ref="scroll3"
+              :options="slideItem[3].options"
+              @pulling-up="onPullingUp"
+            >
+              <vProduct :noOrder="slideItem[3].noOrder" :items="slideItem[3].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待评价 -->
           <cube-slide-item>
-            <cube-scroll ref="scroll4" :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="slideItem[4].items" />
+            <cube-scroll
+              :data="slideItem[4].items"
+              ref="scroll4"
+              :options="slideItem[4].options"
+              @pulling-up="onPullingUp"
+            >
+              <vProduct :noOrder="slideItem[4].noOrder" :items="slideItem[4].items" />
             </cube-scroll>
           </cube-slide-item>
         </cube-slide>
@@ -89,45 +114,62 @@ export default {
         /* lock y-direction when scrolling horizontally and  vertically at the same time */
         directionLockThreshold: 0
       },
-      scrollOptions: {
-        /* lock x-direction when scrolling horizontally and  vertically at the same time */
-        pullUpLoad: false,
-        directionLockThreshold: 0
-      },
       allOrders: [],
       slideItem: [{
         items: [],
-        num: 0
+        num: 0,
+        noOrder: false,
+        options: {
+          /* lock x-direction when scrolling horizontally and  vertically at the same time */
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        },
       }, {
         items: [],
-        num: 0
+        num: 0,
+        noOrder: false,
+        options: {
+          /* lock x-direction when scrolling horizontally and  vertically at the same time */
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        },
       }, {
         items: [],
-        num: 0
+        num: 0,
+        noOrder: false,
+        options: {
+          /* lock x-direction when scrolling horizontally and  vertically at the same time */
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        },
       }, {
         items: [],
-        num: 0
+        num: 0,
+        noOrder: false,
+        options: {
+          /* lock x-direction when scrolling horizontally and  vertically at the same time */
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        },
       }, {
         items: [],
-        num: 0
+        num: 0,
+        noOrder: false,
+        options: {
+          /* lock x-direction when scrolling horizontally and  vertically at the same time */
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        },
       }]
     }
   },
   methods: {
     async onPullingUp() {
       this.getOrder(this.initialIndex)
-      // console.log(this.initialIndex);
-      // setTimeout(() => {
-      //   this.scrollOptions.pullUpLoad = Math.random() > 0.5 ? false : this.pullUpLoad;
-      //   this.$refs['scroll' + this.initialIndex].forceUpdate();
-      // }, 1000);
-      // if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
-      // this.param.pageNum++;
-      // this.upLoadMore = await this.search();
     },
     changePage(current) {
-      console.log(current)
-      this.selectedLabel = this.tabLabels[current].label
+      if (this.slideItem[current].items.length === 0 && this.slideItem[current].num === 0) this.getOrder(current)
+      this.selectedLabel = this.tabLabels[current].label;
     },
     scroll(pos) {
       const x = Math.abs(pos.x)
@@ -153,8 +195,14 @@ export default {
       console.log(param);
       let res = await this.$api.Order.allOrder(param);
       console.log(res);
-      if (res.orderList.length < 10) this.slideItem[index].num = false;
-      this.slideItem[index].items = res.orderList || []
+      this.slideItem[index].items.push(...res.orderList);
+      if (this.slideItem[index].num === 1 && res.orderList.length === 0) this.slideItem[index].noOrder = true;
+      if (res.orderList.length < 3) {
+        this.slideItem[index].num = false;
+      } else {
+        this.slideItem[index].options.pullUpLoad = this.pullUpLoad;
+      }
+      this.$refs['scroll' + index].forceUpdate();
     },
     initialTab() {
       let i = Number(this.$route.query.type || 0);
