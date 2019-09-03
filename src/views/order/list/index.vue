@@ -23,32 +23,32 @@
         >
           <!-- 全部 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="getOrders()" />
+            <cube-scroll ref="scroll0" :options="scrollOptions" @pulling-up="onPullingUp">
+              <vProduct :items="slideItem[0].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待付款 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="getOrders(0)" />
+            <cube-scroll ref="scroll1" :options="scrollOptions" @pulling-up="onPullingUp">
+              <vProduct :items="slideItem[1].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待发货 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="getOrders(1)" />
+            <cube-scroll ref="scroll2" :options="scrollOptions" @pulling-up="onPullingUp">
+              <vProduct :items="slideItem[2].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待收货 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="getOrders(2)" />
+            <cube-scroll ref="scroll3" :options="scrollOptions" @pulling-up="onPullingUp">
+              <vProduct :items="slideItem[3].items" />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待评价 -->
           <cube-slide-item>
-            <cube-scroll :options="scrollOptions" @pulling-up="onPullingUp">
-              <vProduct :items="getOrders(3)" />
+            <cube-scroll ref="scroll4" :options="scrollOptions" @pulling-up="onPullingUp">
+              <vProduct :items="slideItem[4].items" />
             </cube-scroll>
           </cube-slide-item>
         </cube-slide>
@@ -66,6 +66,11 @@ export default {
   },
   data() {
     return {
+      pullUpLoad: {
+        txt: {
+          noMore: '没有更多了...'
+        }
+      },
       selectedLabel: '全部',
       tabLabels: [{
         label: '全部'
@@ -86,25 +91,43 @@ export default {
       },
       scrollOptions: {
         /* lock x-direction when scrolling horizontally and  vertically at the same time */
+        pullUpLoad: false,
         directionLockThreshold: 0
       },
       allOrders: [],
-      pageNum: [0, 0, 0, 0, 0]
+      slideItem: [{
+        items: [],
+        num: 0
+      }, {
+        items: [],
+        num: 0
+      }, {
+        items: [],
+        num: 0
+      }, {
+        items: [],
+        num: 0
+      }, {
+        items: [],
+        num: 0
+      }]
     }
   },
   methods: {
     async onPullingUp() {
+      this.getOrder(this.initialIndex)
+      // console.log(this.initialIndex);
+      // setTimeout(() => {
+      //   this.scrollOptions.pullUpLoad = Math.random() > 0.5 ? false : this.pullUpLoad;
+      //   this.$refs['scroll' + this.initialIndex].forceUpdate();
+      // }, 1000);
       // if (!this.upLoadMore) return this.$refs.scroll.forceUpdate();
       // this.param.pageNum++;
       // this.upLoadMore = await this.search();
     },
-    getOrders(s) {
-      if (s === undefined || s === '') return this.allOrders;
-      return this.allOrders.filter(v => v.order_status === s)
-    },
     changePage(current) {
+      console.log(current)
       this.selectedLabel = this.tabLabels[current].label
-      // console.log(current)
     },
     scroll(pos) {
       const x = Math.abs(pos.x)
@@ -113,18 +136,25 @@ export default {
       const deltaX = x / slideScrollerWidth * tabItemWidth
       this.$refs.tabNav.setSliderTransform(deltaX)
     },
-    async getAllOrder() {
-      this.userInfo = await getUser(this.$route.fullPath);
+    /**
+     * s => order_status	string	否	''全部  0 待付款 1已付款（待发货）2已发货(待收货) 3已收货（待评价） 4用户已评价 5商家已评价
+     */
+    async getOrder(index) {
+      if (this.slideItem[index].num === false) return;
+      let orderStatus = index - 1;
+      if (orderStatus === -1) orderStatus = '';
+      this.slideItem[index].num++;
       let param = {
         user_id: this.userInfo.id,
         token: this.userInfo.token,
-        pageNum: 1,
-        order_status: '',
-        // order_status	string	否	''全部  0 待付款 1已付款（待发货）2已发货(待收货) 3已收货（待评价） 4用户已评价 5商家已评价
+        pageNum: this.slideItem[index].num,
+        order_status: orderStatus
       }
+      console.log(param);
       let res = await this.$api.Order.allOrder(param);
       console.log(res);
-      this.allOrders = res.orderList || []
+      if (res.orderList.length < 10) this.slideItem[index].num = false;
+      this.slideItem[index].items = res.orderList || []
     },
     initialTab() {
       let i = Number(this.$route.query.type || 0);
@@ -136,9 +166,10 @@ export default {
       return this.tabLabels.findIndex(item => item.label === this.selectedLabel);
     }
   },
-  created() {
-    this.getAllOrder();
+  async created() {
+    this.userInfo = await getUser(this.$route.fullPath);
     this.initialTab()
+    this.getOrder(this.initialIndex);
   }
 }
 </script>
