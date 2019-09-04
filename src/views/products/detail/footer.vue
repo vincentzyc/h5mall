@@ -147,7 +147,6 @@ export default {
         num: this.number
       }
       this.$loading.open();
-      console.log(param);
       let res = await this.$api.Product.addShoppingCart(param);
       this.$createToast({
         txt: "添加成功",

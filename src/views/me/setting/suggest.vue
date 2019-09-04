@@ -40,7 +40,6 @@ export default {
       }
       this.$loading.open();
       let res = await this.$api.Common.feedback(param);
-      console.log(res);
       this.$loading.close();
       this.$createDialog({
         title: '提交成功',

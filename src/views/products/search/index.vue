@@ -119,9 +119,7 @@ export default {
         this.upLoadMore = true;
         this.$refs.scroll.scrollTo(0, 0, 100)
       }
-      console.log(this.param);
       let res = await this.$api.Product.productSearch(this.param);
-      console.log(res);
       if (this.param.pageNum === 1) {
         this.productList = res.shops;
         this.options.pullUpLoad = res.shops.length < 10 ? false : this.pullUpLoad;

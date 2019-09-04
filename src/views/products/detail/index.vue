@@ -257,7 +257,6 @@ export default {
       if (!this.Data) return this.storeCoupon = [];
       this.$loading.open();
       let res = await this.$api.Store.shopCard({ shop_id: this.Data.shop_id });
-      console.log(res);
       if (res.list.length > 0) {
         this.storeCoupon = res.list;
         this.$refs.couponPopup.show();
@@ -282,7 +281,6 @@ export default {
     async init() {
       this.$loading.open();
       let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
-      console.log(res);
       this.Data = res.product_info;
       this.getCarousel();
       this.$loading.close();

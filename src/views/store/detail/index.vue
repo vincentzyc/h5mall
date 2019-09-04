@@ -161,9 +161,7 @@ export default {
         pageNum: this.pageNum,
         shop_id: this.$route.query.id
       }
-      console.log(param);
       let res = await this.$api.Store.shopDetail(param);
-      console.log(res);
       let { productList, ...Data } = res;
       this.isLike = Data.collection;
       this.Data = Data;

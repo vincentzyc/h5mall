@@ -134,7 +134,6 @@ export default {
       let res = await this.$api.Product.myCart(param);
       if (res.cartList.length === 0) return this.getRecommend();
       this.stores = this.addCheckKey(res.cartList);
-      console.log(this.stores);
     },
     itemCheck(index) {
       this.stores[index].allCheck = this.stores[index].productInfo.every(v => v.check === true);
@@ -171,7 +170,6 @@ export default {
         token: this.userInfo.token,
         product_list: delectList
       }
-      console.log(param);
       let res = await this.$api.Product.delShoppingCart(param);
       this.$createToast({
         txt: '删除成功',

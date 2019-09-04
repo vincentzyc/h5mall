@@ -213,40 +213,15 @@ export default {
         }]
       }
       this.$loading.open();
-      console.log(param);
       let res = await this.$api.Order.orderSubmit(param);
-      console.log(res);
       let payParam = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
         order_id: res.order_id
       }
       let payres = await this.$api.Pay.wxpay(payParam);
-      console.log(payres);
       this.$loading.close();
-
     }
-    // addressDelete(id) {
-    //   this.$createDialog({
-    //     type: 'confirm',
-    //     content: '是否确定删除该地址',
-    //     onConfirm: async () => {
-    //       let param = {
-    //         user_id: this.userInfo.id,
-    //         token: this.userInfo.token,
-    //         id: id
-    //       }
-    //       await this.$api.Common.addressDelete(param);
-    //       this.$createToast({
-    //         txt: '删除成功',
-    //         type: 'txt',
-    //         time: 2000
-    //       }).show();
-    //       this.items = this.items.filter(v => v.id !== id)
-    //     },
-    //     onCancel: () => { }
-    //   }).show()
-    // }
   },
   activated() {
     if (this.EVENTBUS.selectAdress) this.address = this.EVENTBUS.selectAdress;

@@ -69,9 +69,7 @@ export default {
         }).show()
       }
       this.$loading.open();
-      console.log(this.formData);
       let res = await this.$api.Common.updatePwdByCode(this.formData);
-      console.log(res);
       this.$createDialog({
         content: '密码设置成功，请重新登录',
         onConfirm: () => this.$router.replace('/me/login')

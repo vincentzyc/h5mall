@@ -193,9 +193,7 @@ export default {
         pageNum: this.slideItem[index].num,
         order_status: orderStatus
       }
-      console.log(param);
       let res = await this.$api.Order.allOrder(param);
-      console.log(res);
       this.slideItem[index].items.push(...res.orderList);
       if (this.slideItem[index].num === 1 && res.orderList.length === 0) this.slideItem[index].noOrder = true;
       if (res.orderList.length < 10) {
