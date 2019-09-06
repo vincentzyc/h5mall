@@ -20,27 +20,27 @@
           <i class="cubeic-arrow c666"></i>
         </div>
         <ul class="flex order-state">
-          <li>
+          <li @click="$router.push('/order/list?type=1')">
             <div class="state state1">
-              <span>1</span>
+              <span>{{user.needToPay||''}}</span>
             </div>
             <div>待付款</div>
           </li>
-          <li>
+          <li @click="$router.push('/order/list?type=2')">
             <div class="state state2">
-              <span>2</span>
+              <span>{{user.needSendProduct||''}}</span>
             </div>
             <div>待发货</div>
           </li>
-          <li>
+          <li @click="$router.push('/order/list?type=3')">
             <div class="state state3">
-              <span>3</span>
+              <span>{{user.needGetProduct||''}}</span>
             </div>
             <div>待收货</div>
           </li>
-          <li>
+          <li @click="$router.push('/order/list?type=4')">
             <div class="state state4">
-              <span></span>
+              <span>{{user.needToCommet||''}}</span>
             </div>
             <div>待评价</div>
           </li>
@@ -180,10 +180,12 @@ export default {
         user_id: userInfo.id
       }
       let res = await this.$api.Common.getInfoByUserId(param);
+      let orderNum = await this.$api.Order.myNeedToDoOrder(param);
       this.user = {
         gift_card_num: res.gift_card_num,
         user_money: res.user_money,
-        ...res.userPd
+        ...res.userPd,
+        ...orderNum
       }
       updateUser({ ...userInfo, ...this.user });
       this.$refs.scroll.refresh();

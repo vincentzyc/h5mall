@@ -10,4 +10,7 @@ export default [{
 },{
   name:"allOrder",
   url:"/znOrder/allOrder"    //所有订单（我的订单（包含待付款、发货、评价等））
+},{
+  name:"myNeedToDoOrder",
+  url:"/appUser/myNeedToDoOrder"  //各类订单数量
 }]
