@@ -46,13 +46,9 @@
 </template>
 
 <script>
-import VerificaCode from '@/components/verifica-code'
 import { getUser,clearUser } from "@/service/user"
 export default {
   name: 'forgetpsw',
-  components: {
-    "verifica-code": VerificaCode
-  },
   data() {
     return {
       userInfo: "",

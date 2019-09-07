@@ -71,7 +71,7 @@ export default {
         ...this.formData
       }
       this.$loading.open('正在保存...');
-      let res = this.EVENTBUS.editAddress ? await this.$api.Common.addressUpdate(param) : await this.$api.Common.addressAdd(param);
+      let res = this.BUS.editAddress ? await this.$api.Common.addressUpdate(param) : await this.$api.Common.addressAdd(param);
       this.$loading.close();
       this.$createDialog({
         content: '保存成功',
@@ -80,18 +80,18 @@ export default {
     }
   },
   destroyed() {
-    this.EVENTBUS.editAddress = null;
+    this.BUS.editAddress = null;
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    if (this.EVENTBUS.editAddress) {
+    if (this.BUS.editAddress) {
       this.formData = {
-        phone: this.EVENTBUS.editAddress.phone,
-        address: this.EVENTBUS.editAddress.address,
-        name: this.EVENTBUS.editAddress.name,
-        id: this.EVENTBUS.editAddress.id,
+        phone: this.BUS.editAddress.phone,
+        address: this.BUS.editAddress.address,
+        name: this.BUS.editAddress.name,
+        id: this.BUS.editAddress.id,
       }
-      this.checked = this.EVENTBUS.editAddress.state === 1;
+      this.checked = this.BUS.editAddress.state === 1;
       this.title = "编辑地址"
     }
   }

@@ -64,7 +64,7 @@
   </base-page>
 </template>
 <script>
-import { getUser, unusedCard, overdueCard, usedCard } from "@/service/user"
+import { unusedCard, overdueCard, usedCard } from "@/service/user"
 export default {
   data() {
     return {

@@ -135,6 +135,16 @@ export default new VueRouter({
       component: () => import("./views/order/list")
     },
     {
+      path: "/order/comment",
+      name: "orderComment",
+      component: () => import("./views/order/comment")
+    },
+    {
+      path: "/order/orderdetail",
+      name: "orderDetail",
+      component: () => import("./views/order/order-detail")
+    },
+    {
       path: "/iframe/:url",
       name: "iframe",
       component: () => import("./views/iframe")

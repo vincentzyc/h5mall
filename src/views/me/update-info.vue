@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    errHandler(file) {
+    errHandler() {
       this.$createToast({
         type: 'warn',
         txt: '网络繁忙，请稍后重试',
@@ -115,7 +115,7 @@ export default {
       }).show()
     },
     uploadSuccess(file) {
-      if (file.response.code !== '1') this.errHandler(file);
+      if (file.response.code !== '1') this.errHandler();
       this.userInfo.head_img = file.response.url || '';
     },
     formatDate(d) {

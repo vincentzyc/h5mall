@@ -165,7 +165,7 @@ export default {
         specs_id: this.selectSpecs.id.toString(),
         num: this.number
       }
-      this.EVENTBUS.orderParam = param;
+      this.BUS.orderParam = param;
       this.$router.push('/order/add')
       // let res = await this.$api.Product.addShoppingCart(param);
       // this.$createToast({

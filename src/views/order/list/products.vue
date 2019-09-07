@@ -59,6 +59,8 @@ export default {
           return "去付款"
         case 2:
           return "确认收货"
+        case 3:
+          return "去评价"
         default:
           return false
       }
@@ -66,10 +68,13 @@ export default {
     goPage(v) {
       switch (v) {
         case 0:
-          this.$router.push('/home')
+          this.$router.push('/order/orderdetail')
           break
         case 2:
-          this.$router.push('/cart')
+          this.$router.push('/order/orderdetail')
+          break
+        case 3:
+          this.$router.push('/order/comment')
           break
         default:
           break

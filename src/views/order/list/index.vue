@@ -120,7 +120,6 @@ export default {
         num: 0,
         noOrder: false,
         options: {
-          /* lock x-direction when scrolling horizontally and  vertically at the same time */
           pullUpLoad: false,
           directionLockThreshold: 0
         },
@@ -129,7 +128,6 @@ export default {
         num: 0,
         noOrder: false,
         options: {
-          /* lock x-direction when scrolling horizontally and  vertically at the same time */
           pullUpLoad: false,
           directionLockThreshold: 0
         },
@@ -138,7 +136,6 @@ export default {
         num: 0,
         noOrder: false,
         options: {
-          /* lock x-direction when scrolling horizontally and  vertically at the same time */
           pullUpLoad: false,
           directionLockThreshold: 0
         },
@@ -147,7 +144,6 @@ export default {
         num: 0,
         noOrder: false,
         options: {
-          /* lock x-direction when scrolling horizontally and  vertically at the same time */
           pullUpLoad: false,
           directionLockThreshold: 0
         },
@@ -156,7 +152,6 @@ export default {
         num: 0,
         noOrder: false,
         options: {
-          /* lock x-direction when scrolling horizontally and  vertically at the same time */
           pullUpLoad: false,
           directionLockThreshold: 0
         },

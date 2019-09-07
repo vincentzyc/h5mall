@@ -220,16 +220,17 @@ export default {
         order_id: res.order_id
       }
       let payres = await this.$api.Pay.wxpay(payParam);
+      console.log(payres)
       this.$loading.close();
     }
   },
   activated() {
-    if (this.EVENTBUS.selectAdress) this.address = this.EVENTBUS.selectAdress;
-    if (this.EVENTBUS.orderParam) this.getProducts(this.EVENTBUS.orderParam)
+    if (this.BUS.selectAdress) this.address = this.BUS.selectAdress;
+    if (this.BUS.orderParam) this.getProducts(this.BUS.orderParam)
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    if (this.EVENTBUS.orderParam) {
+    if (this.BUS.orderParam) {
       this.getAddress()
     } else {
       if (this.$route.fullPath === '/order/add') {
