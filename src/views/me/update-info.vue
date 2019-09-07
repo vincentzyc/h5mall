@@ -200,7 +200,7 @@ export default {
     }
   },
   async created() {
-    this.userInfo = await getUser(this.$route.fullPath, 'local');
+    this.userInfo = await getUser(this.$route.fullPath);
     this.userInfo.birthday = this.$util.getFormatDate('yyyy-mm-dd', this.userInfo.birthday)
   }
 }

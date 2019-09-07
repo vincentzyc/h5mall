@@ -13,4 +13,7 @@ export default [{
 },{
   name:"myNeedToDoOrder",
   url:"/appUser/myNeedToDoOrder"  //各类订单数量
+},{
+  name:"appriseProduct",
+  url:"/znOrder/appriseProduct"  //评价商品
 }]
