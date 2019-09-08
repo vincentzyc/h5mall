@@ -32,7 +32,7 @@
               :inline="true"
               primary
               v-if="btnStatus(store.order_status)"
-              @click="goPage(store.order_status)"
+              @click="goPage(store.order_status,store.order_id)"
             >{{btnStatus(store.order_status)}}</cube-button>
           </div>
         </div>
@@ -65,16 +65,16 @@ export default {
           return false
       }
     },
-    goPage(v) {
+    goPage(v, id) {
       switch (v) {
         case 0:
-          this.$router.push('/order/orderdetail')
+          this.$router.push('/order/orderdetail?id=' + id)
           break
         case 2:
-          this.$router.push('/order/orderdetail')
+          this.$router.push('/order/orderdetail?id=' + id)
           break
         case 3:
-          this.$router.push('/order/comment')
+          this.$router.push('/order/comment?id=' + id)
           break
         default:
           break

@@ -30,6 +30,7 @@ import { getUser } from "@/service/user"
 export default {
   data() {
     return {
+      order_id: "",
       star: 5,
       note: "",
       imglist: "",
@@ -65,7 +66,7 @@ export default {
       let param = {
         user_id: this.userInfo.id,
         token: this.userInfo.token,
-        order_id: this.$route.query.id,
+        order_id: this.order_id,
         appraise_img: this.imglist ? this.imglist.slice(1) : '',
         appraise_star: this.star,
         appraise_note: this.note
@@ -81,6 +82,8 @@ export default {
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
+    this.order_id = this.$route.query.id;
+    if (!this.order_id) this.$router.back()
   }
 }
 </script>

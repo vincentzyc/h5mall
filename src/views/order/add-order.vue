@@ -173,7 +173,9 @@ export default {
         user_id: this.userInfo.id,
         token: this.userInfo.token
       }
+      this.$loading.open();
       let res = await this.$api.Common.addressList(param);
+      this.$loading.close();
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
     async getProducts(param) {
