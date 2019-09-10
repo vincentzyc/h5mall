@@ -9,9 +9,15 @@
             <span class="mg-r10">{{store.shop_name}}</span>
             <i class="fs16 cubeic-arrow"></i>
           </div>
+          <div class="flex-auto text-right cblue">{{store.order_status|orderState}}</div>
         </div>
         <!-- 商品 -->
-        <div class="product-item" v-for="item in store.products" :key="item.id">
+        <div
+          class="product-item"
+          v-for="item in store.products"
+          :key="item.id"
+          @click="$router.push('/order/orderdetail?id=' + item.id)"
+        >
           <div class="pd10">
             <div class="flex product-info">
               <img v-lazy="item.img.split(',')[0]" alt="产品图片" />
@@ -51,6 +57,22 @@ export default {
   props: {
     items: Array,
     noOrder: Boolean
+  },
+  filters: {
+    orderState(v) {
+      switch (v) {
+        case 0:
+          return "待付款"
+        case 1:
+          return "待发货"
+        case 2:
+          return "待收货"
+        case 3:
+          return "待评价"
+        default:
+          return ''
+      }
+    }
   },
   methods: {
     btnStatus(value) {
