@@ -2,7 +2,7 @@ import BasePage from './base-page'; //页面组件
 import Loading from "./loading"; // loading
 import InputItem from "./input-item"; // 可格式化输入框组件
 import CommonHeader from "./common-header"; // 公共头部组件
-import PagePopup from "./page-popup"; // 公共头部组件
+import PagePopup from "./page-popup"; // 全屏页面组件
 
 const version = '1.0';
 const install = function(Vue) {
