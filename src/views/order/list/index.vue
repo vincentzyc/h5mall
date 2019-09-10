@@ -175,7 +175,7 @@ export default {
       this.$refs.tabNav.setSliderTransform(deltaX)
     },
     /**
-     * s => order_status	string	否	''全部  0 待付款 1已付款（待发货）2已发货(待收货) 3已收货（待评价） 4用户已评价 5商家已评价
+     * s => order_status	string	否	''全部  0待付款  1已付款（待发货） 2已发货(待收货)  3已收货（待评价）  4用户已评价  5商家已评价
      */
     async getOrder(index) {
       if (this.slideItem[index].num === false) return;

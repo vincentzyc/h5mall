@@ -3,7 +3,7 @@
     <common-header title="订单详情" />
     <div>订单详情</div>
     <div class="content">
-      <div class="address-wrap bgfff">
+      <!-- <div class="address-wrap bgfff">
         <div class="flex align-middle add-address" @click="$router.push('/me/address?type=select')">
           <i class="c999 cubeic-location"></i>
           <div class="flex flex-auto flex-column pd10">
@@ -15,19 +15,19 @@
           </div>
         </div>
         <img src="@/assets/img/order-address.png" alt width="100%" />
-      </div>
+      </div>-->
 
       <!-- 店铺 -->
-      <div class="products mg-t10" v-for="store in items" :key="store.id">
+      <!-- <div class="products mg-t10" v-for="store in items" :key="store.id">
         <div class="flex align-middle pd10 c666 bgfff">
           <span class="store"></span>
           <div class="flex align-middle mg-l10">
             <span class="mg-r10">{{store.name}}</span>
             <i class="fs16 cubeic-arrow"></i>
           </div>
-        </div>
+        </div> -->
         <!-- 店铺 商品 -->
-        <div class="product-item" v-for="item in store.productInfo" :key="item.id">
+        <!-- <div class="product-item" v-for="item in store.productInfo" :key="item.id">
           <div class="pd10">
             <div class="flex product-info">
               <img :src="item.specs.specsImg.split(',')[0]" alt="店铺logo" />
@@ -40,11 +40,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- /店铺 商品 -->
-      </div>
+      <!-- </div> -->
       <!--/ 店铺 -->
-      <div class="leave-msg">
+      <!-- <div class="leave-msg">
         <label>买家留言：</label>
         <cube-textarea
           v-model.trim="remark"
@@ -53,7 +53,7 @@
           class="mg-t10"
           style="min-height: 100px"
         ></cube-textarea>
-      </div>
+      </div>-->
     </div>
   </base-page>
 </template>
@@ -61,10 +61,30 @@
 <script>
 import { getUser } from "@/service/user"
 export default {
+  data() {
+    return {
+      order_id: '',
+      detail:""
+    }
+  },
+  methods: {
+    async getOrderDetail() {
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        order_id: this.order_id
+      }
+      console.log(param);
+      let res = await this.$api.Order.orderDetail(param);
+      console.log(res);
+      this.detail = res.order_detail
+    }
+  },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
     this.order_id = this.$route.query.id;
-    if (!this.order_id) this.$router.back()
+    if (!this.order_id) this.$router.back();
+    this.getOrderDetail()
   }
 }
 </script>
