@@ -189,7 +189,13 @@ export default {
         onCancel: () => { }
       }).show()
     },
-    pay() { }
+    pay() {
+      return this.$createToast({
+        txt: "拼命开发中",
+        type: "txt",
+        time: 2000
+      }).show()
+    }
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);

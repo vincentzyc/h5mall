@@ -199,6 +199,18 @@ export default {
       this.$refs.pagePopup.open()
     },
     async pay() {
+      if (!this.address) {
+        return this.$createToast({
+          txt: "请添加收货地址",
+          type: "txt",
+          time: 2000
+        }).show()
+      }
+      return this.$createToast({
+        txt: "拼命开发中",
+        type: "txt",
+        time: 2000
+      }).show()
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
@@ -216,26 +228,26 @@ export default {
       }
       this.$loading.open();
       let res = await this.$api.Order.orderSubmit(param);
-      let payParam = {
+      let orderParam = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
         order_id: res.order_id
       }
-      let payres = '';
+      let payParam = '';
       switch (this.selected) {
         case 'zfb':
-          payres = await this.$api.Pay.alipay(payParam);
+          payParam = await this.$api.Pay.alipay(orderParam);
           break;
         case 'wx':
-          payres = await this.$api.Pay.wxpay(payParam);
+          payParam = await this.$api.Pay.wxpay(orderParam);
           break;
         case 'ye':
-          payres = await this.$api.Pay.userPayedByMoney(payParam);
+          payParam = await this.$api.Pay.userPayedByMoney(orderParam);
           break;
         default:
           break;
       }
-      console.log(payres)
+      console.log(payParam)
       this.$loading.close();
     }
   },
