@@ -1,9 +1,9 @@
 <template>
   <base-page>
     <common-header title="订单详情" />
-    <div class="content" v-if="detail">
+    <div class="content">
       <cube-scroll ref="scroll">
-        <div class="scroll-wrapper">
+        <div class="scroll-wrapper" v-if="detail">
           <div class="flex align-middle bgfff pd10">
             <div class="flex-auto cblue">{{detail.order_status|orderStatus}}</div>
             <img v-if="detail.order_status===0" src="@/assets/img/dfk.png" alt="待付款" class="width80" />

@@ -206,7 +206,7 @@ export default {
         phone: this.address.phone,
         name: this.address.name,
         card_id: this.coupon.card_id,
-        submitType: "2",
+        submitType: "2", //提交类型，1购物车，2立即支付
         product_info: [{
           specsId: this.items[0].productInfo[0].specs.id,
           product_id: this.items[0].productInfo[0].id,
@@ -221,7 +221,20 @@ export default {
         token: this.userInfo.token,
         order_id: res.order_id
       }
-      let payres = await this.$api.Pay.wxpay(payParam);
+      let payres = '';
+      switch (this.selected) {
+        case 'zfb':
+          payres = await this.$api.Pay.alipay(payParam);
+          break;
+        case 'wx':
+          payres = await this.$api.Pay.wxpay(payParam);
+          break;
+        case 'ye':
+          payres = await this.$api.Pay.userPayedByMoney(payParam);
+          break;
+        default:
+          break;
+      }
       console.log(payres)
       this.$loading.close();
     }

@@ -80,7 +80,7 @@ export default {
     }
   },
   destroyed() {
-    this.BUS.editAddress = null;
+    this.BUS.setEditAddress(null);
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);

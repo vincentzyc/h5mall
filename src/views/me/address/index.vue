@@ -45,7 +45,7 @@ export default {
   methods: {
     selectAdress(item) {
       if (this.$route.query.type === 'select') {
-        this.BUS.selectAdress = item;
+        this.BUS.setSelectAdress(item);
         this.$router.back()
       }
     },
@@ -60,7 +60,7 @@ export default {
       this.$loading.close();
     },
     editAddress(item) {
-      this.BUS.editAddress = item;
+      this.BUS.setEditAddress(item);
       this.$router.push('/me/address/view')
     },
     addressDelete(id) {

@@ -8,6 +8,7 @@ import "./assets/css/base.css";
 import "./assets/css/main.styl"
 import Api from './api';
 import Util from './utils';
+import store from './store';  // 状态管理实例，用于组件通信（项目复杂使用vuex）
 import BaseComponents from "./components/base"; //导入组件库
 
 Vue.use(VueLazyload, {
@@ -20,7 +21,7 @@ Vue.use(BaseComponents);
 Vue.prototype.$api = Api;
 Vue.prototype.$util = Util;
 
-Vue.prototype.BUS = {}; //公共对象，用于组件通信（项目复杂或者多人开发使用vuex）
+Vue.prototype.BUS = store;
 
 Vue.config.productionTip = false;
 
