@@ -47,11 +47,11 @@
         </ul>
       </div>
       <ul class="info-list">
-        <li class="flex align-middle">
+        <!-- <li class="flex align-middle">
           <div class="icon icon1"></div>
           <span class="flex-auto">钱包：</span>
           <strong class="ctheme">￥{{user.user_money||0}}</strong>
-        </li>
+        </li> -->
         <li class="flex align-middle" @click="$router.push('/me/likestore')">
           <div class="icon icon2"></div>
           <span class="flex-auto">我关注的商家</span>
