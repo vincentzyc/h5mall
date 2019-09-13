@@ -52,8 +52,8 @@
           </div>
 
           <div class="mg-t10 bgfff pd10">
-            <div class="c666">备注信息</div>
-            <div class="lh20">{{detail.remark}}</div>
+            <div class="c666 mg-b10">备注信息</div>
+            <div class="lh20 fs12">{{detail.remark}}</div>
           </div>
 
           <div class="mg-t10 bgfff pd10 order-record">
@@ -119,7 +119,7 @@ export default {
         order_id: this.order_id
       }
       let res = await this.$api.Order.orderDetail(param);
-      console.log(res);
+      // console.log(res);
       this.detail = res.order_detail;
       setTimeout(() => {
         this.$refs.scroll.refresh();
