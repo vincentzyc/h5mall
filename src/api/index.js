@@ -5,6 +5,7 @@ import Common from './common.js';
 import Product from './product.js';
 import Store from './store.js';
 import Order from './order.js';
+import Message from './message.js';
 import Pay from './pay.js';
 import { clearUser } from '@/service/user.js'
 
@@ -27,6 +28,7 @@ const Api = {
   Product: createInterface(Product),
   Store: createInterface(Store),
   Order: createInterface(Order),
+  Message: createInterface(Message),
   Pay: createInterface(Pay),
   uploadUrl() {
     return "/appfileupload/img"
