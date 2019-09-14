@@ -15,7 +15,7 @@
         </li>
       </ul>
     </div>
-    <div v-else class="mg20 pd20 text-center" @click="test()">您还没有关注的店铺哦~</div>
+    <div v-else class="mg20 pd20 text-center">您还没有关注的店铺哦~</div>
   </base-page>
 </template>
 
