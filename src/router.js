@@ -145,6 +145,26 @@ export default new VueRouter({
       component: () => import("./views/order/order-detail")
     },
     {
+      path: "/message/system",
+      name: "systemMessage",
+      component: () => import("./views/message/messages/system")
+    },
+    {
+      path: "/message/trade",
+      name: "tradeMessage",
+      component: () => import("./views/message/messages/trade")
+    },
+    {
+      path: "/message/purchase",
+      name: "purchaseMessage",
+      component: () => import("./views/message/messages/purchase")
+    },
+    {
+      path: "/message/shop",
+      name: "shopMessage",
+      component: () => import("./views/message/messages/shop")
+    },
+    {
       path: "/iframe/:url",
       name: "iframe",
       component: () => import("./views/iframe")
