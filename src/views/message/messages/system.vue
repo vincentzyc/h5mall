@@ -3,7 +3,7 @@
     <common-header title="系统消息"></common-header>
     <ul class="view-wrapper" v-if="userInfo&&haveMsg">
       <li v-for="item in items" :key="item.id" class="flex bgfff border-beee" @click="detail=item;$refs.pagePopup.open()">
-        <img :src="item.img||requrie('@/assets/img/logo.png')" alt="店铺logo" class="pd10 square66" />
+        <img :src="item.img||requrie('@/assets/img/logo.png')" alt="店铺logo" class="pd10 square66 flex-none" />
         <div class="pd-t10 pd-b10 flex-auto">
           <h3 class="lh20">{{item.message_head}}</h3>
           <p class="textover1 mg-t10 c999">{{item.message}}</p>
@@ -48,7 +48,7 @@ export default {
           id: 1,
           img: 'http://ricky-s.qicp.io/res/image/2018/9/5/92729b0697764085857049b1daee83ff.png',
           message_head: "111",
-          message: "发射点发射点发射点发射点发1",
+          message: "发射点发射点发射点发射点发1发射点发射点发射点发射点发1发射点发射点发射点发射点发1发射点发射点发射点发射点发1发射点发射点发射点发射点发1发射点发射点发射点发射点发1",
           time: "2019-01-01"
         }, {
           id: 12,

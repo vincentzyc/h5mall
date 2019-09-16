@@ -5,7 +5,7 @@
       <img :src="detail.img" alt="店铺logo" class="avatar" />
       <div class="mg-l10 flex-auto bubble">
         <h3 class="c666">{{detail.message_head}}</h3>
-        <p class="textover1 mg-t10 bgfff fs12">{{detail.message}}</p>
+        <p class="lh18 mg-t10 bgfff fs12">{{detail.message}}</p>
       </div>
     </li>
   </div>
