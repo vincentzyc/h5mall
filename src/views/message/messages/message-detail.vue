@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="text-center mg-t15 mg-b10 c666">2019-01-01</div>
+  <div class="message-wrapper">
+    <div class="text-center mg-t15 mg-b10 c666">{{$util.getFormatDate('',detail.create_time)}}</div>
     <li class="flex pd10">
-      <img :src="detail.img" alt="店铺logo" class="avatar" />
+      <div class="avatar message-icon" :class="iconClass" />
       <div class="mg-l10 flex-auto bubble">
         <h3 class="c666">{{detail.message_head}}</h3>
         <p class="lh18 mg-t10 bgfff fs12">{{detail.message}}</p>
@@ -14,18 +14,16 @@
 <script>
 export default {
   name: "messageDetail",
-  props: ['detail']
+  props: ['detail', 'iconClass'],
+  created(){
+    if(this.$route.query.type==='msg') this.$router.back()
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
 .avatar {
   border-radius: 50%;
-  margin-left: 10px;
-  margin-right: 6px;
-  min-width: 48px;
-  width: 48px;
-  height: 48px;
   outline: none;
 }
 
@@ -35,7 +33,6 @@ export default {
   background: #fff;
   box-shadow: 0 3px 2px rgba(0, 0, 0, 0.1);
   position: relative;
-  max-width: 420px;
   min-width: 80px;
   margin: 0 15px 0 5px;
 }
@@ -43,10 +40,10 @@ export default {
 .bubble:before {
   content: '';
   border-style: solid;
-  border-width: 6px;
+  border-width: 8px;
   border-color: transparent #fff transparent transparent;
   position: absolute;
   top: 8px;
-  left: -12px;
+  left: -15px;
 }
 </style>

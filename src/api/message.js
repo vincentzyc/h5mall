@@ -9,7 +9,7 @@ export default [{
 	url: "/appMessage/tradeMessage" // 交易消息
 }, {
 	name: "purchaseMessage",
-	url: "/appMessage/purchaseMessage" // 报价消息
+	url: "/appMessage/purchaseMessage" // 农户报价
 }, {
 	name: "shopMessage",
 	url: "/appMessage/shopMessage" // 商户消息（农户通知）

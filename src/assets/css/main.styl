@@ -84,11 +84,6 @@
   height: 50px;
 }
 
-.square66 {
-  width: 66px;
-  height: 66px;
-}
-
 .square88 {
   width: 88px;
   height: 88px;
@@ -373,5 +368,52 @@
 
   .cube-upload-file-state {
     display: none;
+  }
+}
+
+.message-wrapper {
+  .message-list {
+    background: #fff;
+    margin-bottom: 15px;
+    padding: 0 10px;
+
+    li {
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .state {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      color: #fff;
+      border-radius: 5px;
+      background: $color-theme;
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  .message-icon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+  }
+
+  .message-icon1 {
+    background: url('~@/assets/img/message.png') no-repeat 0px 0px / auto 100%;
+  }
+
+  .message-icon2 {
+    background: url('~@/assets/img/message.png') no-repeat -50px 0px / auto 100%;
+  }
+
+  .message-icon3 {
+    background: url('~@/assets/img/message.png') no-repeat -100px 0px / auto 100%;
+  }
+
+  .message-icon4 {
+    background: url('~@/assets/img/message.png') no-repeat -150px 0px / auto 100%;
   }
 }
