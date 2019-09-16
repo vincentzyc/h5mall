@@ -47,10 +47,10 @@
                     <span class="flex-auto">店铺介绍</span>
                     <i class="cubeic-arrow c666"></i>
                   </li>
-                  <li class="flex">
+                  <!-- <li class="flex">
                     <span class="flex-auto">优惠券领取</span>
                     <i class="cubeic-arrow c666"></i>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </cube-tab-panel>
@@ -64,13 +64,13 @@
         <div class="icon like" :class="{active:isLike}"></div>
         <h5 class="fs12 c999">关注</h5>
       </div>
-      <div class="flex flex-center flex-auto">
+      <div class="flex flex-center flex-auto" @click="phone(Data.shop.telephone)">
         <div class="icon seller"></div>
         <h5 class="fs12 c999">联系卖家</h5>
       </div>
-      <div class="flex flex-center flex-auto">
+      <div class="flex flex-center flex-auto" @click="phone(Data.shop.telephone)">
         <div class="icon call"></div>
-        <h5 class="fs12 c999" @click="phone(Data.shop.telephone)">打电话</h5>
+        <h5 class="fs12 c999">打电话</h5>
       </div>
     </footer>
 

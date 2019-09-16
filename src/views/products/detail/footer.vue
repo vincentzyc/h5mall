@@ -88,7 +88,7 @@ export default {
       let str = JSON.stringify({ shop_id: (this.Data.shop_id || '').toString() });
       if (this.$util.platform() === 'android') return window.android.toShop(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.jumpShop.postMessage(str);
-      return this.$router.push('/store/detail?id=' + (this.Data.shop_id || '').toString())
+      return this.$router.push('/store/detail?id=' + this.Data.shop_id)
     },
     // 联系卖家
     toChat() {
@@ -98,7 +98,8 @@ export default {
       });
       if (this.$util.platform() === 'android') return window.android.toChat(str);
       if (this.$util.platform() === 'ios') return window.webkit.messageHandlers.contactSellers.postMessage(str);
-      return this.$createDialog({ content: '联系卖家' }).show();
+      return this.$router.push('/store/detail?id=' + this.Data.shop_id)
+      // return this.$createDialog({ content: '联系卖家' }).show();
     },
     // 加入购物车
     addCart() {
