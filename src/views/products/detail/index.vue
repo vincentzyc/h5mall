@@ -415,10 +415,11 @@ th, td {
 .video-close {
   position: absolute;
   right: 5px;
-  top: -12px;
+  top: -25px;
   font-size: 25px;
   background: #fff;
   border-radius: 20px;
+  z-index: 1001;
 }
 
 .comment-panel {
