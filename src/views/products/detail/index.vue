@@ -22,7 +22,7 @@
       <div v-if="Data">
         <div class="common-slide detail-slide">
           <cube-slide ref="slide" :data="carousel" :auto-play="false">
-            <cube-slide-item v-for="(item, index) in carousel" :key="index">
+            <cube-slide-item v-for="(item, index) in carousel" :key="index" class="relative">
               <div v-if="item.type==='video'">
                 <img :src="item.video_cover" />
                 <img src="@/assets/img/video_controls.png" @click="initVideo(item)" class="play-icon" />
