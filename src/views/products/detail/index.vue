@@ -23,8 +23,11 @@
         <div class="common-slide detail-slide">
           <cube-slide ref="slide" :data="carousel" :auto-play="false">
             <cube-slide-item v-for="(item, index) in carousel" :key="index">
-              <img :src="item.url" v-if="item.type==='img'" />
-              <video
+              <div v-if="item.type==='video'">
+                <img :src="item.video_cover" />
+                <img src="@/assets/img/video_controls.png" @click="initVideo(item)" class="play-icon" />
+              </div>
+              <!-- <video
                 controls
                 v-if="item.type==='video'"
                 :poster="item.video_cover"
@@ -32,7 +35,8 @@
                 @click="videoPlay($event)"
               >
                 <source :src="item.url" type="video/mp4" />
-              </video>
+              </video>-->
+              <img :src="item.url" v-else />
             </cube-slide-item>
           </cube-slide>
         </div>
@@ -137,6 +141,24 @@
         <div class="coupon_btn bgtheme" @click="$refs.couponPopup.hide()">完成</div>
       </cube-popup>
     </div>
+    <div class="video-play">
+      <cube-popup ref="videoPopup">
+        <div class="video-wrap">
+          <video
+            ref="videoPlayer"
+            controls
+            autoplay
+            preload="auto"
+            :poster="curVideo.video_cover"
+            :src="curVideo.url"
+            style="width:100%;height:100%"
+          >
+            <!-- <source :src="curVideo.url" type="video/mp4" /> -->
+          </video>
+        </div>
+        <i class="cubeic-close video-close" @click="videoClose()"></i>
+      </cube-popup>
+    </div>
 
     <vFooter :Data="Data" ref="footer"></vFooter>
   </base-page>
@@ -150,7 +172,7 @@ import vFooter from "./footer.vue";
 import { addShopCollection, getCard } from "@/service/user"
 
 export default {
-  name: "keepProductDetail",
+  name: "productDetail",
   components: {
     vComment, vRecommend, vFooter
   },
@@ -161,6 +183,7 @@ export default {
       loadMore: true,
       loadComment: true,
       carousel: [],
+      curVideo: {},
       showDropDownMenu: false,
       selectedLabel: '图片',
       tabs: ['图片', '文字', '评价', '推荐'],
@@ -202,8 +225,13 @@ export default {
     getCard(id) {
       getCard(id, this.$route.fullPath)
     },
-    videoPlay(e) {
-      e.target.paused ? e.target.play() : e.target.pause();
+    initVideo(obj) {
+      this.curVideo = obj;
+      this.$refs.videoPopup.show();
+    },
+    videoClose() {
+      this.$refs.videoPlayer.pause();
+      this.$refs.videoPopup.hide();
     },
     likeStore(id) {
       addShopCollection(id, this.$route.fullPath);
@@ -321,8 +349,9 @@ export default {
 
 .video-wrap {
   width: 100%;
-  height: 100%;
+  height: 400px;
   z-idnex: 999;
+  background-color: #fff;
 }
 
 .drop-down-menu {
@@ -381,6 +410,15 @@ th, td {
     color: #333;
     font-size: 14px;
   }
+}
+
+.video-close {
+  position: absolute;
+  right: 5px;
+  top: -12px;
+  font-size: 25px;
+  background: #fff;
+  border-radius: 20px;
 }
 
 .comment-panel {
