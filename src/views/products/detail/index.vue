@@ -415,7 +415,7 @@ th, td {
 .video-close {
   position: absolute;
   right: 5px;
-  top: -25px;
+  top: -26px;
   font-size: 25px;
   background: #fff;
   border-radius: 20px;
