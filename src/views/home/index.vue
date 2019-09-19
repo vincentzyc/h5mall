@@ -5,7 +5,7 @@
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="topItems" class="common-slide">
           <cube-slide-item v-for="(item, index) in topItems" :key="index">
-            <a :href="'/#/store/detail?id='+item.farmer_id">
+            <a :href="'/#/products/detail?id='+item.link_url">
               <img :src="item.img" />
             </a>
           </cube-slide-item>
@@ -82,6 +82,7 @@ export default {
   },
   async created() {
     let res = await this.$api.Product.carouselList();
+    console.log(res);
     this.topItems = res.top;
     // this.middleItems = res.middle;
     this.$refs.slide.refresh();

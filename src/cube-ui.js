@@ -29,8 +29,8 @@ import {
   // // popup
   Popup,
   Toast,
-  Picker,
-  // CascadePicker,
+  // Picker,
+  CascadePicker,
   DatePicker,
   // TimePicker,
   // SegmentPicker,
@@ -69,8 +69,8 @@ Vue.use(Upload)
 // Vue.use(Form)
 Vue.use(Popup)
 Vue.use(Toast)
-Vue.use(Picker)
-// Vue.use(CascadePicker)
+// Vue.use(Picker)
+Vue.use(CascadePicker)
 Vue.use(DatePicker)
 // Vue.use(TimePicker)
 // Vue.use(SegmentPicker)

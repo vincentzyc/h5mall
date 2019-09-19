@@ -25,7 +25,7 @@
                       <img :src="item.carousel_img.split(',')[0]" alt="店铺logo" />
                       <div class="pd-l10">
                         <h4 class="textover2 mg-t5">{{item.name}}</h4>
-                        <p class="ctheme fs16 mg-t5">￥{{item.price}}</p>
+                        <p class="ctheme fs16 mg-t5">￥{{item.specs.specsPrice}}</p>
                       </div>
                     </div>
                   </cube-checkbox>
