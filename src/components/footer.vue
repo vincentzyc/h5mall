@@ -5,10 +5,10 @@
         <div class="icon home"></div>
         <h5 class="title">首页</h5>
       </router-link>
-      <!-- <router-link class="flex-auto" to="/publish" tag="li" active-class="active">
+      <router-link class="flex-auto" to="/publish" tag="li" active-class="active">
         <div class="icon publish"></div>
         <h5 class="title">发布采购</h5>
-      </router-link> -->
+      </router-link>
       <router-link class="flex-auto" to="/cart" tag="li" active-class="active">
         <div class="icon cart"></div>
         <h5 class="title">购物车</h5>

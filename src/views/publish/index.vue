@@ -1,43 +1,71 @@
 <template>
   <base-page>
+    <common-header title="发布采购" hideBack>
+      <span slot="right" @click="$router.push('/publish/gopublish')">去发布</span>
+    </common-header>
     <cube-scroll ref="scroll">
       <div class="scroll-wrapper">
-        <div class="text-center mg20">发布采购</div>
-        <div style="height:1500px;width:100%;background:#999"></div>
-        <div class="text-center mg20">到底啦</div>
+        <div class="bgfff">
+          <cube-tab-bar v-model="selectedLabel" show-slider class="border-beee">
+            <cube-tab v-for="(item, index) in tabs" :label="item" :key="item+index" class="lh30 width100"></cube-tab>
+          </cube-tab-bar>
+          <cube-tab-panels class="mg-b10">
+            <cube-tab-panel class="img-panel" label="采购中" v-show="selectedLabel==='采购中'">
+              <ul>
+                <li>111</li>
+                <li>111</li>
+                <li>时间：{{$util.getFormatDate('yyyy-mm-dd')}}</li>
+              </ul>
+            </cube-tab-panel>
+            <cube-tab-panel class="text-panel" label="已停止" v-show="selectedLabel==='已停止'">
+              <ul>
+                <li>22</li>
+                <li>222</li>
+                <li>时间：{{$util.getFormatDate('yyyy-mm-dd')}}</li>
+              </ul>
+            </cube-tab-panel>
+          </cube-tab-panels>
+        </div>
       </div>
     </cube-scroll>
   </base-page>
 </template>
 
 <script>
-// @ is an alias to /src
-// import vHeader from "./header.vue";
-// import vFooter from "./footer.vue";
-
+import { getUser } from "@/service/user"
 export default {
   name: "publish",
-  components: {
-    // 'v-header': vHeader,
-    // 'v-footer': vFooter
-  },
   data() {
     return {
-      items: [
-
-      ]
+      userInfo: "",
+      selectedLabel: '采购中',
+      tabs: ['采购中', '已停止'],
+      purchasing: [],
+      purchaseStop: []
     }
   },
   methods: {
-
+    async getPurchasing() {
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token
+      }
+      let res = await this.$api.Publish.purchasing(param);
+      console.log('采购中', res);
+    },
+    async getPurchaseStop() {
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token
+      }
+      let res = await this.$api.Publish.purchaseStop(param);
+      console.log('已停止', res);
+    }
   },
-  mounted() {
-    // this.$nextTick(function () {
-    //   setTimeout(() => {
-    //     this.$refs.slide.refresh();
-    //     this.$refs.scroll.refresh();
-    //   }, 0);
-    // });
+  async created() {
+    this.userInfo = await getUser(this.$route.fullPath);
+    this.getPurchasing();
+    this.getPurchaseStop()
   }
 };
 </script>
