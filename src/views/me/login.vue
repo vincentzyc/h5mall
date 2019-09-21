@@ -32,7 +32,7 @@
               v-model="formData.code"
               placeholder="请输入验证码"
             ></base-input-item>
-            <verifica-code :phone="formData.phone" />
+            <verifica-code :phone="formData.phone" codeType="1"/>
           </div>
         </cube-tab-panel>
         <cube-tab-panel class="text-panel" label="账号登录" v-show="label==='账号登录'">

@@ -14,6 +14,10 @@ export default {
     phone: {
       require: true,
       type: String
+    },
+    codeType:{
+      default:'0',
+      type: String
     }
   },
   data() {
@@ -61,7 +65,7 @@ export default {
       }
       let param = {
         phone: this.phone,
-        codeType: "2"
+        codeType: this.codeType
       }
       let res = await this.$api.Common.getCode(param)
       this.sendcCode();

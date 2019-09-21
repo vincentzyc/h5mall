@@ -3,53 +3,47 @@
     <common-header title="个人资料">
       <span slot="right" @click="save()">保存</span>
     </common-header>
-    <ul class="info-list mg-t15 bgfff">
-      <li class="flex align-middle pd15 border-beee">
-        <span class="flex-auto">头像</span>
-        <cube-upload
-          ref="upload"
-          v-model="files"
-          :action="action"
-          @file-success="uploadSuccess"
-          @file-error="errHandler"
-        >
-          <div class="headimg mg-r10">
-            <cube-upload-btn :multiple="false">
-              <img :src="userInfo.head_img||require('@/assets/img/logo.png')" class="square50" alt="头像" />
-            </cube-upload-btn>
+    <cube-scroll ref="scroll">
+      <ul class="info-list mg-t15 bgfff">
+        <li class="flex align-middle pd15 border-beee">
+          <span class="flex-auto">头像</span>
+          <cube-upload
+            ref="upload"
+            v-model="files"
+            :action="action"
+            @file-success="uploadSuccess"
+            @file-error="errHandler"
+          >
+            <div class="headimg mg-r10">
+              <cube-upload-btn :multiple="false">
+                <img :src="userInfo.head_img||require('@/assets/img/logo.png')" class="square50" alt="头像" />
+              </cube-upload-btn>
+            </div>
+          </cube-upload>
+          <i class="cubeic-arrow c666"></i>
+        </li>
+        <li class="flex align-middle pd15 border-beee">
+          <span>呢称</span>
+          <base-input-item
+            class="input-item flex-auto text-right mg-l20 c666"
+            type="text"
+            placeholder="请输入昵称"
+            v-model.trim="userInfo.name"
+          ></base-input-item>
+        </li>
+        <li class="flex align-middle pd15 border-beee">
+          <span>生日</span>
+          <div class="flex-auto text-right mg-l20 c666" @click="showDatePicker()">{{userInfo.birthday||'请选择生日'}}</div>
+        </li>
+        <li class="flex align-middle pd15 border-beee">
+          <span>手机号</span>
+          <div class="flex-auto text-right">
+            <span class="mg-r15 c666">18812345678</span>
+            <cube-button :inline="true" :primary="true" :outline="true" @click="$refs.pagePopup.open()">更换</cube-button>
           </div>
-        </cube-upload>
-        <i class="cubeic-arrow c666"></i>
-      </li>
-      <li class="flex align-middle pd15 border-beee">
-        <span>呢称</span>
-        <base-input-item
-          class="input-item flex-auto text-right mg-l20 c666"
-          type="text"
-          placeholder="请输入昵称"
-          v-model.trim="userInfo.name"
-        ></base-input-item>
-      </li>
-      <li class="flex align-middle pd15 border-beee">
-        <span>生日</span>
-        <div
-          class="flex-auto text-right mg-l20 c666"
-          @click="showDatePicker()"
-        >{{userInfo.birthday||'请选择生日'}}</div>
-      </li>
-      <li class="flex align-middle pd15 border-beee">
-        <span>手机号</span>
-        <div class="flex-auto text-right">
-          <span class="mg-r15 c666">18812345678</span>
-          <cube-button
-            :inline="true"
-            :primary="true"
-            :outline="true"
-            @click="$refs.pagePopup.open()"
-          >更换</cube-button>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </cube-scroll>
     <!-- 更换手机号 -->
     <page-popup ref="pagePopup" position="right" class="pd-t44" type="changephone">
       <common-header title="更换手机号" />
@@ -57,12 +51,7 @@
         <div class="form-wrapper">
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title">手机号：</label>
-            <base-input-item
-              v-model="formData.phone"
-              class="input-item flex-auto"
-              type="phone"
-              placeholder="请输入手机号"
-            ></base-input-item>
+            <base-input-item v-model="formData.phone" class="input-item flex-auto" type="phone" placeholder="请输入手机号"></base-input-item>
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title">验证码：</label>
@@ -73,7 +62,7 @@
               v-model="formData.checkCode"
               placeholder="请输入验证码"
             ></base-input-item>
-            <verifica-code :phone="formData.phone" />
+            <verifica-code :phone="formData.phone" codeType="7" />
           </div>
           <p class="flex fs12 c999">提示：更换后，新手机号将成为登录账号</p>
           <cube-button :primary="true" class="block-btn" @click="submit()">确定</cube-button>
@@ -115,7 +104,7 @@ export default {
       }).show()
     },
     uploadSuccess(file) {
-      if (file.response.code !== '1') this.errHandler();
+      if (file.response.code !== '1') return this.errHandler();
       this.userInfo.head_img = file.response.url || '';
     },
     formatDate(d) {

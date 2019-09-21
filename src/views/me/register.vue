@@ -15,7 +15,7 @@
           v-model="formData.checkCode"
           placeholder="请输入验证码"
         ></base-input-item>
-        <verifica-code :phone="formData.phone" />
+        <verifica-code :phone="formData.phone" codeType="2" />
       </div>
       <div class="flex align-middle input-wrap">
         <label class="flex-none input-title">密码：</label>
