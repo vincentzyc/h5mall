@@ -165,12 +165,12 @@ export default new VueRouter({
       component: () => import("./views/message/messages/shop")
     },
     {
-      path: "/publish/gopublish",
-      name: "goPublish",
+      path: "/publish/viewpublish",
+      name: "viewPublish",
       component: () => import("./views/publish/publish")
     },
     {
-      path: "/publish/gopublish/success",
+      path: "/publish/viewpublish/success",
       name: "publishSuccess",
       component: () => import("./views/publish/publish-success")
     },

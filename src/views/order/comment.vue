@@ -1,27 +1,29 @@
 <template>
   <base-page>
     <common-header title="发表评价" />
-    <div class="bgfff pd10">
-      <div class="flex align-middle pd10 c666">
-        <span class="mg-r10">商品满意度</span>
-        <cube-rate v-model="star"></cube-rate>
-        <span class="mg-l10">{{star}}分</span>
+    <cube-scroll ref="scroll">
+      <div class="bgfff pd10">
+        <div class="flex align-middle pd10 c666">
+          <span class="mg-r10">商品满意度</span>
+          <cube-rate v-model="star"></cube-rate>
+          <span class="mg-l10">{{star}}分</span>
+        </div>
+        <div class="mg-t10 pd10">
+          <cube-textarea v-model.trim="note" placeholder="请输入评价" :maxlength="200" style="min-height: 150px"></cube-textarea>
+          <cube-upload
+            ref="upload"
+            v-model="files"
+            :action="action"
+            @file-success="uploadSuccess"
+            @file-error="errHandler"
+            class="mg-t10"
+          ></cube-upload>
+        </div>
+        <div class="pd20">
+          <cube-button primary @click="submit()">发布评论</cube-button>
+        </div>
       </div>
-      <div class="mg-t10 pd10">
-        <cube-textarea v-model.trim="note" placeholder="请输入评价" :maxlength="200" style="min-height: 150px"></cube-textarea>
-        <cube-upload
-          ref="upload"
-          v-model="files"
-          :action="action"
-          @file-success="uploadSuccess"
-          @file-error="errHandler"
-          class="mg-t10"
-        ></cube-upload>
-      </div>
-      <div class="pd20">
-        <cube-button primary @click="submit()">发布评论</cube-button>
-      </div>
-    </div>
+    </cube-scroll>
   </base-page>
 </template>
 
@@ -51,9 +53,8 @@ export default {
       }).show()
     },
     uploadSuccess(file) {
-      if (file.response.code !== '1') this.errHandler();
-      this.imglist += (',' + file.response.url);
-      console.log(this.Data);
+      if (file.response.code !== '1') return this.errHandler();
+      this.imglist = this.imglist + ',' + file.response.url;
     },
     async submit() {
       if (this.note.length === 0) {
