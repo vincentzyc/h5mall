@@ -165,6 +165,11 @@ export default new VueRouter({
       component: () => import("./views/message/messages/shop")
     },
     {
+      path: "/publish/gopublish",
+      name: "goPublish",
+      component: () => import("./views/publish/publish")
+    },
+    {
       path: "/iframe/:url",
       name: "iframe",
       component: () => import("./views/iframe")
