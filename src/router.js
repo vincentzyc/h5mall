@@ -170,6 +170,11 @@ export default new VueRouter({
       component: () => import("./views/publish/publish")
     },
     {
+      path: "/publish/publishdetail",
+      name: "publishdetail",
+      component: () => import("./views/publish/publish-detail")
+    },
+    {
       path: "/publish/viewpublish/success",
       name: "publishSuccess",
       component: () => import("./views/publish/publish-success")
