@@ -170,6 +170,11 @@ export default new VueRouter({
       component: () => import("./views/publish/publish")
     },
     {
+      path: "/publish/gopublish/success",
+      name: "publishSuccess",
+      component: () => import("./views/publish/publish-success")
+    },
+    {
       path: "/iframe/:url",
       name: "iframe",
       component: () => import("./views/iframe")
