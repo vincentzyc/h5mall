@@ -62,7 +62,7 @@
               v-model="formData.checkCode"
               placeholder="请输入验证码"
             ></base-input-item>
-            <verifica-code :phone="formData.phone" codeType="7" />
+            <verifica-code :phone="formData.phone" type="7" />
           </div>
           <p class="flex fs12 c999">提示：更换后，新手机号将成为登录账号</p>
           <cube-button :primary="true" class="block-btn" @click="submit()">确定</cube-button>

@@ -10,7 +10,7 @@
         <div class="flex align-middle input-wrap">
           <label class="flex-none input-title">验证码：</label>
           <base-input-item class="input-item flex-auto" type="digit" :maxlength="6" v-model="formData.checkCode" placeholder="请输入验证码"></base-input-item>
-          <verifica-code :phone="formData.phone" codeType="4"/>
+          <verifica-code :phone="formData.phone" type="4"/>
         </div>
         <div class="flex align-middle input-wrap">
           <label class="flex-none input-title">密码：</label>
