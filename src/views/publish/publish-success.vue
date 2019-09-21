@@ -4,7 +4,7 @@
     <cube-scroll ref="scroll" class="bgfff">
       <div class="pd20">
         <div class="mg20 text-center">
-          <i class="cubeic-ok ctheme" style="font-size:100px"></i>
+          <i class="cubeic-right ctheme" style="font-size:100px"></i>
         </div>
         <p class="text-center" style="margin-top:50px">发布采购成功！农户们会发消息联系您</p>
         <div class="pd20" style="margin-top:50px">
