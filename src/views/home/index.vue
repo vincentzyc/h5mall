@@ -5,9 +5,9 @@
       <div class="scroll-wrapper">
         <cube-slide ref="slide" :data="topItems" class="common-slide">
           <cube-slide-item v-for="(item, index) in topItems" :key="index">
-            <a :href="'/#/products/detail?id='+item.link_url">
+            <router-link :to="'/products/detail?id='+item.link_url">
               <img :src="item.img" />
-            </a>
+            </router-link>
           </cube-slide-item>
         </cube-slide>
         <v-tabs />
@@ -18,7 +18,7 @@
               <img :src="item.img" />
             </a>
           </cube-slide-item>
-        </cube-slide> -->
+        </cube-slide>-->
         <vRecommend ref="recommend" />
       </div>
     </cube-scroll>
