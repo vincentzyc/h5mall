@@ -173,7 +173,6 @@ export default {
         user_id: this.userInfo.id,
         token: this.userInfo.token,
       }
-      console.log(param);
       param.img = this.imglist ? this.imglist.slice(1) : '';
       let res = this.publishId ? await this.$api.Publish.purchaseUpdate(param) : await this.$api.Publish.publish(param);
       if (this.publishId) {
@@ -205,7 +204,6 @@ export default {
         return { url: v }
       })
       this.formData = { ...res.publishPd }
-      console.log(res);
     }
   },
   async created() {
