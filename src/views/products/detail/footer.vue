@@ -74,7 +74,7 @@ export default {
   watch: {
     Data(n) {
       if (!n) return;
-      this.selectSpecs = n.specs[0] || ''
+      this.selectSpecs = n.specs[0] || '';
     }
   },
   methods: {
@@ -178,7 +178,10 @@ export default {
       // }).show()
     },
     showPopup() {
-      this.$refs.specsPopup.show()
+      this.$refs.specsPopup.show();
+      setTimeout(() => {
+        this.$refs.scroll.refresh();
+      }, 66);
     },
     hidePopup() {
       this.$refs.specsPopup.hide()
