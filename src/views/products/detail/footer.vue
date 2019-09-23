@@ -31,23 +31,25 @@
           <i class="cubeic-close" @click="hidePopup()"></i>
         </div>
         <div class="specs-info">
-          <p class="lh30 fs12">选择规格</p>
-          <ul class="specs-content">
-            <li
-              :class="{active:selectSpecs.id===item.id}"
-              v-for="item in Data.specs"
-              :key="item.id"
-              @click="selectSpecs=item"
-            >{{item.specsName}}</li>
-          </ul>
-          <div class="flex align-middle mg-b10">
-            <span class="c666 fs12">购买数量</span>
-            <div class="flex align-middle flex-auto justify-end">
-              <span class="icon cut" @click="number = number>1?number-1:1">-</span>
-              <span class="mg10">{{number}}</span>
-              <span class="icon add" @click="number = number+1">+</span>
+          <cube-scroll ref="scroll">
+            <p class="lh30 fs12">选择规格</p>
+            <ul class="specs-content">
+              <li
+                :class="{active:selectSpecs.id===item.id}"
+                v-for="item in Data.specs"
+                :key="item.id"
+                @click="selectSpecs=item"
+              >{{item.specsName}}</li>
+            </ul>
+            <div class="flex align-middle mg-b10">
+              <span class="c666 fs12">购买数量</span>
+              <div class="flex align-middle flex-auto justify-end">
+                <span class="icon cut" @click="number = number>1?number-1:1">-</span>
+                <span class="mg10">{{number}}</span>
+                <span class="icon add" @click="number = number+1">+</span>
+              </div>
             </div>
-          </div>
+          </cube-scroll>
         </div>
 
         <div class="flex handle">
@@ -247,7 +249,6 @@ export default {
     right: 15px;
     bottom: 50px;
     font-size: 12px;
-    overflow-y: auto;
 
     li {
       display: inline-block;
