@@ -4,12 +4,12 @@
     <ul class="lh30 bgfff">
       <li class="flex align-middle pd10 border-beee" @click="$router.push('/me/setting/suggest')">
         <div class="icon icon4"></div>
-        <span class="flex-auto">给掌农建议</span>
+        <span class="flex-auto">给云忆建议</span>
         <i class="cubeic-arrow c666"></i>
       </li>
       <li class="flex align-middle pd10 border-beee" @click="$router.push('/me/setting/about')">
         <div class="icon icon5"></div>
-        <span class="flex-auto">关于掌农</span>
+        <span class="flex-auto">关于云忆</span>
         <i class="cubeic-arrow c666"></i>
       </li>
     </ul>

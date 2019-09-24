@@ -10,7 +10,7 @@
         :maxlength="500"
         style="min-height: 200px"
       ></cube-textarea>
-      <p class="mg-t15 fs12 c666">联系电话：18812345678</p>
+      <p class="mg-t15 fs12 c666">联系电话：18826229916</p>
     </div>
   </base-page>
 </template>
