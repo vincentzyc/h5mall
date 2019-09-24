@@ -69,11 +69,6 @@
           <span class="flex-auto">联系客服</span>
           <i class="cubeic-arrow c666"></i>
         </li>
-        <li class="flex align-middle" @click="$router.push('/me/becomefarmer')">
-          <div class="icon icon5"></div>
-          <span class="flex-auto">成为农户</span>
-          <i class="cubeic-arrow c666"></i>
-        </li>
         <li class="flex align-middle" @click="$router.push('/me/setting')">
           <div class="icon icon6"></div>
           <span class="flex-auto">设置</span>
