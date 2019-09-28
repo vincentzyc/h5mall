@@ -38,7 +38,7 @@
         <li class="flex align-middle pd15 border-beee">
           <span>手机号</span>
           <div class="flex-auto text-right">
-            <span class="mg-r15 c666">18812345678</span>
+            <span class="mg-r15 c666">{{userInfo.phone}}</span>
             <cube-button :inline="true" :primary="true" :outline="true" @click="$refs.pagePopup.open()">更换</cube-button>
           </div>
         </li>
