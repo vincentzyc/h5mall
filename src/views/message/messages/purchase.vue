@@ -3,7 +3,7 @@
     <common-header title="农户报价"></common-header>
     <ul class="message-wrapper" v-if="userInfo&&haveMsg">
       <li v-for="item in items" :key="item.id" class="flex bgfff border-beee align-middle pd5" @click="detail=item;$refs.pagePopup.open()">
-        <div class="flex-none message-icon message-icon3"/>
+        <div class="flex-none message-icon message-icon3 flex-none"/>
         <div class="pd-t10 pd-b10 flex-auto">
           <h3 class="lh20">{{item.message_head}}</h3>
           <p class="textover1 mg-t10 c999">{{item.message}}</p>
