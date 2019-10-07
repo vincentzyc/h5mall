@@ -178,10 +178,10 @@ export default {
       this.$loading.close();
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
-    async getProducts(param) {
-      let res = await this.$api.Order.directSettlement(param);
-      this.items = res.settlementList || [];
-    },
+    // async getProducts(param) {
+    //   let res = await this.$api.Order.directSettlement(param);
+    //   this.items = res.settlementList || [];
+    // },
     async getOrderCard() {
       this.$loading.open();
       let param = {
@@ -253,11 +253,11 @@ export default {
   },
   activated() {
     if (this.BUS.selectAdress) this.address = this.BUS.selectAdress;
-    if (this.BUS.orderParam) this.getProducts(this.BUS.orderParam)
+    if (this.BUS.buyList) this.items = this.BUS.buyList;
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    if (this.BUS.orderParam) {
+    if (this.BUS.buyList) {
       this.getAddress()
     } else {
       if (this.$route.fullPath === '/order/add') {
