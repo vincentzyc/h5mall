@@ -144,7 +144,7 @@ export default {
         sum = v.productInfo.reduce((all, c) => all + c.cart_num * c.specs.specsPrice, 0)
         totalPrice += sum;
       })
-      return totalPrice - (this.coupon.discount || 0) > 0 ? totalPrice : 0
+      return totalPrice - (this.coupon.discount || 0) > 0 ? this.$util.toDecimal(totalPrice, 2) : 0
     }
   },
   methods: {
@@ -218,7 +218,7 @@ export default {
         phone: this.address.phone,
         name: this.address.name,
         card_id: this.coupon.card_id,
-        submitType: "2", //提交类型，1购物车，2立即支付
+        submitType: this.$route.query.type, //提交类型，1购物车，2立即支付
         product_info: [{
           specsId: this.items[0].productInfo[0].specs.id,
           product_id: this.items[0].productInfo[0].id,

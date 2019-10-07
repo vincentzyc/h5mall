@@ -172,7 +172,7 @@ export default {
       let res = await this.$api.Order.directSettlement(param);
       this.BUS.setBuyList(res.settlementList);
       this.$loading.close();
-      this.$router.push('/order/add')
+      this.$router.push('/order/add?type=2')
     },
     showPopup() {
       this.$refs.specsPopup.show();

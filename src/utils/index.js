@@ -146,6 +146,30 @@ export default {
     if ((/^1[0-9]{10}$/.test(phone))) return true;
     return false;
   },
+  /**
+	 * 四舍五入强制保留n位小数
+	 * @param  x  操作数字
+	 * @param  n 保留位数
+	 */
+  toDecimal(x, n) {
+    var f = parseFloat(x);
+    if (isNaN(f) || isNaN(n)) {
+      return '';
+    }
+    if (n === 0) return Math.round(x);
+    var num = Number("1E" + n);
+    f = Math.round(x * num) / num;
+    var s = f.toString();
+    var rs = s.indexOf(".");
+    if (rs < 0) {
+      rs = s.length;
+      s += ".";
+    }
+    while (s.length <= rs + n) {
+      s += "0";
+    }
+    return s;
+  },
 	/**
 	 * 倒计时
 	 * @param  time  倒计时秒数

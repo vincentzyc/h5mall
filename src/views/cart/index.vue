@@ -104,7 +104,7 @@ export default {
         sum = v.productInfo.reduce((all, c) => c.check ? all + c.cart_num * c.price : all, 0)
         totalPrice += sum;
       })
-      return totalPrice
+      return this.$util.toDecimal(totalPrice, 2)
     }
   },
   methods: {
@@ -210,7 +210,7 @@ export default {
       let res = await this.$api.Product.orderShoppingCart(param);
       this.BUS.setBuyList(res.settlementList);
       this.$loading.close();
-      this.$router.push('/order/add')
+      this.$router.push('/order/add?type=1')
     }
   },
   async created() {
