@@ -210,7 +210,7 @@ export default {
       let res = await this.$api.Product.orderShoppingCart(param);
       this.BUS.setBuyList(res.settlementList);
       this.$loading.close();
-      this.$router.push('/order/add?type=1')
+      this.$router.push('/order/add?ordertype=1')
     }
   },
   async created() {
