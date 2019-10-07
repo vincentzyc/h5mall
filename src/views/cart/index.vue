@@ -189,12 +189,28 @@ export default {
         onCancel: () => { }
       }).show()
     },
-    pay() {
-      return this.$createToast({
-        txt: "拼命开发中",
-        type: "txt",
-        time: 2000
-      }).show()
+    async pay() {
+      let buyList = [];
+      this.stores.forEach(s => {
+        s.productInfo.forEach(v => {
+          if (v.check) {
+            buyList.push({
+              product_id: v.id,
+              specsId: v.specs.id
+            })
+          }
+        })
+      })
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token,
+        product_list: buyList
+      }
+      this.$loading.open();
+      let res = await this.$api.Product.orderShoppingCart(param);
+      this.BUS.setBuyList(res.settlementList);
+      this.$loading.close();
+      this.$router.push('/order/add')
     }
   },
   async created() {

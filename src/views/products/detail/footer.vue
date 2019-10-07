@@ -168,14 +168,11 @@ export default {
         specs_id: this.selectSpecs.id.toString(),
         num: this.number
       }
-      this.BUS.setOrderParam(param);
+      this.$loading.open();
+      let res = await this.$api.Order.directSettlement(param);
+      this.BUS.setBuyList(res.settlementList);
+      this.$loading.close();
       this.$router.push('/order/add')
-      // let res = await this.$api.Product.addShoppingCart(param);
-      // this.$createToast({
-      //   txt: "添加成功",
-      //   type: "txt",
-      //   time: 2000
-      // }).show()
     },
     showPopup() {
       this.$refs.specsPopup.show();
