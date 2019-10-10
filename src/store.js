@@ -5,7 +5,7 @@ export default new Vue({
     return {
       selectAdress: "",
       editAddress: "",
-      orderParam: ""
+      buyList: ""
     }
   },
   methods: {
@@ -15,8 +15,8 @@ export default new Vue({
     setEditAddress(newValue) {
       this.editAddress = newValue
     },
-    setOrderParam(newValue) {
-      this.orderParam = newValue
+    setBuyList(newValue) {
+      this.buyList = newValue
     }
   }
 });

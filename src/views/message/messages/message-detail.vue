@@ -2,7 +2,7 @@
   <div class="message-wrapper">
     <div class="text-center mg-t15 mg-b10 c666">{{$util.getFormatDate('',detail.create_time)}}</div>
     <li class="flex pd10">
-      <div class="avatar message-icon" :class="iconClass" />
+      <div class="avatar message-icon flex-none" :class="iconClass" />
       <div class="mg-l10 flex-auto bubble">
         <h3 class="c666">{{detail.message_head}}</h3>
         <p class="lh18 mg-t10 bgfff fs12">{{detail.message}}</p>

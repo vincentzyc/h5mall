@@ -144,7 +144,7 @@ export default {
         sum = v.productInfo.reduce((all, c) => all + c.cart_num * c.specs.specsPrice, 0)
         totalPrice += sum;
       })
-      return totalPrice - (this.coupon.discount || 0) > 0 ? totalPrice : 0
+      return totalPrice - (this.coupon.discount || 0) > 0 ? this.$util.toDecimal(totalPrice, 2) : 0
     }
   },
   methods: {
@@ -178,10 +178,10 @@ export default {
       this.$loading.close();
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
-    async getProducts(param) {
-      let res = await this.$api.Order.directSettlement(param);
-      this.items = res.settlementList || [];
-    },
+    // async getProducts(param) {
+    //   let res = await this.$api.Order.directSettlement(param);
+    //   this.items = res.settlementList || [];
+    // },
     async getOrderCard() {
       this.$loading.open();
       let param = {
@@ -218,7 +218,7 @@ export default {
         phone: this.address.phone,
         name: this.address.name,
         card_id: this.coupon.card_id,
-        submitType: "2", //提交类型，1购物车，2立即支付
+        submitType: this.$route.query.ordertype, //提交类型，1购物车，2立即支付
         product_info: [{
           specsId: this.items[0].productInfo[0].specs.id,
           product_id: this.items[0].productInfo[0].id,
@@ -253,11 +253,11 @@ export default {
   },
   activated() {
     if (this.BUS.selectAdress) this.address = this.BUS.selectAdress;
-    if (this.BUS.orderParam) this.getProducts(this.BUS.orderParam)
+    if (this.BUS.buyList) this.items = this.BUS.buyList;
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    if (this.BUS.orderParam) {
+    if (this.BUS.buyList) {
       this.getAddress()
     } else {
       if (this.$route.fullPath === '/order/add') {
