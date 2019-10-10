@@ -82,7 +82,7 @@ export default {
   },
   async created() {
     let res = await this.$api.Product.carouselList();
-    console.log(res);
+    // console.log(res);
     this.topItems = res.top;
     // this.middleItems = res.middle;
     this.$refs.slide.refresh();

@@ -74,7 +74,9 @@ const Api = {
             content: msg || '登录信息已过期，请重新登录',
             onConfirm: () => {
               clearUser();
-              router.replace('/me/login?redirect=' + window.location.hash.replace('#', ''))
+              if (!window.location.hash.includes('/me/login')) {
+                router.push('/me/login?redirect=' + window.location.hash.replace('#', ''))
+              }
             }
           }).show();
         }
