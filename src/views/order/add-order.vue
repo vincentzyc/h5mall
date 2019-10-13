@@ -178,10 +178,6 @@ export default {
       this.$loading.close();
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
-    // async getProducts(param) {
-    //   let res = await this.$api.Order.directSettlement(param);
-    //   this.items = res.settlementList || [];
-    // },
     async getOrderCard() {
       this.$loading.open();
       let param = {
