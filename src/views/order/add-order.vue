@@ -67,13 +67,13 @@
         <h3 class="pay-title">请选择支付方式</h3>
         <ul class="shop_ul">
           <cube-radio-group v-model="selected">
-            <cube-radio option="zfb" position="right" class="border-beee">
-              <img src="@/assets/img/zfb-pay.png" width="20px" height="20px" class="mg-r10" />
-              支付宝支付
-            </cube-radio>
             <cube-radio option="wx" position="right" class="border-beee">
               <img src="@/assets/img/wx-pay.png" width="20px" height="20px" class="mg-r10" />
               微信支付
+            </cube-radio>
+            <cube-radio option="zfb" position="right" class="border-beee" v-if="!$util.isWechat()">
+              <img src="@/assets/img/zfb-pay.png" width="20px" height="20px" class="mg-r10" />
+              支付宝支付
             </cube-radio>
             <cube-radio option="ye" position="right" class="border-beee">
               <img src="@/assets/img/balance.png" width="20px" height="20px" class="mg-r10" />
@@ -123,6 +123,7 @@
 
 <script>
 import { getUser } from "@/service/user"
+import PAY from "@/service/pay"
 export default {
   name: 'keepaddorder',
   data() {
@@ -131,7 +132,7 @@ export default {
       items: [],
       address: "",
       remark: "",
-      selected: 'zfb',
+      selected: 'wx',
       coupon: '',
       couponList: [],
       checked: false
@@ -233,9 +234,12 @@ export default {
       switch (this.selected) {
         case 'zfb':
           payParam = await this.$api.Pay.alipay(orderParam);
+          PAY.alipay(payParam.formStr)
           break;
         case 'wx':
           payParam = await this.$api.Pay.wxpay(orderParam);
+          console.log(payParam);
+          this.$util.isWechat() ? PAY.wxpay(orderParam.payOrder) : PAY.h5wxpay(orderParam.payOrder.mweb_url);
           break;
         case 'ye':
           payParam = await this.$api.Pay.userPayedByMoney(orderParam);
