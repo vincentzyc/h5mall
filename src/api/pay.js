@@ -1,16 +1,13 @@
 export default [{
-  name:"wxpay",
-  url:"/appWxpay/wxpay"  //微信支付——订单
-},{
-  name:"userPayedByMoney",
-  url:"/appUser/userPayedByMoney"  //用户余额支付
-},{
-  name:"alipay",
-  url:"/appAlipay/alipay"  //支付宝支付——订单
-},{
-  name:"wxpayRechanBaL",
-  url:"/appWxpay/wxpay_rechanBaL"  //微信 充值 余额
-},{
-  name:"rechargeBalance",
-  url:"/appAlipay/rechargeBalance"  //用户充值 ——支付宝方式充值
+	name: "wxpay",
+	url: "/appWxpay/h5pay" //微信支付——订单
+}, {
+	name: "wxpayQuery",
+	url: "/appWxpay/h5payQuery" //微信支付——H5支付-状态查询
+}, {
+	name: "alipay",
+	url: "/appAlipay/aliH5pay" //支付宝支付——订单
+}, {
+	name: "alipayQuery",
+	url: "/appAlipay/aliH5payQuery" //支付宝支付——H5状态查询
 }]
