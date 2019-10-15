@@ -123,6 +123,7 @@
 
 <script>
 import { getUser } from "@/service/user"
+import goPay from "@/service/pay"
 export default {
   name: 'keepaddorder',
   data() {
@@ -233,22 +234,7 @@ export default {
         token: this.userInfo.token,
         order_id: res.order_id
       }
-      let payParam = '';
-      switch (this.selected) {
-        case 'zfb':
-          payParam = await this.$api.Pay.alipay(orderParam);
-          break;
-        case 'wx':
-          payParam = await this.$api.Pay.wxpay(orderParam);
-          break;
-        case 'ye':
-          payParam = await this.$api.Pay.userPayedByMoney(orderParam);
-          break;
-        default:
-          break;
-      }
-      console.log(payParam)
-      this.$loading.close();
+      goPay(orderParam,this.selected)
     }
   },
   activated() {

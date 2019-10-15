@@ -66,26 +66,52 @@
               <li v-if="detail.received_time">收货时间：{{$util.getFormatDate('yyyy-mm-dd hh:mm',detail.received_time)}}</li>
             </ul>
           </div>
+
+          <div class="mg-t10 bgfff">
+            <h3 class="pd10 lh20 fs14 c999 border-beee">请选择支付方式</h3>
+            <ul class="shop_ul">
+              <cube-radio-group v-model="selected">
+                <cube-radio option="wx" position="right" class="border-beee">
+                  <img src="@/assets/img/wx-pay.png" width="20px" height="20px" class="mg-r10" />
+                  微信支付
+                </cube-radio>
+                <cube-radio option="zfb" position="right" class="border-beee" v-if="!$util.isWechat()">
+                  <img src="@/assets/img/zfb-pay.png" width="20px" height="20px" class="mg-r10" />
+                  支付宝支付
+                </cube-radio>
+                <!-- <cube-radio option="ye" position="right" class="border-beee">
+              <img src="@/assets/img/balance.png" width="20px" height="20px" class="mg-r10" />
+              余额支付
+                </cube-radio>-->
+              </cube-radio-group>
+            </ul>
+          </div>
         </div>
       </cube-scroll>
 
-      <footer class="footerwrap bgtheme" v-if="detail.order_status!==1">{{detail.order_status|footerStatus}}</footer>
+      <footer
+        class="footerwrap bgtheme"
+        v-if="detail.order_status!==1"
+        @click="footerClick(detail.order_status)"
+      >{{detail.order_status|footerStatus}}</footer>
     </div>
   </base-page>
 </template>
 
 <script>
 import { getUser } from "@/service/user"
+import goPay from "@/service/pay"
 export default {
   data() {
     return {
       order_id: '',
-      detail: ""
+      detail: "",
+      selected: "wx"
     }
   },
   filters: {
-    orderStatus(v) {
-      switch (v) {
+    orderStatus(s) {
+      switch (s) {
         case 0:
           return "等待买家付款"
         case 1:
@@ -98,8 +124,8 @@ export default {
           return ''
       }
     },
-    footerStatus(v) {
-      switch (v) {
+    footerStatus(s) {
+      switch (s) {
         case 0:
           return "立即付款"
         case 2:
@@ -112,6 +138,26 @@ export default {
     }
   },
   methods: {
+    footerClick(s) {
+      switch (s) {
+        case 0:
+          this.pay()
+        case 2:
+          return "确认收货"
+        case 3:
+          return "去评价"
+        default:
+          return ''
+      }
+    },
+    pay() {
+      let orderParam = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        order_id: this.detail.order_id
+      }
+      goPay(orderParam,this.selected)
+    },
     async getOrderDetail() {
       let param = {
         user_id: this.userInfo.id.toString(),
@@ -119,7 +165,7 @@ export default {
         order_id: this.order_id
       }
       let res = await this.$api.Order.orderDetail(param);
-      // console.log(res);
+      console.log(res);
       this.detail = res.order_detail;
       setTimeout(() => {
         this.$refs.scroll.refresh();
