@@ -140,6 +140,11 @@ export default new VueRouter({
       component: () => import("./views/order/order-detail")
     },
     {
+      path:"/order/payresult",
+      name:"payResult",
+      component: () => import("./views/order/pay-result")
+    },
+    {
       path: "/message/system",
       name: "systemMessage",
       component: () => import("./views/message/messages/system")

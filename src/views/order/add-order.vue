@@ -32,7 +32,7 @@
         <div class="product-item" v-for="item in store.productInfo" :key="item.id">
           <div class="pd10">
             <div class="flex product-info">
-              <img :src="item.specs.specsImg.split(',')[0]" alt="店铺logo" />
+              <img class="flex-none" :src="item.specs.specsImg.split(',')[0]" alt="店铺logo" />
               <div class="flex-auto pd-l10">
                 <h4 class="textover2 lh20 title">{{item.name}}</h4>
                 <div class="flex mg-t10">
@@ -67,18 +67,18 @@
         <h3 class="pay-title">请选择支付方式</h3>
         <ul class="shop_ul">
           <cube-radio-group v-model="selected">
-            <cube-radio option="zfb" position="right" class="border-beee">
-              <img src="@/assets/img/zfb-pay.png" width="20px" height="20px" class="mg-r10" />
-              支付宝支付
-            </cube-radio>
             <cube-radio option="wx" position="right" class="border-beee">
               <img src="@/assets/img/wx-pay.png" width="20px" height="20px" class="mg-r10" />
               微信支付
             </cube-radio>
-            <cube-radio option="ye" position="right" class="border-beee">
+            <cube-radio option="zfb" position="right" class="border-beee" v-if="!$util.isWechat()">
+              <img src="@/assets/img/zfb-pay.png" width="20px" height="20px" class="mg-r10" />
+              支付宝支付
+            </cube-radio>
+            <!-- <cube-radio option="ye" position="right" class="border-beee">
               <img src="@/assets/img/balance.png" width="20px" height="20px" class="mg-r10" />
               余额支付
-            </cube-radio>
+            </cube-radio>-->
           </cube-radio-group>
         </ul>
       </div>
@@ -132,7 +132,7 @@ export default {
       items: [],
       address: "",
       remark: "",
-      selected: 'zfb',
+      selected: 'wx',
       coupon: '',
       couponList: [],
       checked: false
@@ -179,10 +179,6 @@ export default {
       this.$loading.close();
       this.address = Array.isArray(res.list) ? res.list[0] : ""
     },
-    // async getProducts(param) {
-    //   let res = await this.$api.Order.directSettlement(param);
-    //   this.items = res.settlementList || [];
-    // },
     async getOrderCard() {
       this.$loading.open();
       let param = {
@@ -207,11 +203,6 @@ export default {
           time: 2000
         }).show()
       }
-      return this.$createToast({
-        txt: "拼命开发中",
-        type: "txt",
-        time: 2000
-      }).show()
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
@@ -220,13 +211,23 @@ export default {
         name: this.address.name,
         card_id: this.coupon.card_id,
         submitType: this.$route.query.ordertype, //提交类型，1购物车，2立即支付
-        product_info: [{
-          specsId: this.items[0].productInfo[0].specs.id,
-          product_id: this.items[0].productInfo[0].id,
-          num: this.items[0].productInfo[0].cart_num,
-          remark: this.remark
-        }]
+        product_info: this.items.map(shop => {
+          return shop.productInfo.map(product => {
+            return {
+              specsId: product.specs.id,
+              product_id: product.id,
+              num: product.cart_num,
+              remark: this.remark
+            }
+          })
+        })
       }
+      console.log(param);
+      // return this.$createToast({
+      //   txt: "拼命开发中",
+      //   type: "txt",
+      //   time: 2000
+      // }).show()
       this.$loading.open();
       let res = await this.$api.Order.orderSubmit(param);
       let orderParam = {
@@ -234,7 +235,7 @@ export default {
         token: this.userInfo.token,
         order_id: res.order_id
       }
-      goPay(orderParam,this.selected)
+      goPay(orderParam, this.selected)
     }
   },
   activated() {
