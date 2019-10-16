@@ -29,7 +29,7 @@
           </div>
         </div>
         <!-- 店铺 商品 -->
-        <div class="product-item" v-for="item in store.productInfo" :key="item.id">
+        <div class="product-item mg-b5" v-for="item in store.productInfo" :key="item.id">
           <div class="pd10">
             <div class="flex product-info">
               <img class="flex-none" :src="item.specs.specsImg.split(',')[0]" alt="店铺logo" />
@@ -203,6 +203,17 @@ export default {
           time: 2000
         }).show()
       }
+      let product_info = [];
+      this.items.forEach(shop => {
+        shop.productInfo.forEach(product => {
+          product_info.push({
+            specsId: product.specs.id,
+            product_id: product.id,
+            num: Number(product.cart_num),
+            remark: this.remark
+          })
+        })
+      })
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
@@ -211,18 +222,9 @@ export default {
         name: this.address.name,
         card_id: this.coupon.card_id,
         submitType: this.$route.query.ordertype, //提交类型，1购物车，2立即支付
-        product_info: this.items.map(shop => {
-          return shop.productInfo.map(product => {
-            return {
-              specsId: product.specs.id,
-              product_id: product.id,
-              num: product.cart_num,
-              remark: this.remark
-            }
-          })
-        })
+        product_info: product_info
       }
-      console.log(param);
+      // console.log(param);
       // return this.$createToast({
       //   txt: "拼命开发中",
       //   type: "txt",

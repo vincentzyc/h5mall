@@ -23,33 +23,33 @@
                 <p class="fs14 c666 mg-t10 textover2 lh20">{{detail.consignee_address}}</p>
               </div>
             </div>
-            <img src="@/assets/img/order-address.png" alt width="100%" />
+            <img class="flex-none" src="@/assets/img/order-address.png" alt width="100%" />
           </div>
 
-          <div class="products mg-t10 bgfff">
+          <div class="products mg-t10 bgfff" v-for="store in orderList" :key="store.shop_id">
             <div class="flex align-middle pd10 c666 bgfff">
               <span class="store"></span>
               <div class="flex align-middle mg-l10">
-                <span class="mg-r10">{{detail.shop_name}}</span>
+                <span class="mg-r10">{{store.shop_name}}</span>
                 <i class="fs16 cubeic-arrow"></i>
               </div>
             </div>
-            <div class="product-item bgeee">
+            <div class="product-item bgeee mg-b5" v-for="item in store.products" :key="item.id">
               <div class="pd10">
                 <div class="flex product-info">
-                  <img :src="detail.specs.specsImg.split(',')[0]" alt="店铺logo" />
+                  <img class="flex-none" :src="item.img.split(',')[0]" alt="店铺logo" />
                   <div class="flex-auto pd-l10">
-                    <h4 class="textover2 lh20 title">{{detail.product_name}}</h4>
+                    <h4 class="textover2 lh20 title">{{item.product_name}}</h4>
                     <div class="flex mg-t10">
-                      <span class="flex-auto ctheme fs16">￥{{detail.specs.specsPrice}}</span>
-                      <span class="mg5">x{{detail.num}}</span>
+                      <span class="flex-auto ctheme fs16">￥{{item.price}}</span>
+                      <span class="mg5">x{{item.num}}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="lh20 pd10 text-right">合计：￥{{detail.product_sum_money}}</div>
           </div>
+          <div class="bgfff lh20 pd10 text-right">合计：￥{{orderTotalPrice}}</div>
 
           <div class="mg-t10 bgfff pd10">
             <div class="c666 mg-b10">备注信息</div>
@@ -104,8 +104,10 @@ import goPay from "@/service/pay"
 export default {
   data() {
     return {
-      order_id: '',
+      id_in: '',
       detail: "",
+      orderList: "",
+      orderTotalPrice:"",
       selected: "wx"
     }
   },
@@ -145,6 +147,7 @@ export default {
         case 2:
           return "确认收货"
         case 3:
+          this.$router.push('/order/comment?id=' + detail.product_id)
           return "去评价"
         default:
           return ''
@@ -156,14 +159,26 @@ export default {
         token: this.userInfo.token,
         order_id: this.detail.order_id
       }
-      goPay(orderParam,this.selected)
+      goPay(orderParam, this.selected)
     },
-    async getOrderDetail() {
+    async getOrderList() {
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
-        order_id: this.order_id
+        id_in: this.id_in
       }
+      let res = await this.$api.Order.goPay(param);
+      this.orderList = res.orderList;
+      this.orderTotalPrice = res.orderTotalPrice;
+      this.getOrderDetail();
+    },
+    async getOrderDetail(order_id) {
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        order_id: this.id_in
+      }
+      console.log(param);
       let res = await this.$api.Order.orderDetail(param);
       console.log(res);
       this.detail = res.order_detail;
@@ -174,9 +189,9 @@ export default {
   },
   async created() {
     this.userInfo = await getUser(this.$route.fullPath);
-    this.order_id = this.$route.query.id;
-    if (!this.order_id) this.$router.back();
-    this.getOrderDetail()
+    this.id_in = this.$route.query.id;
+    if (!this.id_in) this.$router.back();
+    this.getOrderList()
   }
 }
 </script>
