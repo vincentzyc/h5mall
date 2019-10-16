@@ -4,7 +4,7 @@ import router from "@/router"
 const vm = new Vue()
 let payData = "", payType = ""
 
-export async function Pay(data, type) {
+export default async function pay(data, type) {
   vm.$loading.open('正在支付...');
   payData = data;
   payType = type;
@@ -97,7 +97,7 @@ function confirmPay() {
         queryPay()
       },
       onCancel: () => {
-        Pay(payData, payType)
+        pay(payData, payType)
       }
     }).show()
   }, 500);
@@ -108,7 +108,9 @@ function confirmPay() {
 async function queryPay() {
   vm.$loading.open("正在查询支付结果");
   let res = "", checkApi = payType === 'wx' ? 'wxpayQuery' : 'alipayQuery';
+  console.log("正在查询支付结果",payData);
   res = await vm.$api.Pay[checkApi](payData);
+  console.log("返回支付结果",res);
   if (res.order_status !== 'SUCCESS' || res.order_status !== 'TRADE_SUCCESS') {
     setTimeout(async () => {
       res = await vm.$api.Pay[checkApi](payData);

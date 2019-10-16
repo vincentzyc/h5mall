@@ -40,6 +40,9 @@ const Api = {
     if (window.location.href.includes('test-mgr')) return 'test';
     return 'production'
   },
+  getWechatCode(appid,redirect_uri){
+    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_base#wechat_redirect`
+  },
   axiosPost(url, data, backType = 'success', encrypt = true) {
     if (encrypt) {
       var { key, iv, ...encryptData } = Crypto.encrypt(data);
