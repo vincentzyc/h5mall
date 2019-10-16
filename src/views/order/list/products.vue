@@ -2,8 +2,8 @@
   <div v-if="!noOrder">
     <div v-if="items.length>0">
       <!-- 店铺 -->
-      <div class="products mg-b10" v-for="store in items" :key="store.id">
-        <div class="flex align-middle pd10 c666 bgfff">
+      <div class="products mg-b10 bgfff" v-for="(store,index) in items" :key="store.id">
+        <div class="flex align-middle pd10 c666">
           <span class="store"></span>
           <div class="flex align-middle mg-l10">
             <span class="mg-r10">{{store.shop_name}}</span>
@@ -13,14 +13,14 @@
         </div>
         <!-- 商品 -->
         <div
-          class="product-item"
+          class="product-item mg-b5 bg-grey-sss"
           v-for="item in store.products"
           :key="item.id"
           @click="$router.push('/order/orderdetail?id=' + item.id)"
         >
           <div class="pd10">
             <div class="flex product-info">
-              <img v-lazy="item.img.split(',')[0]" alt="产品图片" />
+              <img class="flex-none" v-lazy="item.img.split(',')[0]" alt="产品图片" />
               <div class="flex-auto pd-l10">
                 <h4 class="textover2 lh20 title">{{item.product_name}}</h4>
                 <div class="flex mg-t10">
@@ -30,17 +30,25 @@
               </div>
             </div>
           </div>
-          <!-- 商品价格总计 -->
-          <div class="flex pd10 bgfff flex-center">
-            <span>总计：</span>
-            <div class="flex-auto">￥{{item.price*item.num||0}}</div>
-            <cube-button
-              :inline="true"
-              primary
-              v-if="btnStatus(store.order_status)"
-              @click="goPage(store.order_status,store.order_id)"
-            >{{btnStatus(store.order_status)}}</cube-button>
-          </div>
+        </div>
+        <!-- 商品价格总计 -->
+        <div class="flex pd10 bgfff flex-center">
+          <span>总计：</span>
+          <div class="flex-auto">￥{{totalPrice(store.products)}}</div>
+          <cube-button
+            v-if="store.order_status===0"
+            :inline="true"
+            :outline="true"
+            primary
+            class="mg-r10"
+            @click="deleteOrder(store,index)"
+          >删除订单</cube-button>
+          <cube-button
+            :inline="true"
+            primary
+            v-if="btnStatus(store.order_status)"
+            @click="goPage(store)"
+          >{{btnStatus(store.order_status)}}</cube-button>
         </div>
       </div>
     </div>
@@ -56,7 +64,8 @@
 export default {
   props: {
     items: Array,
-    noOrder: Boolean
+    noOrder: Boolean,
+    userInfo: Object
   },
   filters: {
     orderState(v) {
@@ -75,6 +84,12 @@ export default {
     }
   },
   methods: {
+    totalPrice(arr) {
+      let totalPrice = 0, sum = 0;
+      sum = arr.reduce((all, c) => all + c.num * c.price, 0)
+      totalPrice += sum;
+      return this.$util.toDecimal(totalPrice, 2)
+    },
     btnStatus(value) {
       switch (value) {
         case 0:
@@ -87,16 +102,39 @@ export default {
           return false
       }
     },
-    goPage(v, id) {
-      switch (v) {
+    async deleteOrder(store, index) {
+      this.$loading.open();
+      let allId = "";
+      store.products.forEach(element => {
+        allId += (element.id + ",")
+      });
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token,
+        id: allId.slice(0, -1)
+      }
+      let res = await this.$api.Order.deleteOrder(param);
+      this.items.splice(index, 1);
+      this.$loading.close();
+      this.$createToast({
+        txt: '删除成功',
+        type: 'txt'
+      }).show()
+    },
+    goPage(store) {
+      let allId = "";
+      switch (store.order_status) {
         case 0:
-          this.$router.push('/order/orderdetail?id=' + id)
+          store.products.forEach(element => {
+            allId += (element.id + ",")
+          });
+          this.$router.push('/order/orderdetail?id=' + allId.slice(0, -1))
           break
         case 2:
-          this.$router.push('/order/orderdetail?id=' + id)
+          this.$router.push('/order/orderdetail?id=' + store.order_id)
           break
         case 3:
-          this.$router.push('/order/comment?id=' + id)
+          this.$router.push('/order/comment?id=' + store.order_id)
           break
         default:
           break
