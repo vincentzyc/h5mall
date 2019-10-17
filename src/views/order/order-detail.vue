@@ -1,7 +1,7 @@
 <template>
   <base-page>
     <common-header title="订单详情" />
-    <div class="content">
+    <div class="content" :class="{'pd-b50':footerStatus}">
       <cube-scroll ref="scroll">
         <div class="scroll-wrapper" v-if="detail">
           <div class="flex align-middle bgfff pd10">
@@ -89,11 +89,7 @@
         </div>
       </cube-scroll>
 
-      <footer
-        class="footerwrap bgtheme"
-        v-if="detail.order_status!==1"
-        @click="footerClick(detail.order_status)"
-      >{{detail.order_status|footerStatus}}</footer>
+      <footer class="footerwrap bgtheme" v-if="footerStatus" @click="footerClick(detail.order_status)">{{footerStatus}}</footer>
     </div>
   </base-page>
 </template>
@@ -107,8 +103,23 @@ export default {
       id_in: '',
       detail: "",
       orderList: "",
-      orderTotalPrice:"",
+      orderTotalPrice: "",
       selected: "wx"
+    }
+  },
+  computed: {
+    footerStatus() {
+      if (!this.detail) return "";
+      switch (this.detail.order_status) {
+        case 0:
+          return "立即付款"
+        case 2:
+          return "确认收货"
+        case 3:
+          return "去评价"
+        default:
+          return ''
+      }
     }
   },
   filters: {
@@ -122,18 +133,6 @@ export default {
           return "等待买家收货"
         case 3:
           return "等待买家评价"
-        default:
-          return ''
-      }
-    },
-    footerStatus(s) {
-      switch (s) {
-        case 0:
-          return "立即付款"
-        case 2:
-          return "确认收货"
-        case 3:
-          return "去评价"
         default:
           return ''
       }
@@ -201,7 +200,6 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding-bottom: 50px;
 }
 
 .address-wrap .address {
