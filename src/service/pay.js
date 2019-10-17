@@ -100,7 +100,7 @@ function confirmPay() {
         pay(payData, payType)
       }
     }).show()
-  }, 500);
+  }, 300);
 }
 /**
  * 查询支付结果
