@@ -233,9 +233,8 @@ export default {
       this.$loading.open();
       let res = await this.$api.Order.orderSubmit(param);
       let orderParam = {
-        user_id: this.userInfo.id.toString(),
-        token: this.userInfo.token,
-        order_id: res.order_id
+        order_id: res.order_id,
+        ...this.userInfo
       }
       goPay(orderParam, this.selected)
     }
