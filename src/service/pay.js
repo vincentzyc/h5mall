@@ -6,25 +6,29 @@ let payData = "", payType = ""
 
 export default async function pay(data, type) {
   vm.$loading.open('正在支付...');
-  payData = data;
+  payData = {
+    user_id: data.id.toString(),
+    token: data.token,
+    order_id: data.order_id
+  };
   payType = type;
   let payParam = ""
   switch (type) {
     case 'wx':
-      data.browser_type = vm.$util.isWechat() ? '1' : '2';
-      console.log("获取微信支付参数", data);
-      payParam = await vm.$api.Pay.wxpay(data);
+      payData.browser_type = vm.$util.isWechat() ? '1' : '2';
+      if (payData.browser_type === '1') payData.open_id = data.openId;
+      console.log("微信支付参数", payData);
+      payParam = await vm.$api.Pay.wxpay(payData);
       console.log("开始微信支付", payParam);
       if (vm.$util.isWechat()) {
-        let payres = await wxpay(payParam.payOrder);
-        payres === true ? queryPay() : vm.$createToast({ type: 'txt', txt: payres });
+        wxpay(payParam.payOrder);
       } else {
         confirmPay();
         h5wxpay(payParam.payOrder.mweb_url);
       }
       break;
     case 'zfb':
-      payParam = await vm.$api.Pay.alipay(data);
+      payParam = await vm.$api.Pay.alipay(payData);
       confirmPay();
       alipay(payParam.formStr)
       break;
@@ -37,30 +41,30 @@ export default async function pay(data, type) {
  * 微信支付
  */
 function wxpay(data) {
-  return new Promise(resolve => {
-    if (window['WeixinJSBridge']) {
-      // alert(window.JSON.stringify(data));
-      if (typeof data === "string") data = window.JSON.parse(data);
-      if (!data['AppId']) return resolve('支付失败！缺少支付参数！');
-      //微信处理
-      window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
-        "appId": data.AppId, //公众号名称，由商户传入
-        "timeStamp": data.Timestamp, //时间戳，自1970年以来的秒数
-        "nonceStr": data.Nonce, //随机串
-        "package": data.Package,
-        "signType": data.SignType, //微信签名方式：
-        "paySign": data.Sign //微信签名
-      }, res => {
-        if (res.err_msg === "get_brand_wcpay_request:ok") {
-          return resolve(true);
-        } else if (res.err_msg === "get_brand_wcpay_request:cancel") {
-          return resolve('您取消了支付');
-        } else {
-          return resolve('支付失败！');
-        }
-      })
-    }
-  })
+  if (window['WeixinJSBridge']) {
+    //调起微信支付
+    window.WeixinJSBridge.invoke('getBrandWCPayRequest', {
+      "appId": data.appId, //公众号名称，由商户传入
+      "timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+      "nonceStr": data.nonceStr, //随机串
+      "package": data.package,
+      "signType": data.signType, //微信签名方式：
+      "paySign": data.paySign //微信签名
+    }, res => {
+      console.log('微信支付结果',res);
+      if (res.err_msg === "get_brand_wcpay_request:ok") {
+        // 支付成功
+        queryPay()
+      } else if (res.err_msg === "get_brand_wcpay_request:cancel") {
+        // vm.$createToast({ type: 'txt', txt: '您取消了支付' });
+        vm.$createDialog({ content: '您取消了支付' }).show();
+        vm.$loading.close();
+      } else {
+        vm.$createDialog({ content: '支付失败！' }).show();
+        vm.$loading.close();
+      }
+    })
+  }
 }
 /**
  * 微信APP外部使用微信支付
@@ -108,9 +112,9 @@ function confirmPay() {
 async function queryPay() {
   vm.$loading.open("正在查询支付结果");
   let res = "", checkApi = payType === 'wx' ? 'wxpayQuery' : 'alipayQuery';
-  console.log("正在查询支付结果",payData);
+  console.log("正在查询支付结果", payData);
   res = await vm.$api.Pay[checkApi](payData);
-  console.log("返回支付结果",res);
+  console.log("返回支付结果", res);
   if (res.order_status !== 'SUCCESS' || res.order_status !== 'TRADE_SUCCESS') {
     setTimeout(async () => {
       res = await vm.$api.Pay[checkApi](payData);
