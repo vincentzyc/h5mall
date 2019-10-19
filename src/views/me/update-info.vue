@@ -51,7 +51,12 @@
         <div class="form-wrapper">
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title">手机号：</label>
-            <base-input-item v-model="formData.phone" class="input-item flex-auto" type="phone" placeholder="请输入手机号"></base-input-item>
+            <base-input-item
+              v-model="formData.new_phone"
+              class="input-item flex-auto"
+              type="phone"
+              placeholder="请输入手机号"
+            ></base-input-item>
           </div>
           <div class="flex align-middle input-wrap">
             <label class="flex-none input-title">验证码：</label>
@@ -62,7 +67,7 @@
               v-model="formData.checkCode"
               placeholder="请输入验证码"
             ></base-input-item>
-            <verifica-code :phone="formData.phone" type="7" />
+            <verifica-code :phone="formData.new_phone" type="7" />
           </div>
           <p class="flex fs12 c999">提示：更换后，新手机号将成为登录账号</p>
           <cube-button :primary="true" class="block-btn" @click="submit()">确定</cube-button>
@@ -74,7 +79,7 @@
 
 <script>
 import VerificaCode from '@/components/verifica-code'
-import { getUser } from "@/service/user"
+import { getUser, updateUser } from "@/service/user"
 
 export default {
   name: 'updateInfo',
@@ -159,8 +164,8 @@ export default {
       }).show()
     },
     checkInfo() {
-      if (this.formData.phone === "") return "请输入手机号";
-      if (!this.$util.checkMobile(this.formData.phone)) return "手机号输入有误";
+      if (this.formData.new_phone === "") return "请输入手机号";
+      if (!this.$util.checkMobile(this.formData.new_phone)) return "手机号输入有误";
       if (this.formData.checkCode === "") return "请输入验证码";
       if (!/^[0-9]{6}$/.test(this.formData.checkCode)) return "验证码有误";
       return true;
@@ -182,6 +187,8 @@ export default {
       }
       let res = await this.$api.Common.updatePhoneByCode(param);
       this.$loading.close();
+      this.userInfo.phone = this.formData.new_phone;
+      updateUser(this.userInfo);
       this.$createDialog({
         content: '修改成功',
         onConfirm: () => this.$router.back()
