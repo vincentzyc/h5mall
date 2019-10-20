@@ -224,12 +224,6 @@ export default {
         submitType: this.$route.query.ordertype, //提交类型，1购物车，2立即支付
         product_info: product_info
       }
-      // console.log(param);
-      // return this.$createToast({
-      //   txt: "拼命开发中",
-      //   type: "txt",
-      //   time: 2000
-      // }).show()
       this.$loading.open();
       let res = await this.$api.Order.orderSubmit(param);
       let orderParam = {

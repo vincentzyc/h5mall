@@ -160,7 +160,9 @@ export default {
         phone: this.detail.consignee_phone,
         address: this.detail.consignee_address
       }
+      console.log('接口orderSubmitOfWait入参',param);
       let res = await this.$api.Order.orderSubmitOfWait(param);
+      console.log('接口orderSubmitOfWait返回',res);
       let orderParam = {
         order_id: res.order_id,
         ...this.userInfo
@@ -184,7 +186,9 @@ export default {
         token: this.userInfo.token,
         order_id: this.id_in
       }
+      console.log(param);
       let res = await this.$api.Order.orderDetail(param);
+      console.log(res);
       this.detail = res.order_detail;
     }
   },
