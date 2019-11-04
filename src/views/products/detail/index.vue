@@ -179,7 +179,7 @@ export default {
   data() {
     return {
       Data: '',
-      pageNum: 1,
+      pageNum: 0,
       loadMore: true,
       loadComment: true,
       carousel: [],
