@@ -74,7 +74,8 @@ export default {
   .tag-item {
     font-weight: lighter;
     color: #fff;
-    font-size: 6px;
+    font-weight:bold; 
+    font-size: 10px;
     padding: 2px 5px 1px 5px;
     margin-right: 5px;
     border: 1px solid transparent;
