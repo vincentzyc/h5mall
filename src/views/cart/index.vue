@@ -189,12 +189,36 @@ export default {
         onCancel: () => { }
       }).show()
     },
+    updateCartNum(buyList) {
+      let param = {
+        user_id: this.userInfo.id,
+        token: this.userInfo.token
+      },
+        promiseList = [];
+      for (const item of buyList) {
+        param = {
+          ...param,
+          ...item
+        }
+        promiseList.push(this.$api.Product.updateCartNum(param))
+      }
+      return new Promise(resolve => {
+        Promise.all(promiseList).then((result) => {
+          console.log(result);
+          resolve(true)
+        }).catch(error => {
+          console.log(error);
+          resolve(error)
+        })
+      })
+    },
     async pay() {
       let buyList = [];
       this.stores.forEach(s => {
         s.productInfo.forEach(v => {
           if (v.check) {
             buyList.push({
+              num: v.cart_num,
               product_id: v.id,
               specsId: v.specs.id
             })
@@ -207,10 +231,19 @@ export default {
         product_list: buyList
       }
       this.$loading.open();
-      let res = await this.$api.Product.orderShoppingCart(param);
-      this.BUS.setBuyList(res.settlementList);
-      this.$loading.close();
-      this.$router.push('/order/add?ordertype=1')
+      let updateRes = await this.updateCartNum(buyList);
+      if (updateRes === true) {
+        let res = await this.$api.Product.orderShoppingCart(param);
+        this.BUS.setBuyList(res.settlementList);
+        this.$loading.close();
+        this.$router.push('/order/add?ordertype=1')
+      } else {
+        this.$createToast({
+          txt: "服务器异常，请稍后再试",
+          type: "txt",
+          time: 2000
+        }).show()
+      }
     }
   },
   async created() {
