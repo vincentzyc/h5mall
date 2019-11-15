@@ -13,4 +13,7 @@ export default [{
 }, {
   name: "getWxOpenId",
   url: "/appWxpay/getWxOpenId"  //获取微信openid
+},{
+  name: "getWxShareInfo",
+  url: "/appWxpay/getWxShareInfo"  //微信获取分享信息
 }]

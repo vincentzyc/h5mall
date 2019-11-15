@@ -33,6 +33,9 @@ export default {
       this.fullscreen = toDepth === 2 ? false : true;
       this.transitionName = toDepth === fromDepth ? 'fade' : toDepth < fromDepth ? 'slide-right' : 'slide-left';
     }
+  },
+  created(){
+    this.$api.wxShare()
   }
 }
 </script>

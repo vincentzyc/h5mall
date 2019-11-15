@@ -97,6 +97,41 @@ const Api = {
         vm.$createDialog({ content: '网络异常' }).show();
       });
     })
+  },
+  async wxShare(shareData) {
+    let res = await this.Pay.getWxShareInfo({ url: window.location.href.split('#')[0] });
+    window.wx.config({
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: res.appId, // 必填，公众号的唯一标识
+      timestamp: res.timestamp, // 必填，生成签名的时间戳
+      nonceStr: res.nonceStr, // 必填，生成签名的随机串
+      signature: res.signature,// 必填，签名
+      jsApiList: [
+        'onMenuShareTimeline', // 分享到朋友圈接口
+        'onMenuShareAppMessage', //  分享到朋友接口
+        'onMenuShareQQ', // 分享到QQ接口
+        'onMenuShareWeibo', // 分享到微博接口
+        'updateTimelineShareData',
+        'updateAppMessageShareData'
+      ] // 必填，需要使用的JS接口列表
+    });
+    // 通用分享信息
+    if (!shareData) {
+      shareData = {
+        imgUrl: 'https://www.baidu.com/img/bd_logo1.png', // 分享显示的缩略图地址
+        link: window.location.href,
+        desc: '百度一下，你就知道', // 分享描述
+        title: '云忆' // 分享标题
+      }
+    }
+    window.wx.ready(function () {
+      window.wx.onMenuShareWeibo(shareData)
+      window.wx.onMenuShareTimeline(shareData)
+      window.wx.onMenuShareQQ(shareData)
+      window.wx.onMenuShareAppMessage(shareData)
+      window.wx.updateTimelineShareData(shareData)
+      window.wx.updateAppMessageShareData(shareData)
+    })
   }
 }
 
