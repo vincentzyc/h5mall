@@ -92,7 +92,7 @@ export default {
       userInfo: '',
       pageNum: 1,
       showDelete: false,
-      allSelect: false,
+      allSelect: true,
       stores: [],
       recommendList: []
     }
@@ -112,11 +112,11 @@ export default {
       return list.map(v => {
         return {
           ...v,
-          allCheck: false,
+          allCheck: true,
           productInfo: v.productInfo.map(pv => {
             return {
               ...pv,
-              check: false
+              check: true
             }
           })
         }
@@ -204,7 +204,6 @@ export default {
       }
       return new Promise(resolve => {
         Promise.all(promiseList).then((result) => {
-          console.log(result);
           resolve(true)
         }).catch(error => {
           console.log(error);
