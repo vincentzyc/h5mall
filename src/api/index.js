@@ -98,10 +98,11 @@ const Api = {
       });
     })
   },
-  async wxShare(shareData) {
+  async wxConfigInit() {
     let res = await this.Pay.getWxShareInfo({ url: window.location.href.split('#')[0] });
+    vm.BUS.setWxConfig(res);
     window.wx.config({
-      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
       appId: res.appId, // 必填，公众号的唯一标识
       timestamp: res.timestamp, // 必填，生成签名的时间戳
       nonceStr: res.nonceStr, // 必填，生成签名的随机串
@@ -115,6 +116,12 @@ const Api = {
         'updateAppMessageShareData'
       ] // 必填，需要使用的JS接口列表
     });
+    if (vm.BUS.shareData) {
+      this.wxShare(vm.BUS.shareData)
+      vm.BUS.setShareData('')
+    }
+  },
+  async wxShare(shareData) {
     // 通用分享信息
     if (!shareData) {
       shareData = {
@@ -124,14 +131,18 @@ const Api = {
         title: '云忆' // 分享标题
       }
     }
-    window.wx.ready(function () {
-      window.wx.onMenuShareWeibo(shareData)
-      window.wx.onMenuShareTimeline(shareData)
-      window.wx.onMenuShareQQ(shareData)
-      window.wx.onMenuShareAppMessage(shareData)
-      window.wx.updateTimelineShareData(shareData)
-      window.wx.updateAppMessageShareData(shareData)
-    })
+    if (vm.BUS.wxConfig) {
+      window.wx.ready(function () {
+        window.wx.onMenuShareWeibo(shareData)
+        window.wx.onMenuShareTimeline(shareData)
+        window.wx.onMenuShareQQ(shareData)
+        window.wx.onMenuShareAppMessage(shareData)
+        window.wx.updateTimelineShareData(shareData)
+        window.wx.updateAppMessageShareData(shareData)
+      })
+    } else {
+      vm.BUS.setShareData(shareData)
+    }
   }
 }
 
