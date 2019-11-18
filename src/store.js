@@ -1,22 +1,31 @@
 import Vue from 'vue'
 
 export default new Vue({
-  data() {
-    return {
-      selectAdress: "",
-      editAddress: "",
-      buyList: ""
-    }
-  },
-  methods: {
-    setSelectAdress(newValue) {
-      this.selectAdress = newValue
+	data() {
+		return {
+      wxConfig:null,
+      shareData:null,
+      contactPhone:"18826229916",
+			selectAdress: "",
+			editAddress: "",
+			buyList: ""
+		}
+	},
+	methods: {
+    setShareData(newValue){
+			this.shareData = newValue
     },
-    setEditAddress(newValue) {
-      this.editAddress = newValue
+    setWxConfig(newValue){
+			this.wxConfig = newValue
     },
-    setBuyList(newValue) {
-      this.buyList = newValue
-    }
-  }
+		setSelectAdress(newValue) {
+			this.selectAdress = newValue
+		},
+		setEditAddress(newValue) {
+			this.editAddress = newValue
+		},
+		setBuyList(newValue) {
+			this.buyList = newValue
+		}
+	}
 });

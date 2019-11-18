@@ -90,7 +90,6 @@ export default {
   data() {
     return {
       user: "",
-      contactPhone: "18826229916",
       items: []
     }
   },
@@ -101,7 +100,7 @@ export default {
         confirmBtn: {
           text: '拨打',
           active: true,
-          href: 'tel:' + this.contactPhone
+          href: 'tel:' + this.BUS.contactPhone
         }
       }, (createElement) => {
         return [
@@ -115,7 +114,7 @@ export default {
           }, [
               createElement('p', {
                 'class': ['c000', 'lh30']
-              }, this.contactPhone),
+              }, this.BUS.contactPhone),
               createElement('p', {
                 'class': ['c999']
               }, '（周一至周五）9:00-18:00)')
