@@ -306,11 +306,21 @@ export default {
       this.loadComment = false;
       this.$loading.close();
     },
+    wxShare() {
+      let shareData = {
+        imgUrl: this.Data.carousel_img.split(",")[0], // 分享显示的缩略图地址
+        link: window.location.origin + window.location.pathname + window.location.hash, // 分享地址
+        desc: this.Data.introduction, // 分享描述
+        title: this.Data.name // 分享标题
+      }
+      this.$api.wxShare(shareData);
+    },
     async init() {
       this.$loading.open();
       let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
       this.Data = res.product_info;
       this.getCarousel();
+      this.wxShare();
       this.$loading.close();
     }
   },

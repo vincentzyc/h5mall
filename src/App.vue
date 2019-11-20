@@ -32,10 +32,11 @@ export default {
       const fromDepth = from.path.split('/').length;
       this.fullscreen = toDepth === 2 ? false : true;
       this.transitionName = toDepth === fromDepth ? 'fade' : toDepth < fromDepth ? 'slide-right' : 'slide-left';
+      if (to.name !== 'productsDetail') this.$api.wxShare()
     }
   },
-  created(){
-    this.$api.wxShare()
+  created() {
+    this.$api.wxConfigInit()
   }
 }
 </script>
