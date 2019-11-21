@@ -1,6 +1,6 @@
 <template>
   <base-page>
-    <common-header title="订单详情" />
+    <common-header :title="detail.order_status===0?'订单支付':'订单详情'" />
     <div class="content">
       <div class="scroll-wrapper" v-if="detail" :class="{'pd-b50':footerStatus}">
         <div class="flex align-middle bgfff pd10">
@@ -12,7 +12,7 @@
         </div>
 
         <div class="address-wrap bgfff mg-t10">
-          <div class="flex align-middle address">
+          <div class="flex align-middle address" @click="$router.push('/me/address?type=select')">
             <i class="c999 cubeic-location"></i>
             <div class="flex flex-auto flex-column pd10">
               <div class="flex flex-auto">
@@ -48,11 +48,19 @@
             </div>
           </div>
         </div>
-        <div class="bgfff lh20 pd10 text-right">合计：￥{{orderTotalPrice}}</div>
+        <div class="bgfff lh20 pd10 text-right">合计：￥{{totalPrice}}</div>
 
         <div class="mg-t10 bgfff pd10">
           <div class="c666 mg-b10">备注信息</div>
           <div class="lh20 fs12">{{detail.remark}}</div>
+        </div>
+
+        <div class="flex bgfff pd15 mg-t10" @click="getOrderCard()">
+          <div class="flex flex-auto">优惠券领取</div>
+          <div class="c999">
+            <span>-￥{{detail.card_id_discount||0.00}}</span>
+            <i class="cubeic-arrow"></i>
+          </div>
         </div>
 
         <div class="mg-t10 bgfff pd10 order-record">
@@ -89,6 +97,30 @@
 
       <footer class="footerwrap bgtheme" v-if="footerStatus" @click="footerClick(detail.order_status)">{{footerStatus}}</footer>
     </div>
+    <!-- 选择优惠券 -->
+    <page-popup ref="pagePopup" position="right" class="pd-t44" type="coupon">
+      <div class="pd10">
+        <common-header title="选择优惠券" />
+        <div>
+          <ul class="not_used_coupon" v-if="couponList.length>0">
+            <cube-checkbox v-model="checked" shape="square" @input="noUseCoupon">不使用优惠券</cube-checkbox>
+            <li class="coupon_box" v-for="item in couponList" :key="item.card_id" @click="selectCoupon(item)">
+              <div class="coupon_centent flex align-middle bg1">
+                <div class="coupon_centent_left flex-auto">
+                  <h2>{{item.note}}</h2>
+                  <h5>{{item.shop_name}}</h5>
+                  <h6>{{formatTime(item.start_time,item.end_time)}}</h6>
+                </div>
+                <div class="coupon_centent_right">￥{{item.discount||0}}</div>
+              </div>
+            </li>
+          </ul>
+          <div class="mg20" v-else>
+            <p class="pd20 c666 text-center">暂无可用优惠券</p>
+          </div>
+        </div>
+      </div>
+    </page-popup>
   </base-page>
 </template>
 
@@ -96,16 +128,22 @@
 import { getUser } from "@/service/user"
 import goPay from "@/service/pay"
 export default {
+  name: 'keeporderdetail',
   data() {
     return {
       id_in: '',
       detail: "",
       orderList: "",
       orderTotalPrice: "",
-      selected: "wx"
+      selected: "wx",
+      couponList: []
     }
   },
   computed: {
+    totalPrice() {
+      let totalPrice = this.orderTotalPrice - (this.detail.card_id_discount || 0);
+      return totalPrice > 0 ? this.$util.toDecimal(totalPrice, 2) : 0
+    },
     footerStatus() {
       if (!this.detail) return "";
       switch (this.detail.order_status) {
@@ -137,6 +175,42 @@ export default {
     }
   },
   methods: {
+    selectCoupon(item) {
+      this.detail.card_id = item.card_id;
+      this.$router.back()
+    },
+    noUseCoupon(check) {
+      if (check) {
+        setTimeout(() => {
+          this.detail.card_id = "";
+          this.$router.back()
+        }, 300);
+      }
+    },
+    formatTime(start, end) {
+      if (start && end) {
+        let startTime = this.$util.getFormatDate('yyyy-mm-dd', start);
+        let endTime = this.$util.getFormatDate('yyyy-mm-dd', end);
+        return '有效日期:' + startTime + '至' + endTime;
+      }
+      return ''
+    },
+    async getOrderCard() {
+      this.$loading.open();
+      let param = {
+        user_id: this.userInfo.id.toString(),
+        token: this.userInfo.token,
+        product_info: [{
+          shop_id: this.detail.shop_id.toString(),
+          product_id: this.detail.product_id.toString(),
+          num: this.detail.num
+        }]
+      }
+      let res = await this.$api.Order.orderCard(param);
+      this.couponList = res.list || [];
+      this.$loading.close();
+      this.$refs.pagePopup.open()
+    },
     footerClick(s) {
       switch (s) {
         case 0:
@@ -160,9 +234,9 @@ export default {
         phone: this.detail.consignee_phone,
         address: this.detail.consignee_address
       }
-      console.log('接口orderSubmitOfWait入参',param);
+      // console.log('接口orderSubmitOfWait入参', param);
       let res = await this.$api.Order.orderSubmitOfWait(param);
-      console.log('接口orderSubmitOfWait返回',res);
+      // console.log('接口orderSubmitOfWait返回', res);
       let orderParam = {
         order_id: res.order_id,
         ...this.userInfo
@@ -180,16 +254,23 @@ export default {
       this.orderTotalPrice = res.orderTotalPrice;
       this.getOrderDetail();
     },
-    async getOrderDetail(order_id) {
+    async getOrderDetail() {
       let param = {
         user_id: this.userInfo.id.toString(),
         token: this.userInfo.token,
         order_id: this.id_in
       }
-      console.log(param);
+      // console.log(param);
       let res = await this.$api.Order.orderDetail(param);
-      console.log(res);
+      // console.log(res);
       this.detail = res.order_detail;
+    }
+  },
+  activated() {
+    if (this.BUS.selectAdress) {
+      this.detail.consignee_name = this.BUS.selectAdress.name;
+      this.detail.consignee_phone = this.BUS.selectAdress.phone;
+      this.detail.consignee_address = this.BUS.selectAdress.address
     }
   },
   async created() {
@@ -202,6 +283,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '~@/assets/css/color.styl';
 .content {
   position: relative;
   width: 100%;
@@ -254,5 +336,50 @@ export default {
   color: #fff;
   font-size: 16px;
   z-index: 99;
+}
+.coupon_box {
+  width: 100%;
+  padding: 0 5px;
+  margin-bottom: 15px;
+}
+
+.coupon_centent {
+  height: 110px;
+}
+
+.not_used_coupon .bg1 {
+  background: url('~@/assets/img/yhq.png') no-repeat 0 0 / 100% 100%;
+}
+
+.not_used_coupon .bg2 {
+  background: url('~@/assets/img/yhq.png') no-repeat 0 0 / 100% 100%;
+}
+
+.coupon_centent_left {
+  padding-left: 15px;
+}
+
+.coupon_centent_left h2 {
+  font-size: 18px;
+  color: $color-theme;
+  font-weight: bold;
+}
+
+.coupon_centent_left h5 {
+  font-size: 12px;
+  color: $color-theme;
+  padding-top: 10px;
+}
+
+.coupon_centent_left h6 {
+  font-size: 10px;
+  color: #999999;
+  padding-top: 10px;
+}
+
+.coupon_centent_right {
+  font-size: 30px;
+  color: #fff;
+  padding-right: 33px;
 }
 </style>
