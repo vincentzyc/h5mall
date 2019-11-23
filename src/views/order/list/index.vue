@@ -29,7 +29,12 @@
               :options="slideItem[0].options"
               @pulling-up="onPullingUp"
             >
-              <vProduct :noOrder="slideItem[0].noOrder" :items="slideItem[0].items" />
+              <vProduct
+                :noOrder="slideItem[0].noOrder"
+                :items="slideItem[0].items"
+                :userInfo="userInfo"
+                @isDelete="isDelete"
+              />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待付款 -->
@@ -40,7 +45,12 @@
               :options="slideItem[1].options"
               @pulling-up="onPullingUp"
             >
-              <vProduct :noOrder="slideItem[1].noOrder" :items="slideItem[1].items" />
+              <vProduct
+                :noOrder="slideItem[1].noOrder"
+                :items="slideItem[1].items"
+                :userInfo="userInfo"
+                @isDelete="isDelete"
+              />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待发货 -->
@@ -51,7 +61,12 @@
               :options="slideItem[2].options"
               @pulling-up="onPullingUp"
             >
-              <vProduct :noOrder="slideItem[2].noOrder" :items="slideItem[2].items" />
+              <vProduct
+                :noOrder="slideItem[2].noOrder"
+                :items="slideItem[2].items"
+                :userInfo="userInfo"
+                @isDelete="isDelete"
+              />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待收货 -->
@@ -62,7 +77,12 @@
               :options="slideItem[3].options"
               @pulling-up="onPullingUp"
             >
-              <vProduct :noOrder="slideItem[3].noOrder" :items="slideItem[3].items" />
+              <vProduct
+                :noOrder="slideItem[3].noOrder"
+                :items="slideItem[3].items"
+                :userInfo="userInfo"
+                @isDelete="isDelete"
+              />
             </cube-scroll>
           </cube-slide-item>
           <!-- 待评价 -->
@@ -91,6 +111,7 @@ export default {
   },
   data() {
     return {
+      userInfo: {},
       pullUpLoad: {
         txt: {
           noMore: '没有更多了...'
@@ -114,7 +135,6 @@ export default {
         /* lock y-direction when scrolling horizontally and  vertically at the same time */
         directionLockThreshold: 0
       },
-      allOrders: [],
       slideItem: [{
         items: [],
         num: 0,
@@ -159,6 +179,10 @@ export default {
     }
   },
   methods: {
+    isDelete(order_status) {
+      if (this.initialIndex === 0) return this.resetTab(order_status + 1);
+      this.resetTab(0)
+    },
     async onPullingUp() {
       if (this.slideItem[this.initialIndex].num === false) return this.$refs['scroll' + this.initialIndex].forceUpdate();
       this.getOrder(this.initialIndex);
@@ -166,6 +190,18 @@ export default {
     changePage(current) {
       if (this.slideItem[current].items.length === 0 && this.slideItem[current].num === 0) this.getOrder(current)
       this.selectedLabel = this.tabLabels[current].label;
+    },
+    resetTab(index) {
+      this.slideItem.splice(index,1,{
+        items: [],
+        num: 0,
+        noOrder: false,
+        options: {
+          pullUpLoad: false,
+          directionLockThreshold: 0
+        }
+      });
+      this.getOrder(index)
     },
     scroll(pos) {
       const x = Math.abs(pos.x)
@@ -186,10 +222,9 @@ export default {
         user_id: this.userInfo.id,
         token: this.userInfo.token,
         pageNum: this.slideItem[index].num,
-        order_status: orderStatus
+        order_status: orderStatus.toString()
       }
       let res = await this.$api.Order.allOrder(param);
-      // console.log(res);
       this.slideItem[index].items.push(...res.orderList);
       if (this.slideItem[index].num === 1 && res.orderList.length === 0) this.slideItem[index].noOrder = true;
       if (res.orderList.length < 10) {
