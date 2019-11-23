@@ -41,7 +41,7 @@
             :outline="true"
             primary
             class="mg-r10"
-            @click="deleteOrder(store,index)"
+            @click="deleteConfirm(store,index)"
           >删除订单</cube-button>
           <cube-button
             :inline="true"
@@ -102,6 +102,16 @@ export default {
           return false
       }
     },
+    async deleteConfirm(store, index) {
+      this.$createDialog({
+        type: 'confirm',
+        content: '是否确定删除选中订单',
+        onConfirm: () => {
+          this.deleteOrder(store, index);
+        },
+        onCancel: () => { }
+      }).show()
+    },
     async deleteOrder(store, index) {
       this.$loading.open();
       let allId = "";
@@ -115,6 +125,7 @@ export default {
       }
       let res = await this.$api.Order.deleteOrder(param);
       this.items.splice(index, 1);
+      this.$emit('isDelete',store.order_status)
       this.$loading.close();
       this.$createToast({
         txt: '删除成功',
