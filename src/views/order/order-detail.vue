@@ -266,7 +266,14 @@ export default {
       this.detail = res.order_detail;
     }
   },
+  deactivated(){
+    this.BUS.setSelectAdress('');
+  },
   activated() {
+    if (this.id_in && this.id_in !== this.$route.query.id) {
+      this.id_in = this.$route.query.id;
+      this.getOrderList();
+    }
     if (this.BUS.selectAdress) {
       this.detail.consignee_name = this.BUS.selectAdress.name;
       this.detail.consignee_phone = this.BUS.selectAdress.phone;
@@ -277,13 +284,14 @@ export default {
     this.userInfo = await getUser(this.$route.fullPath);
     this.id_in = this.$route.query.id;
     if (!this.id_in) this.$router.back();
-    this.getOrderList()
+    this.getOrderList();
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 @import '~@/assets/css/color.styl';
+
 .content {
   position: relative;
   width: 100%;
@@ -337,6 +345,7 @@ export default {
   font-size: 16px;
   z-index: 99;
 }
+
 .coupon_box {
   width: 100%;
   padding: 0 5px;
