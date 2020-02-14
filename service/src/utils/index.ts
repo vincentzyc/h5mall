@@ -4,3 +4,4 @@ export * from './url';
 export * from './regexp';
 export * from './sql';
 export * from './str';
+export * from './common'
