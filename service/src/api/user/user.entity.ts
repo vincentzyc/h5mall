@@ -11,7 +11,7 @@ export interface UserResult {
   total: number
 }
 
-@Entity('usertest')
+@Entity('h5mall_user')
 export class UserEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
@@ -21,26 +21,10 @@ export class UserEntity {
 
   @Column('varchar', {
     nullable: false,
-    length: 10,
-    name: 'username',
+    name: 'name',
     comment: '用户名',
   })
-  username: string;
-
-  @Column('varchar', {
-    nullable: false,
-    name: 'password',
-    comment: '密码',
-  })
-  password: string;
-
-  @Column('varchar', {
-    nullable: true,
-    length: 100,
-    name: 'email',
-    comment: 'email',
-  })
-  email: string | null;
+  name: string;
 
   @Column('varchar', {
     nullable: true,
@@ -50,17 +34,24 @@ export class UserEntity {
   })
   phone: string | null;
 
+  @Column('varchar', {
+    nullable: false,
+    name: 'password',
+    comment: '密码',
+  })
+  password: string;
+
   @CreateDateColumn({
     type: 'timestamp',
-    name: 'create_at',
+    name: 'create_time',
     comment: '创建时间',
   })
-  createAt: Date;
+  createTime: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
-    name: 'update_at',
+    name: 'update_time',
     comment: '最后更新时间',
   })
-  updateAt: Date;
+  updateTime: Date;
 }
