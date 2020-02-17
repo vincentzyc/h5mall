@@ -26,4 +26,8 @@ export class UserService {
       total: total
     };
   }
+  appUserReg(req): string {
+    console.log(req);
+    return `This is a post test ---${JSON.stringify(req)}--- `;
+  }
 }
