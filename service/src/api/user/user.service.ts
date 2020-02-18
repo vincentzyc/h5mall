@@ -26,8 +26,10 @@ export class UserService {
       total: total
     };
   }
-  appUserReg(req): string {
+  async appUserReg(req): Promise<any> {
     console.log(req);
+    // const user = await this.userRepository.create();
+    // return await this.userRepository.save();
     return `This is a post test ---${JSON.stringify(req)}--- `;
   }
 }
