@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity, UserResult } from './user.entity';
+import { UserDto } from './user.dto';
+
 
 interface UserQuery {
   pageSize?: number;
@@ -26,10 +28,10 @@ export class UserService {
       total: total
     };
   }
-  async appUserReg(req): Promise<any> {
-    console.log(req);
+  async appUserReg(userDto: UserDto): Promise<any> {
+    console.log(userDto);
     // const user = await this.userRepository.create();
-    // return await this.userRepository.save(req);
-    return `This is a post test ---${JSON.stringify(req)}--- `;
+    // return await this.userRepository.save(userDto);
+    return `This is a post test ---${JSON.stringify(userDto)}--- `;
   }
 }
