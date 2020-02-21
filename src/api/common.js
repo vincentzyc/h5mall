@@ -5,6 +5,7 @@ export default [{
   name: "getCode",
   url: "/appUser/verificationCode"  //统一验证码接口
 }, {
+  encrypt: false,
   name: "register",
   url: "/appUser/reg"  //用户注册接口
 }, {
