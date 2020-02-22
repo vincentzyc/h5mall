@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity, UserResult } from './user.entity';
 import { UserDto } from './user.dto';
+import { validate } from 'class-validator';
+import * as _ from 'lodash';
 
 
 interface UserQuery {
@@ -29,9 +31,28 @@ export class UserService {
     };
   }
   async appUserReg(userDto: UserDto): Promise<any> {
-    console.log(userDto);
-    // const user = await this.userRepository.create();
+    let userPost = new UserDto();
+    // userPost = { ...userDto };
+    userPost.name = userDto.name;
+    userPost.password = userDto.password;
+
+    const errors = await validate(userPost);
+    if (errors.length > 0) {
+      // 遍历全部的错误信息,返回给前端
+      const errorMessage = errors.map(item => {
+        return {
+          message:'参数验证错误',
+          currentValue: item.value === undefined ? '' : item.value,
+          [item.property]: _.values(item.constraints)[0],
+        };
+      });
+      // 返回异常
+      console.log(JSON.stringify(errorMessage[0]));
+      return JSON.stringify(errorMessage[0]);
+    }
+    else {
+      console.log("validation succeed");
+    }
     // return await this.userRepository.save(userDto);
-    return `This is a post test ---${JSON.stringify(userDto)}--- `;
   }
 }
