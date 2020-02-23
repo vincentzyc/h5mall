@@ -31,7 +31,8 @@ export class UserService {
   }
   async appUserReg(userDto: UserDto): Promise<any> {
     let userPost = new UserDto();
-    userPost.name = userDto.name;
+    userPost.phone = userDto.phone;
+    // userPost.name = userDto.name;
     userPost.password = userDto.password;
 
     const errors = await validate(userPost);
@@ -50,6 +51,8 @@ export class UserService {
     }
     else {
       console.log("validation succeed");
+      let findUser = await this.userRepository.findOne({ phone: userPost.phone });
+      if (Object.keys(findUser).length > 0) return '用户已存在';
       return await this.userRepository.save(userDto);
     }
   }
