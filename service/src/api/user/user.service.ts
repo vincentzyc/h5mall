@@ -48,8 +48,7 @@ export class UserService {
       // 返回异常
       console.log(JSON.stringify(errorMessage[0]));
       return JSON.stringify(errorMessage[0]);
-    }
-    else {
+    } else {
       console.log("validation succeed");
       let findUser = await this.userRepository.findOne({ phone: userPost.phone });
       if (Object.keys(findUser).length > 0) return '用户已存在';
