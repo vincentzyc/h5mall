@@ -6,7 +6,6 @@ import { UserDto } from './user.dto';
 import { validate } from 'class-validator';
 import * as _ from 'lodash';
 
-
 interface UserQuery {
   pageSize?: number;
   pageIndex?: number;
