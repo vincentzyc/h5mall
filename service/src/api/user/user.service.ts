@@ -32,7 +32,6 @@ export class UserService {
   }
   async appUserReg(userDto: UserDto): Promise<any> {
     let userPost = new UserDto();
-    // userPost = { ...userDto };
     userPost.name = userDto.name;
     userPost.password = userDto.password;
 
@@ -41,7 +40,7 @@ export class UserService {
       // 遍历全部的错误信息,返回给前端
       const errorMessage = errors.map(item => {
         return {
-          message:'参数验证错误',
+          message: '参数验证错误',
           currentValue: item.value === undefined ? '' : item.value,
           [item.property]: _.values(item.constraints)[0],
         };
@@ -52,7 +51,7 @@ export class UserService {
     }
     else {
       console.log("validation succeed");
+      return await this.userRepository.save(userDto);
     }
-    // return await this.userRepository.save(userDto);
   }
 }
