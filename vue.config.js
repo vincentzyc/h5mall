@@ -5,8 +5,7 @@ module.exports = {
 
   devServer: {
     port: 3020,
-    // proxy: 'http://www.zhangnong.net'
-    proxy: 'http://ricky-s.qicp.io'
+    proxy: 'http://xxx.com'
   },
   chainWebpack: config => {
     config.plugins.delete('prefetch')
