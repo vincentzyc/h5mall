@@ -10,7 +10,7 @@ $ npm install
 {
   "type": "mysql",
   "host": "xxx",
-  "port": xxx,
+  "port": "xxx",
   "username": "xxx",
   "password": "xxx",
   "database": "xxx",
