@@ -34,7 +34,6 @@ export class UserService {
     userPost.phone = userDto.phone;
     // userPost.name = userDto.name;
     userPost.password = userDto.password;
-
     const errors = await validate(userPost);
     if (errors.length > 0) {
       // 遍历全部的错误信息,返回给前端
