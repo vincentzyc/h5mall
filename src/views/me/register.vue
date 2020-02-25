@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       formData: {
-        name:'',
         phone: '',
         checkCode: '',
         password: '',
