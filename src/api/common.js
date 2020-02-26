@@ -18,6 +18,7 @@ export default [{
   name: "loginByCode",
   url: "/appUser/loginByCode"  // 用户通过手机号与验证码登录
 }, {
+  encrypt: false,
   name: "login",
   url: "/appUser/login"  // 用户登录密码登录接口
 }, {
