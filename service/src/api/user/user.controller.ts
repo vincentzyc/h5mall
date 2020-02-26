@@ -11,7 +11,11 @@ export class UserController {
     return this.userService.findAll(query);
   }
   @Post('/reg')
-  postTest(@Body() body: any) {
+  appUserReg(@Body() body: any) {
     return this.userService.appUserReg(body);
+  }
+  @Post('/login')
+  appUserLogin(@Body() body: any) {
+    return this.userService.appUserLogin(body);
   }
 }
