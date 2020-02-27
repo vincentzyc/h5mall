@@ -78,7 +78,7 @@ export class UserService {
       if (Object.keys(findUser).length > 0) {
         if (findUser.password === userPost.password) return findUser
         // return '密码错误';
-        throw new HttpException('请检查你的用户名与密码', HttpStatus.OK);
+        throw new HttpException('密码错误', HttpStatus.OK);
       };
       return '用户未注册';
     }
