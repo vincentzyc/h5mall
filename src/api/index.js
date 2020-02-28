@@ -43,7 +43,7 @@ const Api = {
   getWechatCode(appid,redirect_uri){
     window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_base#wechat_redirect`
   },
-  axiosPost(url, data, backType = 'success', encrypt = true) {
+  axiosPost(url, data, backType = 'success', encrypt = false) {
     if (encrypt) {
       var { key, iv, ...encryptData } = Crypto.encrypt(data);
       data = encryptData;
