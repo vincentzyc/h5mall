@@ -48,9 +48,8 @@ export class UserService {
       console.log(JSON.stringify(errorMessage[0]));
       return JSON.stringify(errorMessage[0]);
     } else {
-      console.log("validation succeed");
-      let findUser = await this.userRepository.findOne({ phone: userPost.phone });
-      if (Object.keys(findUser).length > 0) return '用户已存在';
+      let result: Number = await this.userRepository.count({ phone: userPost.phone });
+      if (result) throw new HttpException('用户已存在', HttpStatus.OK);
       return await this.userRepository.save(userDto);
     }
   }
