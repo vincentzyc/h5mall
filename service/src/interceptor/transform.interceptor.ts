@@ -20,7 +20,7 @@ export class TransformInterceptor<T> implements NestInterceptor {
             data && isObject(data) && data.hasOwnProperty('pageSize')
               ? { ...data }
               : { data }, // 如果有分页的就解构出来,没有就直接返回
-          code: 0,
+          code: '0',
           message: '请求成功',
         };
       }),
