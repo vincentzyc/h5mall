@@ -5,7 +5,6 @@ export default [{
   name: "getCode",
   url: "/appUser/verificationCode"  //统一验证码接口
 }, {
-  encrypt: false,
   name: "register",
   url: "/appUser/reg"  //用户注册接口
 }, {
@@ -18,7 +17,6 @@ export default [{
   name: "loginByCode",
   url: "/appUser/loginByCode"  // 用户通过手机号与验证码登录
 }, {
-  encrypt: false,
   name: "login",
   url: "/appUser/login"  // 用户登录密码登录接口
 }, {
