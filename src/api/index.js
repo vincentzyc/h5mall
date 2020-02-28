@@ -69,12 +69,12 @@ const Api = {
           backData = res.data;
         }
         // console.log(backData);
-        let { code, msg, ...result } = backData;
+        let { code, message, ...result } = backData;
         if (backType === 'allData') return resolve(backData);
-        if (code === '1') return resolve(result || '');
+        if (code === '0') return resolve(result || '');
         if (code === '-1') {
           return vm.$createDialog({
-            content: msg || '登录信息已过期，请重新登录',
+            content: message || '登录信息已过期，请重新登录',
             onConfirm: () => {
               clearUser();
               if (!window.location.hash.includes('/me/login')) {
@@ -85,7 +85,7 @@ const Api = {
         }
         if (backType === 'getError') return resolve({ error: true });
         vm.$createToast({
-          txt: msg || "服务器异常，请稍后再试",
+          txt: message || "服务器异常，请稍后再试",
           type: "txt",
           time: 2000
         }).show()
