@@ -32,7 +32,6 @@ export class UserService {
   async appUserReg(userDto: UserDto): Promise<any> {
     let userPost = new UserDto();
     userPost.phone = userDto.phone;
-    // userPost.name = userDto.name;
     userPost.password = userDto.password;
     const errors = await validate(userPost);
     if (errors.length > 0) {
@@ -56,7 +55,6 @@ export class UserService {
   async appUserLogin(userDto: UserDto): Promise<any> {
     let userPost = new UserDto();
     userPost.phone = userDto.phone;
-    // userPost.name = userDto.name;
     userPost.password = userDto.password;
     const errors = await validate(userPost);
     if (errors.length > 0) {
@@ -82,4 +80,19 @@ export class UserService {
       return '用户未注册';
     }
   }
+  // async appUserReg(userDto: UserDto): Promise<any> {
+  //   const { phone } = userDto;
+  //   let result: Number = await this.userRepository.count({ phone: phone });
+  //   if (result) throw new HttpException('用户已存在', HttpStatus.OK);
+  //   return await this.userRepository.save(userDto);
+  // }
+  // async appUserLogin(userDto: UserDto): Promise<any> {
+  //   const { phone, password } = userDto;
+  //   let findUser = await this.userRepository.findOne({ phone: phone });
+  //   if (Object.keys(findUser).length > 0) {
+  //     if (findUser.password === password) return findUser
+  //     throw new HttpException('密码错误', HttpStatus.OK);
+  //   }
+  //   throw new HttpException('用户未注册', HttpStatus.OK);
+  // }
 }
