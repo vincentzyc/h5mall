@@ -33,10 +33,7 @@
       <div class="flex fs12">
         <cube-checkbox v-model="checked" shape="square" class="agree"></cube-checkbox>
         <span>登录即代表您同意</span>
-        <span
-          class="cblue"
-          @click="$util.goIframe('https://www.baidu.com','用户服务协议')"
-        >云忆用户协议和隐私条款</span>
+        <span class="cblue" @click="$util.goIframe('https://www.baidu.com','用户服务协议')">云忆用户协议和隐私条款</span>
       </div>
 
       <cube-button :primary="true" class="block-btn" @click="submit()">注册</cube-button>
@@ -54,6 +51,7 @@ export default {
   data() {
     return {
       formData: {
+        name: '',
         phone: '',
         checkCode: '',
         password: '',
