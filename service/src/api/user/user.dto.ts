@@ -1,10 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 
 export class UserDto {
-  // @IsString({ message: '验证码必须为字符类型' })
-  // @IsNotEmpty({ message: '验证码不能为空' })
-  // readonly code: string;
-
   // @IsString({ message: '姓名必须为字符类型' })
   // @IsNotEmpty({ message: '姓名不能为空' })
   // readonly name: string;
