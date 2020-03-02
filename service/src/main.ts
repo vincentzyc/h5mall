@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from './pipe/validation.pipe';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
+import { Logger } from './logger-service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,4 +15,4 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3030);
 }
-bootstrap();
+bootstrap().catch(e => Logger.error('错误', e));;
