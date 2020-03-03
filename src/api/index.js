@@ -40,7 +40,7 @@ const Api = {
     if (window.location.href.includes('test-mgr')) return 'test';
     return 'production'
   },
-  getWechatCode(appid,redirect_uri){
+  getWechatCode(appid, redirect_uri) {
     window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=snsapi_base#wechat_redirect`
   },
   axiosPost(url, data, backType = 'success', encrypt = false) {
@@ -69,12 +69,11 @@ const Api = {
           backData = res.data;
         }
         // console.log(backData);
-        let { code, message, ...result } = backData;
         if (backType === 'allData') return resolve(backData);
-        if (code === '0') return resolve(result || '');
-        if (code === '-1') {
+        if (backData.code === '0') return resolve(backData.result || '');
+        if (backData.code === '-1') {
           return vm.$createDialog({
-            content: message || '登录信息已过期，请重新登录',
+            content: backData.message || '登录信息已过期，请重新登录',
             onConfirm: () => {
               clearUser();
               if (!window.location.hash.includes('/me/login')) {
@@ -85,7 +84,7 @@ const Api = {
         }
         if (backType === 'getError') return resolve({ error: true });
         vm.$createToast({
-          txt: message || "服务器异常，请稍后再试",
+          txt: backData.message || "服务器异常，请稍后再试",
           type: "txt",
           time: 2000
         }).show()
