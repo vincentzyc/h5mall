@@ -1,4 +1,4 @@
-import { Controller, Get,Post,Body, Query } from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, Get, Post, Body, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserResult } from './user.entity';
 import { UserDto } from './user.dto';
@@ -12,10 +12,12 @@ export class UserController {
     return this.userService.findAll(query);
   }
   @Post('/reg')
+  @HttpCode(HttpStatus.OK)
   appUserReg(@Body() body: UserDto) {
     return this.userService.appUserReg(body);
   }
   @Post('/login')
+  @HttpCode(HttpStatus.OK)
   appUserLogin(@Body() body: UserDto) {
     return this.userService.appUserLogin(body);
   }
