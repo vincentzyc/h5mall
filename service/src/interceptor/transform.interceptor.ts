@@ -1,25 +1,14 @@
-import {
-  Injectable,
-  NestInterceptor,
-  CallHandler,
-  ExecutionContext,
-} from '@nestjs/common';
-import { map } from 'rxjs/operators';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { isObject } from '../utils';
+import { map } from 'rxjs/operators';
 
 @Injectable()
-export class TransformInterceptor<T> implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler<T>): Observable<any> {
-    // return call$.pipe(map(data => classToPlain(data)));
+export class TransformInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data: any) => {
         return {
-          result:
-            // data && isObject(data) && Reflect.has(data, 'pageSize')
-            data && isObject(data) && data.hasOwnProperty('pageSize')
-              ? { ...data }
-              : { data }, // 如果有分页的就解构出来,没有就直接返回
+          result: data,
           code: '0',
           message: '请求成功',
         };
