@@ -108,7 +108,7 @@ export default {
       this.$loading.open();
       let res = this.label === '快速登录' ? await this.$api.Common.loginByCode(this.formData) :
         await this.$api.Common.login(this.formData);
-      this.$util.setLStorage('userInfo', { token: res.token, ...res.user }, true);
+      this.$util.setLStorage('userInfo', res, true);
       this.$loading.close();
       setTimeout(() => {
         this.$router.replace(this.redirect)
