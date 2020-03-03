@@ -21,4 +21,9 @@ export class UserController {
   appUserLogin(@Body() body: UserDto) {
     return this.userService.appUserLogin(body);
   }
+  @Post('/getInfoByUserId')
+  @HttpCode(HttpStatus.OK)
+  getInfoByUserId(@Body() body: any) {
+    return this.userService.getInfoByUserId(body);
+  }
 }

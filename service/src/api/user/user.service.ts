@@ -43,4 +43,11 @@ export class UserService {
     }
     throw new HttpException('用户未注册', HttpStatus.OK);
   }
+  async getInfoByUserId(body): Promise<any> {
+    const { user_id } = body;
+    let findUser = await this.userRepository.findOne({ id: user_id });
+    if (Object.keys(findUser).length > 0) return findUser;
+    throw new HttpException('用户未注册', HttpStatus.OK);
+  }
+
 }
