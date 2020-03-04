@@ -3,8 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './api/user/user.module';
-import { ProductModule } from './api/product/product.module';
+import { ApiModule } from './module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -17,8 +16,7 @@ import { join } from 'path';
       renderPath: join(__dirname, '..', 'public'),
       rootPath: join(__dirname, '..', 'public'),
     }),
-    UserModule,
-    ProductModule
+    ApiModule
   ],
   controllers: [AppController],
   providers: [AppService],
