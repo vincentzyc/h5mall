@@ -24,7 +24,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       exception.message.message ||
       exception.message.error ||
       null;
-    Logger.info(`错误提示：${message}`);
+    Logger.info(`错误提示：${JSON.stringify(message)}`);
     const errorResponse = {
       message: (typeof message == 'string') ? (message || '请求失败') : JSON.stringify(message),
       code: '1', // 自定义code
