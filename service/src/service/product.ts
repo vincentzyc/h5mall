@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProductEntity, ProductResult } from '@src/entity/product.entity';
+import { ProductEntity, ProductResult } from '@src/entity/product';
 
 interface ProductQuery {
   pageSize?: number;

@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity, UserResult } from '@src/entity/user.entity';
+import { UserEntity, UserResult } from '@src/entity/user';
 import { UserDto } from '@src/dto/user.dto';
 import * as _ from 'lodash';
 
