@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserService } from '@src/service/user.service';
-import { ProductService } from '@src/service/product.service';
+import { UserService } from '@src/service/user';
+import { ProductService } from '@src/service/product';
+import { AppWxpayService } from '@src/service/appWxpay';
 
-import { UserController } from '@src/controller/user.controller';
-import { ProductController } from '@src/controller/product.controller';
+import { UserController } from '@src/controller/user';
+import { ProductController } from '@src/controller/product';
+import { AppWxpayController } from '@src/controller/appWxpay';
 
-import { UserEntity } from '@src/entity/user.entity';
-import { ProductEntity } from '@src/entity/product.entity';
+import { UserEntity } from '@src/entity/user';
+import { ProductEntity } from '@src/entity/product';
 
 @Module({
   imports: [
@@ -19,11 +21,13 @@ import { ProductEntity } from '@src/entity/product.entity';
   ],
   providers: [
     UserService,
-    ProductService
+    ProductService,
+    AppWxpayService
   ],
   controllers: [
     ProductController,
-    UserController
+    UserController,
+    AppWxpayController
   ],
 })
 export class ApiModule { }
