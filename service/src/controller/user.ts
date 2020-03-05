@@ -26,4 +26,9 @@ export class UserController {
   getInfoByUserId(@Body() body: any) {
     return this.userService.getInfoByUserId(body);
   }
+  @Post('/updateInfoByUserId')
+  @HttpCode(HttpStatus.OK)
+  updateInfoByUserId(@Body() body: any) {
+    return this.userService.updateInfoByUserId(body);
+  }
 }
