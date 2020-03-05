@@ -1,6 +1,6 @@
 import { Controller, HttpCode, HttpStatus, Get, Post, Body, Query } from '@nestjs/common';
-import { UserService } from '@src/service/user.service';
-import { UserResult } from '@src/entity/user.entity';
+import { UserService } from '@src/service/user';
+import { UserResult } from '@src/entity/user';
 import { UserDto } from '@src/dto/user.dto';
 
 @Controller('appUser')
