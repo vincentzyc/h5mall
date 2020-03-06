@@ -37,7 +37,7 @@ export class UserService {
   async appUserLogin(userDto: UserDto): Promise<any> {
     const { phone, password } = userDto;
     let findUser = await this.userRepository.findOne({ phone: phone });
-    if (Object.keys(findUser).length > 0) {
+    if (findUser) {
       if (findUser.password === password) return findUser
       throw new HttpException('密码错误', HttpStatus.OK);
     }
@@ -46,15 +46,27 @@ export class UserService {
   async getInfoByUserId(body): Promise<any> {
     const { user_id } = body;
     let findUser = await this.userRepository.findOne({ id: user_id });
-    if (Object.keys(findUser).length > 0) return findUser;
+    if (findUser) return findUser;
     throw new HttpException('用户未注册', HttpStatus.OK);
   }
   async updateInfoByUserId(body): Promise<any> {
     const { user_id } = body;
     let findUser = await this.userRepository.findOne({ id: user_id });
-    if (Object.keys(findUser).length > 0) {
-      body.id = user_id
+    if (findUser) {
+      body.id = user_id;
       return await this.userRepository.save(body);
+    }
+    throw new HttpException('用户未注册', HttpStatus.OK);
+  }
+  async updatePwd(body): Promise<any> {
+    const { phone, user_id, password, new_password } = body;
+    let findUser = await this.userRepository.findOne({ id: user_id });
+    if (findUser) {
+      if (findUser.phone === phone && findUser.password === password) {
+        const { raw: { changedRows } } = await this.userRepository.update({ id: 36 }, { password: new_password });
+        if (changedRows) return true;
+      }
+      throw new HttpException('手机号或密码错误', HttpStatus.OK);
     }
     throw new HttpException('用户未注册', HttpStatus.OK);
   }
