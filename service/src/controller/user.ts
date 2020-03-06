@@ -31,4 +31,9 @@ export class UserController {
   updateInfoByUserId(@Body() body: any) {
     return this.userService.updateInfoByUserId(body);
   }
+  @Post('/updatePwd')
+  @HttpCode(HttpStatus.OK)
+  updatePwd(@Body() body: any) {
+    return this.userService.updatePwd(body);
+  }
 }
