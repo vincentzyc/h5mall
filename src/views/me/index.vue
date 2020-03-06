@@ -129,7 +129,6 @@ export default {
         user_id: userInfo.id
       }
       let res = await this.$api.Common.getInfoByUserId(param);
-      console.log(res);
       // let orderNum = await this.$api.Order.myNeedToDoOrder(param);
       this.user = {
         gift_card_num: res.gift_card_num || 0,
