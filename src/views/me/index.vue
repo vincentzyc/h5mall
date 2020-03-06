@@ -76,7 +76,6 @@
         </li>
       </ul>
     </cube-scroll>
-
   </base-page>
 </template>
 
@@ -112,13 +111,13 @@ export default {
             'class': ['text-center'],
             slot: 'content'
           }, [
-              createElement('p', {
-                'class': ['c000', 'lh30']
-              }, this.BUS.contactPhone),
-              createElement('p', {
-                'class': ['c999']
-              }, '（周一至周五）9:00-18:00)')
-            ])
+            createElement('p', {
+              'class': ['c000', 'lh30']
+            }, this.BUS.contactPhone),
+            createElement('p', {
+              'class': ['c999']
+            }, '（周一至周五）9:00-18:00)')
+          ])
         ]
       }).show()
     },
@@ -130,11 +129,12 @@ export default {
         user_id: userInfo.id
       }
       let res = await this.$api.Common.getInfoByUserId(param);
+      console.log(res);
       // let orderNum = await this.$api.Order.myNeedToDoOrder(param);
       this.user = {
-        gift_card_num: res.gift_card_num,
-        user_money: res.user_money,
-        ...res.userPd,
+        gift_card_num: res.gift_card_num || 0,
+        user_money: res.user_money || 0,
+        ...res,
         // ...orderNum
       }
       updateUser({ ...userInfo, ...this.user });
