@@ -63,8 +63,9 @@ export class UserService {
     let findUser = await this.userRepository.findOne({ id: user_id });
     if (findUser) {
       if (findUser.phone === phone && findUser.password === password) {
-        const { raw: { changedRows } } = await this.userRepository.update({ id: 36 }, { password: new_password });
+        const { raw: { changedRows } } = await this.userRepository.update({ id: user_id }, { password: new_password });
         if (changedRows) return true;
+        throw new HttpException('密码修改失败', HttpStatus.OK);
       }
       throw new HttpException('手机号或密码错误', HttpStatus.OK);
     }
