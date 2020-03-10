@@ -7,10 +7,10 @@ import { UserDto } from '@src/dto/user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Get()
-  findAll(@Query() query: Object): Promise<UserResult> {
-    return this.userService.findAll(query);
-  }
+  // @Get()
+  // findAll(@Query() query: Object): Promise<UserResult> {
+  //   return this.userService.findAll(query);
+  // }
   @Post('/reg')
   @HttpCode(HttpStatus.OK)
   appUserReg(@Body() body: UserDto) {
