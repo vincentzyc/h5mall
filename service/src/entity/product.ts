@@ -5,20 +5,20 @@ export interface ProductResult {
   total: number
 }
 
-@Entity('goods')
+@Entity('h5mall_product')
 export class ProductEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
-    name: 'goodsid',
+    name: 'id',
   })
-  goodsid: number;
+  id: number;
 
   @Column('varchar', {
     nullable: false,
-    name: 'title',
-    comment: '标题',
+    name: 'name',
+    comment: '商品名称',
   })
-  title: string;
+  name: string;
 
   @Column('varchar', {
     nullable: false,
@@ -29,36 +29,8 @@ export class ProductEntity {
 
   @Column('varchar', {
     nullable: true,
-    name: 'ad',
-    comment: '广告词',
+    name: 'cost',
+    comment: '采购价',
   })
-  ad: string;
-
-  @Column('varchar', {
-    nullable: true,
-    name: 'goodsimg',
-    comment: '产品图片',
-  })
-  gppdsimg: string;
-
-  @Column('varchar', {
-    nullable: true,
-    name: 'detailimg',
-    comment: '详情图片',
-  })
-  detailimg: string;
-
-  @Column('varchar', {
-    nullable: true,
-    name: 'spec',
-    comment: '规格',
-  })
-  spec: string;
-
-  @Column('varchar', {
-    nullable: true,
-    name: 'classify',
-    comment: '分类',
-  })
-  classify: string;
+  cost: string;
 }

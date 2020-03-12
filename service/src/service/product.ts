@@ -12,18 +12,18 @@ interface ProductQuery {
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
-    private readonly userRepository: Repository<ProductEntity>,
+    private readonly productRepository: Repository<ProductEntity>,
   ) { }
 
   async findAll(query: ProductQuery): Promise<ProductResult> {
-    const [users, total] = await this.userRepository
-      .createQueryBuilder('user')
+    const [product, total] = await this.productRepository
+      .createQueryBuilder('h5mall_product')
       .offset(((query.pageIndex || 1) - 1) * (query.pageSize || 0)) // 从多少条开始
       .limit(query.pageSize) // 查询多少条数据
       .getManyAndCount(); // 查询到数据及个数，返回的是一个数组
     return {
-      list: users,
-      total: total
+      list: product,
+      total: 12
     };
   }
 }
