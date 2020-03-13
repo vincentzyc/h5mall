@@ -22,7 +22,7 @@ export default {
   },
   async created() {
     let res = await this.$api.Product.productType();
-    this.tabs = res.list;
+    this.tabs = res;
   }
 }
 </script>
