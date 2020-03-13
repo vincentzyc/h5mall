@@ -28,6 +28,6 @@ import { ProductEntity } from '@src/entity/product';
     ProductController,
     UserController,
     AppWxpayController
-  ],
+  ]
 })
 export class ApiModule { }
