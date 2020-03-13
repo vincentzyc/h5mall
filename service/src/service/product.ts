@@ -17,13 +17,13 @@ export class ProductService {
 
   async findAll(query: ProductQuery): Promise<ProductResult> {
     const [product, total] = await this.productRepository
-      .createQueryBuilder('h5mall_product')
+      .createQueryBuilder()
       .offset(((query.pageIndex || 1) - 1) * (query.pageSize || 0)) // 从多少条开始
       .limit(query.pageSize) // 查询多少条数据
       .getManyAndCount(); // 查询到数据及个数，返回的是一个数组
     return {
       list: product,
-      total: 12
+      total: total
     };
   }
 }
