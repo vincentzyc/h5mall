@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductEntity, ProductResult } from '@src/entity/product';
+import { ProductTypeEntity } from '@src/entity/product_type';
 
 interface ProductQuery {
   pageSize?: number;
@@ -13,6 +14,8 @@ export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private readonly productRepository: Repository<ProductEntity>,
+    @InjectRepository(ProductTypeEntity)
+    private readonly productTypeRepository: Repository<ProductTypeEntity>,
   ) { }
 
   async findAll(query: ProductQuery): Promise<ProductResult> {
@@ -25,5 +28,11 @@ export class ProductService {
       list: product,
       total: total
     };
+  }
+  async getProductType(): Promise<any> {
+    const productTypes = await this.productTypeRepository
+      .createQueryBuilder()
+      .getMany();
+    return productTypes
   }
 }

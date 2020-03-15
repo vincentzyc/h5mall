@@ -11,12 +11,14 @@ import { AppWxpayController } from '@src/controller/appWxpay';
 
 import { UserEntity } from '@src/entity/user';
 import { ProductEntity } from '@src/entity/product';
+import { ProductTypeEntity } from '@src/entity/product_type';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       UserEntity,
-      ProductEntity
+      ProductEntity,
+      ProductTypeEntity
     ])
   ],
   providers: [
