@@ -1,6 +1,6 @@
 export default [{
   name: "carouselList",
-  url: "/znCarousel/carouselList",//首页头部、中部轮播图
+  url: "/appProduct/carouselList",//首页头部、中部轮播图
 }, {
   name: "productType",
   url: "/appProduct/productType", //商品分类(一级分类)
