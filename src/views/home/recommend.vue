@@ -27,10 +27,10 @@ export default {
     async getRecommend() {
       this.pageNum++;
       let res = await this.$api.Product.sysRecommend({ pageNum: this.pageNum });
-      this.items.push(...res.list);
+      this.items.push(...res);
       return {
-        upLoadMore: res.list.length === 10,
-        hasData: res.list.length > 0
+        upLoadMore: res.length === 10,
+        hasData: res.length > 0
       }
     }
   },
