@@ -33,4 +33,11 @@ export class ProductEntity {
     comment: '采购价',
   })
   cost: string;
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'carousel_img',
+    comment: '商品图片',
+  })
+  carousel_img: string;
 }
