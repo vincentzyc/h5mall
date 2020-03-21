@@ -23,6 +23,6 @@ export class ProductController {
   @Post('/carouselList')
   @HttpCode(HttpStatus.OK)
   carouselList() {
-    return this.ProductService.sysRecommend();
+    return this.ProductService.carouselList();
   }
 }
