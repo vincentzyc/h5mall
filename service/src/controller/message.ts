@@ -10,4 +10,9 @@ export class AppMessageController {
   messageIndex(@Body() body: any) {
     return this.appMessageService.getMessageIndex(body);
   }
+  @Post('/systemMessage')
+  @HttpCode(HttpStatus.OK)
+  systemMessage(@Body() body: any) {
+    return this.appMessageService.systemMessage(body);
+  }
 }
