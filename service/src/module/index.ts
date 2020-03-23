@@ -14,13 +14,15 @@ import { AppMessageController } from '@src/controller/message';
 import { UserEntity } from '@src/entity/user';
 import { ProductEntity } from '@src/entity/product';
 import { ProductTypeEntity } from '@src/entity/product_type';
+import { MessageEntity } from '@src/entity/message';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       UserEntity,
       ProductEntity,
-      ProductTypeEntity
+      ProductTypeEntity,
+      MessageEntity
     ])
   ],
   providers: [
