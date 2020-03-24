@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn,CreateDateColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity('h5mall_message')
 export class MessageEntity {
@@ -26,12 +26,14 @@ export class MessageEntity {
   })
   message: string;
 
+  // 消息状态，0未读，1已读	
   @Column('int', {
     name: 'state',
     comment: '消息状态',
   })
   state: number;
-  
+
+  // 消息类型，0系统消息，1交易消息，2报价消息，3农户通知，4普通聊天消息	
   @Column('int', {
     name: 'type',
     comment: '消息类型',
