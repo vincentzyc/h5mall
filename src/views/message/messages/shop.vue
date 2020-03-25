@@ -47,8 +47,8 @@ export default {
         token: this.userInfo.token
       }
       let res = await this.$api.Message.shopMessage(param);
-      this.haveMsg = (res.shopMessage || []).length > 0;
-      this.items = res.shopMessage
+      this.haveMsg = (res || []).length > 0;
+      this.items = res
     }
   },
   async created() {
