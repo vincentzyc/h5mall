@@ -3,6 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageEntity } from '@src/entity/message';
 
+function formatTime(message) {
+  return message.map(v => {
+    return {
+      ...v,
+      create_time: v.create_time.getTime()
+    }
+  })
+}
+
+
 @Injectable()
 export class AppMessageService {
   constructor(
@@ -18,19 +28,13 @@ export class AppMessageService {
       ShopMessage: true //	boolean	是	农户通知
     };
   }
-  async systemMessage(body: any): Promise<any> {
+  async getMessage(body: any, type: number): Promise<any> {
     const message = await this.messageRepository
       .createQueryBuilder('message')
       .where("message.user_id = :user_id", { user_id: body.user_id })
-      .andWhere("message.type = :type", { type: 0 })
-      .limit(10)
+      .andWhere("message.type = :type", { type: type })
+      // .limit(10)
       .getMany();
-    let res = message.map(v => {
-      return {
-        ...v,
-        create_time: v.create_time.getTime()
-      }
-    })
-    return res
+    return formatTime(message)
   }
 }

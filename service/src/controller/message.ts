@@ -13,6 +13,21 @@ export class AppMessageController {
   @Post('/systemMessage')
   @HttpCode(HttpStatus.OK)
   systemMessage(@Body() body: any) {
-    return this.appMessageService.systemMessage(body);
+    return this.appMessageService.getMessage(body, 0);
+  }
+  @Post('/tradeMessage')
+  @HttpCode(HttpStatus.OK)
+  tradeMessage(@Body() body: any) {
+    return this.appMessageService.getMessage(body, 1);
+  }
+  @Post('/purchaseMessage')
+  @HttpCode(HttpStatus.OK)
+  purchaseMessage(@Body() body: any) {
+    return this.appMessageService.getMessage(body, 2);
+  }
+  @Post('/shopMessage')
+  @HttpCode(HttpStatus.OK)
+  shopMessage(@Body() body: any) {
+    return this.appMessageService.getMessage(body, 3);
   }
 }
