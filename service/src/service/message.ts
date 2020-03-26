@@ -12,20 +12,23 @@ function formatTime(message) {
   })
 }
 
-
 @Injectable()
 export class AppMessageService {
   constructor(
     @InjectRepository(MessageEntity)
     private readonly messageRepository: Repository<MessageEntity>,
   ) { }
-  getMessageIndex(body: any): Object {
+  async getMessageIndex(body: any): Promise<any> {
+    let resultSystem: Number = await this.messageRepository.count({ user_id: body.user_id, state: 0, type: 0 });
+    let resultTrade: Number = await this.messageRepository.count({ user_id: body.user_id, state: 0, type: 1 });
+    let resultPurchase: Number = await this.messageRepository.count({ user_id: body.user_id, state: 0, type: 2 });
+    let resultShop: Number = await this.messageRepository.count({ user_id: body.user_id, state: 0, type: 3 });
     return {
       user_id: body.user_id,
-      SystemMessage: true, //	boolean	是	系统消息	
-      TradeMessage: true, //	boolean	是	交易消息	
-      PurchaseMessage: true, //	boolean	是	农户报价	
-      ShopMessage: true //	boolean	是	农户通知
+      SystemMessage: resultSystem > 0, //	boolean	是	系统消息	
+      TradeMessage: resultTrade > 0, //	boolean	是	交易消息	
+      PurchaseMessage: resultPurchase > 0, //	boolean	是	农户报价	
+      ShopMessage: resultShop > 0 //	boolean	是	农户通知
     };
   }
   async getMessage(body: any, type: number): Promise<any> {
