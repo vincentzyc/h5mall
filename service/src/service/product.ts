@@ -55,4 +55,11 @@ export class ProductService {
       }],
     };
   }
+  async productSearch(): Promise<any> {
+    const [products] = await this.productRepository
+      .createQueryBuilder()
+      .limit(10) // 查询多少条数据;
+      .getManyAndCount();
+    return products
+  }
 }
