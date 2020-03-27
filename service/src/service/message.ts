@@ -38,6 +38,7 @@ export class AppMessageService {
       .andWhere("message.type = :type", { type: type })
       // .limit(10)
       .getMany();
-    return formatTime(message)
+    await this.messageRepository.update({ user_id: body.user_id, type: type }, { state: 1 });
+    return formatTime(message);
   }
 }
