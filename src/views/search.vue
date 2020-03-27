@@ -75,8 +75,8 @@ export default {
     async search(keyWord) {
       if (keyWord) {
         let res = await this.$api.Product.productSearch(this.param);
-        this.productList = res.shops;
-        this.searchNull = res.shops.length > 0 ? false : true;
+        this.productList = res;
+        this.searchNull = res.length > 0 ? false : true;
         this.saveHistory(keyWord);
       } else {
         this.productList = []

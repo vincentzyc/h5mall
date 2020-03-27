@@ -121,13 +121,13 @@ export default {
       }
       let res = await this.$api.Product.productSearch(this.param);
       if (this.param.pageNum === 1) {
-        this.productList = res.shops;
-        this.options.pullUpLoad = res.shops.length < 10 ? false : this.pullUpLoad;
+        this.productList = res;
+        this.options.pullUpLoad = res.length < 10 ? false : this.pullUpLoad;
       } else {
-        this.productList.push(...res.shops);
+        this.productList.push(...res);
       }
       this.pageVisible = false;
-      return res.shops.length === 10
+      return res.length === 10
     },
     searchKeyWord(keyWord) {
       this.$router.push('/home/search?key=' + keyWord)
