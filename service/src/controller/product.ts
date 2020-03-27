@@ -25,4 +25,9 @@ export class ProductController {
   carouselList() {
     return this.ProductService.carouselList();
   }
+  @Post('/productSearch')
+  @HttpCode(HttpStatus.OK)
+  productSearch() {
+    return this.ProductService.productSearch();
+  }
 }
