@@ -30,4 +30,9 @@ export class ProductController {
   productSearch() {
     return this.ProductService.productSearch();
   }
+  @Post('/productDetail')
+  @HttpCode(HttpStatus.OK)
+  productDetail(@Body() body: any) {
+    return this.ProductService.productDetail(body);
+  }
 }
