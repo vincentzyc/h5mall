@@ -318,7 +318,7 @@ export default {
     async init() {
       this.$loading.open();
       let res = await this.$api.Product.productDetail({ product_id: this.$route.query.id });
-      this.Data = res.product_info;
+      this.Data = res;
       this.getCarousel();
       this.wxShare();
       this.$loading.close();
