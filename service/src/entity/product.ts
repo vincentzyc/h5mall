@@ -40,4 +40,11 @@ export class ProductEntity {
     comment: '商品图片',
   })
   carousel_img: string;
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'img',
+    comment: '商品详情图片',
+  })
+  img: string;
 }

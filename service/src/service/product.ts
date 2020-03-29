@@ -62,4 +62,9 @@ export class ProductService {
       .getManyAndCount();
     return products
   }
+  async productDetail(body: any): Promise<any> {
+    const products = await this.productRepository.findOne({ id: body.product_id })
+    if (products) return { ...products, specs: [] }
+    throw new HttpException('无此产品', HttpStatus.OK);
+  }
 }
