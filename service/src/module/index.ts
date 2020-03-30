@@ -15,6 +15,7 @@ import { UserEntity } from '@src/entity/user';
 import { ProductEntity } from '@src/entity/product';
 import { ProductTypeEntity } from '@src/entity/product_type';
 import { MessageEntity } from '@src/entity/message';
+import { SpecsEntity } from '@src/entity/specs';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { MessageEntity } from '@src/entity/message';
       UserEntity,
       ProductEntity,
       ProductTypeEntity,
-      MessageEntity
+      MessageEntity,
+      SpecsEntity
     ])
   ],
   providers: [
