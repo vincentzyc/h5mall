@@ -67,8 +67,7 @@ export class ProductService {
   }
   async productDetail(body: any): Promise<any> {
     const products = await this.productRepository.findOne({ id: body.product_id });
-    const specs: Array<SpecsEntity> = await this.specsRepository.find({ productId: body.product_id });
-    console.log(specs);
+    const specs: Array<SpecsEntity> = await this.specsRepository.find({ productId: body.product_id, state: 1 });
     if (products) return { ...products, specs: specs }
     throw new HttpException('无此产品', HttpStatus.OK);
   }
