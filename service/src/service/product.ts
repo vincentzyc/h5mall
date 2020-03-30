@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductEntity, ProductResult } from '@src/entity/product';
 import { ProductTypeEntity } from '@src/entity/product_type';
+import { SpecsEntity } from '@src/entity/specs';
 
 interface ProductQuery {
   pageSize?: number;
@@ -16,6 +17,8 @@ export class ProductService {
     private readonly productRepository: Repository<ProductEntity>,
     @InjectRepository(ProductTypeEntity)
     private readonly productTypeRepository: Repository<ProductTypeEntity>,
+    @InjectRepository(SpecsEntity)
+    private readonly specsRepository: Repository<SpecsEntity>,
   ) { }
 
   async findAll(query: ProductQuery): Promise<ProductResult> {
@@ -63,8 +66,10 @@ export class ProductService {
     return products
   }
   async productDetail(body: any): Promise<any> {
-    const products = await this.productRepository.findOne({ id: body.product_id })
-    if (products) return { ...products, specs: [] }
+    const products = await this.productRepository.findOne({ id: body.product_id });
+    const specs: Array<SpecsEntity> = await this.specsRepository.find({ productId: body.product_id });
+    console.log(specs);
+    if (products) return { ...products, specs: specs }
     throw new HttpException('无此产品', HttpStatus.OK);
   }
 }
