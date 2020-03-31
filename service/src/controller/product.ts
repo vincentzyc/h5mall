@@ -27,8 +27,8 @@ export class ProductController {
   }
   @Post('/productSearch')
   @HttpCode(HttpStatus.OK)
-  productSearch() {
-    return this.ProductService.productSearch();
+  productSearch(@Body() body: any) {
+    return this.ProductService.productSearch(body);
   }
   @Post('/productDetail')
   @HttpCode(HttpStatus.OK)

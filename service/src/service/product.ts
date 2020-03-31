@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { ProductEntity, ProductResult } from '@src/entity/product';
 import { ProductTypeEntity } from '@src/entity/product_type';
 import { SpecsEntity } from '@src/entity/specs';
@@ -58,11 +58,14 @@ export class ProductService {
       }],
     };
   }
-  async productSearch(): Promise<any> {
-    const [products] = await this.productRepository
-      .createQueryBuilder()
-      .limit(10) // 查询多少条数据;
-      .getManyAndCount();
+  async productSearch(body: any): Promise<any> {
+    const products = await this.productRepository.find({
+      where: {
+        name: Like(`%${body.keywords}%`),
+      },
+      skip: (body.pageNum - 1) * 10,
+      take: 10
+    })
     return products
   }
   async productDetail(body: any): Promise<any> {
