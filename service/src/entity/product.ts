@@ -47,4 +47,10 @@ export class ProductEntity {
     comment: '商品详情图片',
   })
   img: string;
+
+  @Column('int', {
+    name: 'virtual_num',
+    comment: '商品详情图片',
+  })
+  virtual_num: number;
 }
