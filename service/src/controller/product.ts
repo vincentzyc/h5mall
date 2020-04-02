@@ -35,4 +35,9 @@ export class ProductController {
   productDetail(@Body() body: any) {
     return this.ProductService.productDetail(body);
   }
+  @Post('/recommend')
+  @HttpCode(HttpStatus.OK)
+  recommend(@Body() body: any) {
+    return this.ProductService.recommend();
+  }
 }
