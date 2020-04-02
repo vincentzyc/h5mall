@@ -74,4 +74,9 @@ export class ProductService {
     if (products) return { ...products, specs: specs }
     throw new HttpException('无此产品', HttpStatus.OK);
   }
+  async recommend(): Promise<any> {
+    const products = await this.productRepository.find({ recommend: 1 });
+    console.log(products);
+    return products || [];
+  }
 }
