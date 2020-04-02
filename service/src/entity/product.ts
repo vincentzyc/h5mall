@@ -53,4 +53,11 @@ export class ProductEntity {
     comment: '商品详情图片',
   })
   virtual_num: number;
+
+  @Column('int', {
+    name: 'recommend',
+    comment: '是否为推荐商品', // 0不推荐 1推荐
+  })
+  recommend: number;
+  
 }
