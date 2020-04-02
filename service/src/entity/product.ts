@@ -59,5 +59,25 @@ export class ProductEntity {
     comment: '是否为推荐商品', // 0不推荐 1推荐
   })
   recommend: number;
-  
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'application',
+    comment: '商品用途，食用、生活',
+  })
+  application: string;
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'introduction',
+    comment: '商品说明，即详情页“文字”部分',
+  })
+  introduction: string;
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'brief',
+    comment: '商品简介',
+  })
+  brief: string;
 }
