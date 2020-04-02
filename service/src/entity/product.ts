@@ -29,6 +29,13 @@ export class ProductEntity {
 
   @Column('varchar', {
     nullable: true,
+    name: 'production_place',
+    comment: '产地',
+  })
+  production_place: string;
+
+  @Column('varchar', {
+    nullable: true,
     name: 'cost',
     comment: '采购价',
   })
