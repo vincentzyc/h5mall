@@ -268,8 +268,8 @@ export default {
         pageNum: this.pageNum
       }
       let res = await this.$api.Product.getRecommend(param);
-      this.loadMore = (res.recommendList || []).length === 10;
-      this.recommendList.push(...res.recommendList)
+      this.loadMore = (res || []).length === 10;
+      this.recommendList.push(...res)
     },
     scrollBottom() {
       let el = document.getElementById("detail_wrap");
