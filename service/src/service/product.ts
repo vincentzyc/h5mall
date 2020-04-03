@@ -76,7 +76,6 @@ export class ProductService {
   }
   async recommend(): Promise<any> {
     const products = await this.productRepository.find({ recommend: 1 });
-    console.log(products);
     return products || [];
   }
 }
